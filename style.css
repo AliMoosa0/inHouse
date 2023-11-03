@@ -1,0 +1,601 @@
+* {
+    background: #d7d7d9;
+  }
+  
+  /* header div styling */
+  #header {
+    height: 80px;
+    margin: 0 auto;
+    width: 900px;
+  }
+  
+  #header h1 {
+    font-size: 40;
+    color: #ba001f;
+  }
+  
+  #header p {
+    font-size: 20;
+    clear: both;
+  }
+  
+  .links {
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .links:hover {
+    color: #ba001f;
+    text-decoration: underline;
+  }
+  
+  .bar {
+    color: #ba001f;
+  }
+  /* end of header div styling */
+  
+  /* main div styling */
+  #main {
+    width: 100%;
+    clear: both;
+    padding-bottom: 50px;
+    padding-top: 50px;
+  }
+  /* end of main div styling */
+  
+  /* registration form styling */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  .wrapper {
+    margin: 0 auto;
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    padding: 34px;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  .wrapper h2 {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+  }
+  .wrapper h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 28px;
+    border-radius: 12px;
+    background: #4070f4;
+  }
+  .wrapper form {
+    margin-top: 30px;
+  }
+  .wrapper form .input-box {
+    height: 52px;
+    margin: 18px 0;
+  }
+  form .input-box input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding: 0 15px;
+    font-size: 17px;
+    font-weight: 400;
+    color: #333;
+    border: 1.5px solid #c7bebe;
+    border-bottom-width: 2.5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+  .input-box input:focus,
+  .input-box input:valid {
+    border-color: #4070f4;
+  }
+  
+  form h3 {
+    color: #707070;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 10px;
+  }
+  .input-box.button input {
+    color: #fff;
+    letter-spacing: 1px;
+    border: none;
+    background: #4070f4;
+    cursor: pointer;
+  }
+  .input-box.button input:hover {
+    background: #0e4bf1;
+  }
+  form .text h3 {
+    color: #333;
+    width: 100%;
+    text-align: center;
+  }
+  form .text h3 a {
+    color: #4070f4;
+    text-decoration: none;
+  }
+  form .text h3 a:hover {
+    text-decoration: underline;
+  }
+  
+  /* end of registration form styling */
+  
+  .err {
+    color: red;
+  }
+  
+  .article-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 10px;
+  }
+  
+  .articleNews-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .article-meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .articleNews-meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .article-body {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .articleNews-body {
+    font-size: 18px;
+    margin-bottom: 10px;
+    width: 80%;
+    padding: 2%;
+    text-align: justify;
+    margin-left: auto;
+    margin-right: auto;
+    column-count: 3;
+    column-gap: 40px;
+    background: #88898c;
+    padding: 2%;
+    margin-top: 2%;
+  }
+  
+  .like-button {
+    width: 40%;
+    margin-right: 50px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    margin-left: 4%;
+  }
+  
+  .like-count {
+    background: #d7d7d9;
+  }
+  
+  .like-count span {
+    font-size: 18px;
+    color: #000000;
+    background: #d7d7d9;
+  }
+  .bigdiv form {
+    background: #88898c;
+  }
+  .comment-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    background: #d7d7d9;
+    box-shadow: 20px 20px 50px 15px grey;
+    color: #000000;
+    padding: 3%;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 70px;
+  }
+  
+  .comment-form {
+    margin-bottom: 10px;
+  }
+  
+  .comment-form input,
+  .comment-form textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .comment-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #d7d7d9;
+  }
+  
+  .comment-item {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .comment-item .author {
+    font-weight: bold;
+  }
+  
+  .comment-item .timestamp {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .comment-item .content {
+    margin-top: 5px;
+  }
+  
+  /* Like button styling */
+  .like-button {
+    display: flex;
+    align-items: center;
+  }
+  
+  .like-count {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .like-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .like-btn i {
+    margin-right: 5px;
+  }
+  
+  .like-btn.filled i {
+    color: #ba001f;
+  }
+  
+  .like-btn.unfilled i {
+    color: #888;
+  }
+  
+  /* End of like button styling */
+  .media-section {
+    display: flex;
+    width: 80%;
+    padding: 3%;
+    box-shadow: 20px 20px 50px 15px grey;
+    margin-bottom: 100px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 144px;
+  }
+  
+  .mediaFiles {
+    margin-left: 150px;
+    margin-bottom: 20px;
+  }
+  .media-section .mediaFiles {
+    display: none;
+  }
+  
+  .divImg {
+    width: 300px;
+    height: 400px;
+    font-size: 5rem;
+    font-weight: 400;
+    margin-left: -358px;
+  }
+  
+  .divImg img {
+    width: 1000px;
+    height: 300px;
+  }
+  
+  .media-file {
+    margin-bottom: 20px;
+  }
+  
+  .media-file h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .media-image {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .media-video {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .media-audio {
+    width: 100%;
+  }
+  
+  /* end of news_page styling */
+  
+  /* .navbar {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    background-color: #88898c;
+  } */
+  
+  /* nav {
+    flex: 1;
+    text-align: right;
+    background-color: #88898c;
+  } */
+  
+  /*unordered list*/
+  /* nav ul {
+    display: inline-block;
+    list-style-type: none;
+    background-color: #88898c;
+  } */
+  
+  /*unordered list*/
+  /* nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+    background-color: #88898c;
+  } */
+  
+  /*unordered list link*/
+  nav ul li a {
+    color: #000000;
+    background-color: #88898c;
+  }
+  
+  /*hovering*/
+  nav ul li:hover {
+    text-shadow: 0 0 5px #594d43;
+  }
+  
+  link */
+   a {
+    text-decoration: none;
+    color: #3c413d;
+   }
+  
+  .comment-section {
+    color: #000000;
+    padding: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 70px;
+  }
+  
+  .thecomments {
+    background: #88898c;
+  }
+  
+  .comment-section form {
+    background: #d7d7d9;
+  }
+  .comment-section h3 {
+    background: #d7d7d9;
+    font-size: 35px;
+  }
+  
+  .comment-section input {
+    display: none;
+  }
+  
+  .comment-section textarea {
+    background: #d7d7d9;
+  }
+  #txtComment {
+    margin-left: 260px;
+    margin-top: 2%;
+    margin-bottom: -25px;
+    border-radius: 10px;
+  }
+  
+  .submit-comment {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    cursor: pointer;
+    border: 3px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
+      5px 5px 0px 0px;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 435px;
+  }
+  
+  .submit-comment:active {
+    box-shadow: 0px 0px 0px 0px;
+    top: 5px;
+    left: 5px;
+  }
+  
+  .comment-content {
+    background-color: #d7d7d9;
+    padding-bottom: 4%;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 4%;
+    margin-bottom: 7%;
+    border: #686b72 solid 5px;
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-bottom: 8%;
+  }
+  .comment-meta {
+    padding: 5%;
+    background-color: #686b72;
+    border-radius: 10px;
+  }
+  
+  .comment-form textarea {
+    font-family: "Open Sans", sans-serif;
+    width: 50%;
+    height: 100px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+  }
+  
+  #likeButton {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    cursor: pointer;
+    border: 3px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
+      5px 5px 0px 0px;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  #likeButton:active {
+    box-shadow: 0px 0px 0px 0px;
+    top: 5px;
+    left: 5px;
+  }
+  .bigdiv {
+    display: flex;
+    width: 80%;
+    padding: 3%;
+    box-shadow: 20px 20px 50px 15px grey;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6%;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .like-button h3 {
+    background: #d7d7d9;
+    font-size: 35px;
+  }
+  
+  .media-file {
+    margin-left: 150px;
+  }
+  
+  .downloadFiles {
+    margin-bottom: 50px;
+  }
+  
+  .download-section {
+    width: 80%;
+    height: 150px;
+    background: #d7d7d9;
+    box-shadow: 20px 20px 50px 15px grey;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3%;
+    margin-bottom: 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+  
+  .download-link {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    cursor: pointer;
+    border: 3px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
+      5px 5px 0px 0px;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-top: -40px;
+  }
+  
+  .download-link:active {
+    box-shadow: 0px 0px 0px 0px;
+    top: 5px;
+    left: 5px;
+  }
+  
+  .divVid {
+    width: 400px;
+    height: 350px;
+  }
+  
+  .wrapper {
+    box-shadow: 20px 20px 50px 15px grey;
+    background: #d7d7d9;
+  }
+  
+  .wrapper h2 {
+    background: #d7d7d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+  }
