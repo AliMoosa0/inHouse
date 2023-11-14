@@ -88,6 +88,13 @@
 
 </head>
 <body>
+<?php
+$query = "SELECT * FROM Books where inStock = 1 ORDER BY publishDate DESC";
+
+?>
+
+
+
 <?php include "header.html"; ?>
 
     <div class="container">
