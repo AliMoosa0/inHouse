@@ -106,7 +106,45 @@
 <?php include "header.php"; ?>
 
     <div class="container">
-        <h1>Welcome to Our Second-Hand Book Store</h1>
+        <h1>Buy and sell your textbooks for the best price</h1>
+        <div class="books">
+            <div class="book">
+                <img src="book1.jpg" alt="Book 1">
+                <div class="book-info">
+                    <p>Book 1</p>
+                    <p>Price: $10</p>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+            <div class="book">
+                <img src="book2.jfif" alt="Book 2">
+                <div class="book-info">
+                    <p>Book 2</p>
+                    <p>Price: $12</p>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+            <div class="book">
+                <img src="book3.jfif" alt="Book 3">
+                <div class="book-info">
+                    <p>Book 3</p>
+                    <p>Price: $15</p>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="book">
+                <img src="book1.jpg" alt="Book 1">
+                <div class="book-info">
+                    <p>Book 1</p>
+                    <p>Price: $10</p>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        <!-- Add more books as needed -->
+
+
         <div class="books">
             <div class="book">
                 <img src="book1.jpg" alt="Book 1">
@@ -133,6 +171,14 @@
                 </div>
             </div>
             <!-- Add more books as needed -->
+            <div class="book">
+                <img src="book1.jpg" alt="Book 1">
+                <div class="book-info">
+                    <p>Book 1</p>
+                    <p>Price: $10</p>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
         </div>
     </div>
 

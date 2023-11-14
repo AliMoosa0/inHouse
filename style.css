@@ -1,7 +1,5 @@
-* {
-    background: #d7d7d9;
-  }
-  
+
+
   /* header div styling */
   #header {
     height: 80px;
@@ -43,6 +41,7 @@
     padding-top: 50px;
   }
   /* end of main div styling */
+  
   
   /* registration form styling */
   * {
@@ -353,45 +352,7 @@
   }
   
   /* end of news_page styling */
-  
-  /* .navbar {
-    display: flex;
-    align-items: center;
-    padding: 0px;
-    background-color: #88898c;
-  } */
-  
-  /* nav {
-    flex: 1;
-    text-align: right;
-    background-color: #88898c;
-  } */
-  
-  /*unordered list*/
-  /* nav ul {
-    display: inline-block;
-    list-style-type: none;
-    background-color: #88898c;
-  } */
-  
-  /*unordered list*/
-  /* nav ul li {
-    display: inline-block;
-    margin-right: 20px;
-    background-color: #88898c;
-  } */
-  
-  /*unordered list link*/
-  nav ul li a {
-    color: #000000;
-    background-color: #88898c;
-  }
-  
-  /*hovering*/
-  nav ul li:hover {
-    text-shadow: 0 0 5px #594d43;
-  }
-  
+ 
   link */
    a {
     text-decoration: none;
@@ -599,3 +560,47 @@
     font-weight: 600;
     color: #333;
   }
+
+  /*-------------------------------------------navigation------------------------------------------*/
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  background-color: #f0f0f0;
+}
+
+nav {
+  flex: 1;
+  text-align: right;
+}
+
+/*unordered list*/
+nav ul {
+  display: inline-block;
+  list-style-type: none;
+  background-color: #f0f0f0;
+}
+
+/*unordered list*/
+nav ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+/*unordered list link*/
+nav ul li a {
+  color: gray;
+  background-color: #f0f0f0;
+}
+
+/*hovering*/
+nav ul li:hover {
+  text-shadow: 0 0 5px #030303;
+}
+
+/*link */
+a {
+  text-decoration: none;
+  color: #3C413D;
+}
