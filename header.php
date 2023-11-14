@@ -38,10 +38,16 @@
         <ul>
             <li><a href="home.php">Home</a></li>
             <li><a href="contactUs.php">Contact Us</a></li>
-            <li><a href="discusstions.php">discussions</a></li>
+            <li><a href="discussions_page.php">discussions</a></li>
             <li><a href="login.php">Login</a></li>
             <li><a href="register.php">register</a></li>
             <li><a href="cart.php">Shopping Cart</a></li>
         </ul>
     </nav>
 </header>
+
+
+<?php
+// $db = new Connection();
+// $connection = $db->getConnection();
+?>
