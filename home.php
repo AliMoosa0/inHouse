@@ -89,8 +89,16 @@
 </head>
 <body>
 <?php
-$query = "SELECT * FROM Books where inStock = 1 ORDER BY publishDate DESC";
+// $books = new Books();
+// $allBooks = $books->getAllBooks();
 
+// foreach ($allBooks as $book) {
+//     echo "Book ID: " . $book['bookID'] . "<br>";
+//     echo "Book Name: " . $book['bookName'] . "<br>";
+//     echo "Book Author: " . $book['bookAuthor'] . "<br>";
+//     // Display other book details as needed
+//     echo "<hr>";
+// }
 ?>
 
 

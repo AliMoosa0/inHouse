@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-<?php include "header.html"; ?>
+<?php include "header.php"; ?>
 </body>
 </html>
