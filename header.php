@@ -45,3 +45,8 @@
         </ul>
     </nav>
 </header>
+
+<?php
+
+$db = new Connection();
+$connection = $db->getConnection();

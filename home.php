@@ -95,7 +95,7 @@ $query = "SELECT * FROM Books where inStock = 1 ORDER BY publishDate DESC";
 
 
 
-<?php include "header.html"; ?>
+<?php include "header.php"; ?>
 
     <div class="container">
         <h1>Welcome to Our Second-Hand Book Store</h1>
