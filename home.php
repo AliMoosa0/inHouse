@@ -88,7 +88,22 @@
 
 </head>
 <body>
-<?php include "header.html"; ?>
+<?php
+// $books = new Books();
+// $allBooks = $books->getAllBooks();
+
+// foreach ($allBooks as $book) {
+//     echo "Book ID: " . $book['bookID'] . "<br>";
+//     echo "Book Name: " . $book['bookName'] . "<br>";
+//     echo "Book Author: " . $book['bookAuthor'] . "<br>";
+//     // Display other book details as needed
+//     echo "<hr>";
+// }
+?>
+
+
+
+<?php include "header.php"; ?>
 
     <div class="container">
         <h1>Buy and sell your textbooks for the best price</h1>
