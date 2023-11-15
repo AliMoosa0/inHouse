@@ -48,6 +48,9 @@
 
 
 <?php
-// $db = new Connection();
-// $connection = $db->getConnection();
+require_once('connection.php');  // Adjust the path accordingly
+
+$db = new Connection();
+$connection = $db->getConnection();
+
 ?>

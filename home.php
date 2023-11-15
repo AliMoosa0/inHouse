@@ -88,22 +88,25 @@
 
 </head>
 <body>
+<?php include "header.php"; ?>
 <?php
-// $books = new Books();
-// $allBooks = $books->getAllBooks();
-
-// foreach ($allBooks as $book) {
-//     echo "Book ID: " . $book['bookID'] . "<br>";
-//     echo "Book Name: " . $book['bookName'] . "<br>";
-//     echo "Book Author: " . $book['bookAuthor'] . "<br>";
-//     // Display other book details as needed
-//     echo "<hr>";
-// }
+require_once('books.php');  
+require_once('Database.php');  
+$books = new Books();
+$allBooks = $books->getAllBooks();
+//get all books
+foreach ($allBooks as $book) {
+    echo "Book ID: " . $book['bookID'] . "<br>";
+    echo "Book Name: " . $book['bookName'] . "<br>";
+    echo "Book Author: " . $book['bookAuthor'] . "<br>";
+    
+    echo "<hr>";
+}
 ?>
 
 
 
-<?php include "header.php"; ?>
+
 
     <div class="container">
         <h1>Welcome to Our Second-Hand Book Store</h1>
