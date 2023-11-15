@@ -98,7 +98,7 @@ $connection = $db->getConnection();
 require_once('books.php');  
 require_once('Database.php');  
 $books = new Books();
-$allBooks = $books->getAllBooks();
+// $allBooks = $books->getAllBooks();
 
 // Retrieve books from the database in reverse chronological order
 $query = "SELECT * FROM books where inStock = 1 ORDER BY publishDate DESC";

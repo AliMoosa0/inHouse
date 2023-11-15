@@ -124,12 +124,6 @@ private $addedBy;
 	}
 
 
-
-
-
-	
-
-    
 		public function initWith($bookID, $bookName, $bookAuthor, $bookCategory, $bookPrice, $publishDate, $bookCondition, $bookBarcode, $bookPic, $inStock, $addedBy) {
 			$this->bookID = $bookID;
 			$this->bookName = $bookName;
