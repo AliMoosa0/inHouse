@@ -7,12 +7,13 @@ class Connection {
     public function getConnection() {
 
         if ($this->dbc == NULL)
-            $this->dbc = mysqli_connect('localhost', 'root', '', '2nd hand book shop');
+            $this->dbc = mysqli_connect('localhost', 'root', '', '2ndhand');
 
-        if (mysqli_connect_errno()) {
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            die('b0ther');
-        }
+            if (mysqli_connect_errno()) {
+                printf("Connect failed: %s\n", mysqli_connect_error());
+                die('Connection failed. Please try again later.');
+            }
+            
 
         return $this->dbc;
     }
