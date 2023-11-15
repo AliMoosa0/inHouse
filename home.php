@@ -88,25 +88,51 @@
 
 </head>
 <body>
+<?php include "header.php"; 
+$db = new Connection();
+$connection = $db->getConnection();
+
+?>
+<div class="container">
 <?php
-// $books = new Books();
+require_once('books.php');  
+require_once('Database.php');  
+$books = new Books();
 // $allBooks = $books->getAllBooks();
 
-// foreach ($allBooks as $book) {
-//     echo "Book ID: " . $book['bookID'] . "<br>";
-//     echo "Book Name: " . $book['bookName'] . "<br>";
-//     echo "Book Author: " . $book['bookAuthor'] . "<br>";
-//     // Display other book details as needed
-//     echo "<hr>";
-// }
+// Retrieve books from the database in reverse chronological order
+$query = "SELECT * FROM books where inStock = 1 ORDER BY publishDate DESC";
+$result = mysqli_query($connection, $query);
+
+echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
+
+//loop to get get the books and store them in the variables + display each book
+while ($row = mysqli_fetch_assoc($result)) {
+    $bookId = $row['bookID'];
+    $bookName = $row['bookName'];
+    $bookPrice = $row['bookPrice'];
+    $publishDate = $row['publishDate'];
+    $bookPic = $row['bookPic'];
+
+    // Display book with price and add to cart button 
+    echo "<div class='books'>";
+    echo "<div class='book'>";
+    echo "<img src='uploads/$bookPic' alt='$bookPic'>";
+
+    echo "<h2 class='book-title'>$bookName</h2>";
+    echo "<p>Price: ". $bookPrice .  " </p>";
+    echo "<button>Add to Cart</button>";
+
+
+    echo "</div>"; // Close the book container
+    echo "</div>"; // Close the books container
+}
 ?>
 
+    <!-- <div class="container">
+        <h1>Welcome to Our Second-Hand Book Store</h1>
 
 
-<?php include "header.php"; ?>
-
-    <div class="container">
-        <h1>Buy and sell your textbooks for the best price</h1>
         <div class="books">
             <div class="book">
                 <img src="book1.jpg" alt="Book 1">
@@ -116,6 +142,8 @@
                     <button>Add to Cart</button>
                 </div>
             </div>
+
+
             <div class="book">
                 <img src="book2.jfif" alt="Book 2">
                 <div class="book-info">
@@ -133,54 +161,8 @@
                 </div>
             </div>
             
-            <div class="book">
-                <img src="book1.jpg" alt="Book 1">
-                <div class="book-info">
-                    <p>Book 1</p>
-                    <p>Price: $10</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
         </div>
-        <!-- Add more books as needed -->
-
-
-        <div class="books">
-            <div class="book">
-                <img src="book1.jpg" alt="Book 1">
-                <div class="book-info">
-                    <p>Book 1</p>
-                    <p>Price: $10</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-            <div class="book">
-                <img src="book2.jfif" alt="Book 2">
-                <div class="book-info">
-                    <p>Book 2</p>
-                    <p>Price: $12</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-            <div class="book">
-                <img src="book3.jfif" alt="Book 3">
-                <div class="book-info">
-                    <p>Book 3</p>
-                    <p>Price: $15</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-            <!-- Add more books as needed -->
-            <div class="book">
-                <img src="book1.jpg" alt="Book 1">
-                <div class="book-info">
-                    <p>Book 1</p>
-                    <p>Price: $10</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div> -->
 
     
 </body>
