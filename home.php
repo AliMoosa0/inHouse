@@ -69,7 +69,7 @@
     }
 
     .book-info button {
-        background-color: #4CAF50;
+        background-color: #DEAA45;
         color: #fff;
         border: none;
         padding: 5px 10px;
@@ -110,6 +110,7 @@
         <div class="books">
             <div class="book">
                 <img src="book1.jpg" alt="Book 1">
+                <br>Book 1
                 <div class="book-info">
                     <p>Book 1</p>
                     <p>Price: $10</p>
@@ -182,6 +183,6 @@
         </div>
     </div>
 
-    
+    <?php include "footer.html"; ?>
 </body>
 </html>
