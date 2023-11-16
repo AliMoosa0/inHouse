@@ -88,47 +88,78 @@
 
 </head>
 <body>
-<?php include "header.php"; 
+<?php
+include "header.php";
+require_once "Connection.php";
+require_once "Books.php";
+
 $db = new Connection();
 $connection = $db->getConnection();
 
-?>
-<div class="container">
-<?php
-require_once('books.php');  
-require_once('Database.php');  
-$books = new Books();
-// $allBooks = $books->getAllBooks();
+if (isset($_GET['bookId'])) {
+    $bookId = $_GET['bookId'];
 
-// Retrieve books from the database in reverse chronological order
-$query = "SELECT * FROM books where inStock = 1 ORDER BY publishDate DESC";
-$result = mysqli_query($connection, $query);
+    $book = new books();
+    $book->initWithId($bookId);
 
-echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
+    if ($book->getBookID()) {
+        $bookId = $book->getBookID();
+        $bookName = $book->getBookName();
+        $bookPrice = $book->getBookPrice();
+        $publishDate = $book->getPublishDate();
+        $bookPic = $book->getBookPic();
 
-//loop to get get the books and store them in the variables + display each book
-while ($row = mysqli_fetch_assoc($result)) {
-    $bookId = $row['bookID'];
-    $bookName = $row['bookName'];
-    $bookPrice = $row['bookPrice'];
-    $publishDate = $row['publishDate'];
-    $bookPic = $row['bookPic'];
+        echo "<div class='book'>";
+        echo "<img src='uploads/$bookPic' alt='$bookPic'>";
+        echo "<div class='book-info'>";
+        echo "<h2>".$bookName."</h2>";
+        echo "<p>Price: ".$bookPrice."</p>";
+        echo "<p>Publish Date: ".$publishDate."</p>";
+        echo "<button>Add to Cart</button>";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+    } else {
+        echo "<p>No book found with ID: ".$bookId."</p>";
+    }
+} else {
+    $query = "SELECT * FROM books where inStock = 1 ORDER BY publishDate DESC";
+    $result = mysqli_query($connection, $query);
 
-    // Display book with price and add to cart button 
+    echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
+    echo '
+    <form action="" method="GET">
+        <label for="bookId">Search by Book ID:</label>
+        <input type="text" id="bookId" name="bookId">
+        <button type="submit">Search</button>
+    </form>
+    ';
     echo "<div class='books'>";
-    echo "<div class='book'>";
-    echo "<img src='uploads/$bookPic' alt='$bookPic'>";
+    while ($row = mysqli_fetch_assoc($result)) {
+        $bookId = $row['bookID'];
+        $bookName = $row['bookName'];
+        $bookPrice = $row['bookPrice'];
+        $publishDate = $row['publishDate'];
+        $bookPic = $row['bookPic'];
 
-    echo "<h2 class='book-title'>$bookName</h2>";
-    echo "<p>Price: ". $bookPrice .  " </p>";
-    echo "<button>Add to Cart</button>";
-
-
-    echo "</div>"; // Close the book container
-    echo "</div>"; // Close the books container
+        echo "<div class='book'>";
+        echo "<img src='uploads/$bookPic' alt='$bookPic'>";
+        echo "<div class='book-info'>";
+        echo "<h2>".$bookName."</h2>";
+        echo "<p>Price: ".$bookPrice."</p>";
+        echo "<p>Publish Date: ".$publishDate."</p>";
+        echo "<button>Add to Cart</button>";
+        echo "</div>";
+        echo "</div>";
+    }
+    echo "</div>";
 }
+
+include "footer.html";
 ?>
 
+</body>
+</html>
     <!-- <div class="container">
         <h1>Welcome to Our Second-Hand Book Store</h1>
 
@@ -165,6 +196,4 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
     </div> -->
 
-    <?php include "footer.html"; ?>
-</body>
-</html>
+
