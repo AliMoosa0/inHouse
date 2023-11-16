@@ -88,10 +88,12 @@
 
 </head>
 <body>
+
+
 <?php
 include "header.php";
-require_once "Connection.php";
-require_once "Books.php";
+include "Connection.php";
+include "Books.php";
 
 $db = new Connection();
 $connection = $db->getConnection();
