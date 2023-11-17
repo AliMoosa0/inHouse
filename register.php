@@ -181,7 +181,7 @@ include 'header.php';
 //include 'debugging.php';
 
 if (isset($_POST['submitted'])) {
-    $user = new Users;
+    $user = new Users();
     $user->setEmail(trim($_POST['Email']));
     $user->setPassword(trim($_POST['Password']));
     $user->setUsername(trim($_POST['UserName']));

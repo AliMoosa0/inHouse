@@ -1,6 +1,5 @@
 <?php
-// Start the session (place this at the beginning of your script)
-session_start();
+ ob_start();
 
 
 include('header.php');

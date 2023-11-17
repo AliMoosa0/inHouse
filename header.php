@@ -1,3 +1,21 @@
+<?php
+
+session_start();
+
+ini_set('show_errors', 'On');
+ini_set('display_errors', 1);
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
+function __autoload($className){
+    include_once  $className.'.php';
+    
+    
+}
+
+?>
+
+
+
 <header>
 
     <script src="https://kit.fontawesome.com/a9abc608fc.js" ></script>
@@ -13,7 +31,7 @@
         if ($_SESSION['uid'] != null ){
 
             echo'
-            ?>
+            
             <ul>
                 <li><a href="home.php">Home</a></li>
                 <li><a href="contactUs.php">Contact Us</a></li>
@@ -141,7 +159,7 @@
 
 <?php
 include('connection.php');  // Adjust the path accordingly
-include('debugging.php');
+// include('debugging.php');
 include('users.php');
 $db = new Connection();
 $connection = $db->getConnection();

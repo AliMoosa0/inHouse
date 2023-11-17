@@ -8,6 +8,15 @@ private $regDate;
 private $password;
 private $role;
 
+function __construct() {
+    $this->uid = null;
+    $this->username = null;
+    $this->email = null;
+    $this->regDate = null;
+    $this->password = null;
+    $this->role = null;
+}
+
 public function getUid()
 {
     return $this->uid;
@@ -72,12 +81,12 @@ public function setRole($role)
   function initWithUid($uid) {
         $db = Database::getInstance();
         $data = $db->singleFetch('select * from users where uid = ' . $uid);
-        $this->initWith($data->uid, $data->userName, $data->email, $data->password, $data->regDate, $data->role);
+        $this->initWith($data->uid, $data->username, $data->email, $data->password, $data->regDate, $data->role);
     }
 
     function initWithUserName() {
         $db = Database::getInstance();
-        $data = $db->singleFetch('select * from users where userName = \'' . $this->userName . '\'');
+        $data = $db->singleFetch('select * from users where username = \'' . $this->username . '\'');
         if ($data != null) {
             return false;
         }
@@ -86,7 +95,7 @@ public function setRole($role)
 
     function initWith($uid, $userName, $email, $password, $regDate, $role) {
         $this->uid = $uid;
-        $this->userName = $userName;
+        $this->username = $userName;
         $this->email = $email;
         $this->password = $password;
         $this->regDate = $regDate;
@@ -95,7 +104,7 @@ public function setRole($role)
 
     public function isValid() {
         $errors = true;
-        if (empty($this->userName)) {
+        if (empty($this->username)) {
             $errors = false;
         } else {
             if (!$this->initWithUserName()) {
@@ -120,13 +129,11 @@ public function setRole($role)
             try {
                 $hashed_pwd = password_hash($this->password, PASSWORD_DEFAULT);
                 $db = Database::getInstance();
-                $stmt = $db->prepare('INSERT INTO users (uid, userName, email, regDate, password, role) VALUES (null, ?, ?, NOW(), ?, ?)');
-                $stmt->bind_param('ssss', $this->userName, $this->email, $hashed_pwd, $this->role);
-                $stmt->execute();
-                $stmt->close();
+                $data = "insert into users (uid, username, email, RegDate, password, role) values (null, '$this->username', '$this->email', NOW(), '$hashed_pwd', '$this->role')";
+                $db->querySQL($data);
+                //echo $data;
                 return true;
             } catch (Exception $ex) {
-                // Log or handle the exception appropriately
                 echo 'exception: ' . $ex;
                 return false;
             }
@@ -160,7 +167,7 @@ public function setRole($role)
     function checkUser($username, $password) {
         $db = Database::getInstance();
     
-        $userData = $db->singleFetch("SELECT * FROM users WHERE userName = '$username'");
+        $userData = $db->singleFetch("SELECT * FROM users WHERE username = '$username'");
     
         if ($userData) {
             $retrieved_pwd = $userData->password;
