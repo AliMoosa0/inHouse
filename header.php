@@ -4,6 +4,14 @@
     <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
     <div class="navbar">
     <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Blog</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Contact</a>
+      <div class="animation start-home"></div>
+    </nav>
+    <nav>
 
          <!--logo image linked to the home page-->
          <div>
