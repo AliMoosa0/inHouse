@@ -1,6 +1,11 @@
 <?php
-include 'header.php';
-// echo '*********' . $_SESSION['uid'];
+// Start the session (place this at the beginning of your script)
+session_start();
+
+
+include('header.php');
+echo '*********' . $_SESSION['uid'];
+echo '*********' . $_POST['Username'];
 ?>
 
 <script>
@@ -122,24 +127,24 @@ include 'header.php';
 
 
 <?php
-include 'debugging.php';
+
 
 if (isset($_POST['submitted'])) {
+    include('Users.php');
     $lgnObj = new Users();
-    $username = trim($_POST['Username']);
-    $password = trim($_POST['Password']);
+    $username = trim($_POST['Username']); // Note the capital 'U'
+    $password = trim($_POST['Password']); // Note the capital 'P'
 
     if ($lgnObj->login($username, $password)) {
         if ($_SESSION['role'] == "admin") {
-            header('Location: admin_panel.php');
-        } elseif ($_SESSION['role'] == "author") {
-            header('Location: author_panel.php');
-        } elseif ($_SESSION['role'] == "user") {
-            header('Location: index.php');
-            alert("you are logged in");
+            header('Location: home.php');
+            exit(); // Always exit after header redirection
+        } elseif ($_SESSION['role'] == "student") {
+            header('Location: discussions_page.php');
+            exit(); // Always exit after header redirection
         }
     } else {
-        echo $error = 'wrong login values';
+        echo "Invalid username or password";
     }
 }
 ?>

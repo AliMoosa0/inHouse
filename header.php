@@ -9,8 +9,26 @@
          <div>
             <a href=""> <img src="2ndHand3 copy.png" height="60" width="170" alt="Logo" class="nav-logo" /> </a>
         </div>
+        <?php
+        if ($_SESSION['uid'] != null ){
 
-        <ul>
+            echo'
+            ?>
+            <ul>
+                <li><a href="home.php">Home</a></li>
+                <li><a href="contactUs.php">Contact Us</a></li>
+                <li><a href="discussions_page.php">discussions</a></li>
+                <li><a href="logout.php">logOut</a></li>
+                <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <div class="animation start-home"></div>
+            </ul>
+            
+            
+            ';
+
+        }else{
+            echo'
+            <ul>
             <li><a href="home.php">Home</a></li>
             <li><a href="contactUs.php">Contact Us</a></li>
             <li><a href="discussions_page.php">discussions</a></li>
@@ -19,6 +37,15 @@
             <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
             <div class="animation start-home"></div>
         </ul>
+            
+            
+            ';
+
+
+        }
+        
+        ?>
+
     </nav>
     </div>
     <style>
@@ -113,8 +140,9 @@
 
 
 <?php
-require_once('connection.php');  // Adjust the path accordingly
-
+include('connection.php');  // Adjust the path accordingly
+include('debugging.php');
+include('users.php');
 $db = new Connection();
 $connection = $db->getConnection();
 

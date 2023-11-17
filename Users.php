@@ -1,14 +1,75 @@
 <?php
-class Users {
+class Users
+{
+private $uid;
+private $username;
+private $email;
+private $regDate;
+private $password;
+private $role;
 
-    private $uid;
-    private $username;
-    private $email;
-    private $regDate;
-    private $password;
-    private $role;
+public function getUid()
+{
+    return $this->uid;
+}
 
-    function initWithUid($uid) {
+public function setUid($uid)
+{
+    $this->uid = $uid;
+}
+
+public function getUsername()
+{
+    return $this->username;
+}
+
+public function setUsername($username)
+{
+    $this->username = $username;
+}
+
+public function getEmail()
+{
+    return $this->email;
+}
+
+public function setEmail($email)
+{
+    $this->email = $email;
+}
+
+public function getRegDate()
+{
+    return $this->regDate;
+}
+
+public function setRegDate($regDate)
+{
+    $this->regDate = $regDate;
+}
+
+public function getPassword()
+{
+    return $this->password;
+}
+
+public function setPassword($password)
+{
+    $this->password = $password;
+}
+
+public function getRole()
+{
+    return $this->role;
+}
+
+public function setRole($role)
+{
+    $this->role = $role;
+}
+
+
+  function initWithUid($uid) {
         $db = Database::getInstance();
         $data = $db->singleFetch('select * from users where uid = ' . $uid);
         $this->initWith($data->uid, $data->userName, $data->email, $data->password, $data->regDate, $data->role);
@@ -53,25 +114,20 @@ class Users {
         return $errors;
     }
 
+    
     function registerUser() {
         if ($this->isValid()) {
             try {
-                // Debugging: Display the values before insertion
-                echo "Username: " . $this->userName . "<br>";
-                echo "Email: " . $this->email . "<br>";
-                echo "Role: " . $this->role . "<br>";
-                
                 $hashed_pwd = password_hash($this->password, PASSWORD_DEFAULT);
                 $db = Database::getInstance();
-                $query = "INSERT INTO users (uid, userName, email, regDate, password, role) VALUES (null, '$this->userName', '$this->email', NOW(), '$hashed_pwd', '$this->role')";
-                
-                // Debugging: Display the query to check its correctness
-                echo "Query: " . $query . "<br>";
-    
-                $db->querySQL($query);
+                $stmt = $db->prepare('INSERT INTO users (uid, userName, email, regDate, password, role) VALUES (null, ?, ?, NOW(), ?, ?)');
+                $stmt->bind_param('ssss', $this->userName, $this->email, $hashed_pwd, $this->role);
+                $stmt->execute();
+                $stmt->close();
                 return true;
             } catch (Exception $ex) {
-                echo 'Exception: ' . $ex;
+                // Log or handle the exception appropriately
+                echo 'exception: ' . $ex;
                 return false;
             }
         } else {
@@ -101,39 +157,46 @@ class Users {
             return false;
         }
     }
-
     function checkUser($username, $password) {
         $db = Database::getInstance();
-
-        $query = $db->singleFetch("select * from users where username = '$username'");
-        //$query = mysqli_query($db, "select password from users where username = '$username'");
-        $retrieved_pwd = $query->password;
-        echo $retrieved_pwd;
-        if (!empty($retrieved_pwd)) {
+    
+        $userData = $db->singleFetch("SELECT * FROM users WHERE userName = '$username'");
+    
+        if ($userData) {
+            $retrieved_pwd = $userData->password;
             if (password_verify($password, $retrieved_pwd)) {
-                $data = $db->singleFetch('select * from users where username = \'' . $username . '\' and password = \'' . $retrieved_pwd . '\'');
-                $this->initWith($data->uid, $data->username, $data->email, $data->password, $data->regDate, $data->role);
+                $this->initWith(
+                    $userData->uid,
+                    $userData->userName,
+                    $userData->email,
+                    $userData->password,
+                    $userData->regDate,
+                    $userData->role
+                );
+                return true;
             }
         }
+        return false;
     }
-
+    
     function login($username, $password) {
         try {
-            $this->checkUser($username, $password);
-            if ($this->getUid() != null) {
+            if ($this->checkUser($username, $password)) {
                 $_SESSION['uid'] = $this->getUid();
                 $_SESSION['username'] = $this->getUsername();
                 $_SESSION['role'] = $this->getRole();
+                
                 return true;
             } else {
-                $error[] = 'wrong username or password';
+                $error = 'Wrong username or password';
             }
-            return false;
         } catch (Exception $ex) {
             $error = $ex->getMessage();
         }
         return false;
     }
+    
+    
 
     function logout() {
         unset($_SESSION['uid'],
@@ -141,7 +204,5 @@ class Users {
         $_SESSION['role']);
         session_destroy();
     }
-
 }
-
 ?>

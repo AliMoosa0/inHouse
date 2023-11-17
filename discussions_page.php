@@ -93,7 +93,7 @@
         <h1>Discussions Page</h1>
 
         <div class="discussion">
-            <img src="book1.jpg" alt="Book 1">
+            <img src="uploads/book1.jpg" alt="Book 1">
             <div class="discussion-content">
                 <h2>Discussion Title 1</h2>
                 <p><strong>Book:</strong> Book 1</p>
@@ -102,7 +102,7 @@
         </div>
 
         <div class="discussion">
-            <img src="book2.jfif" alt="Book 2">
+            <img src="uploads/book2.jfif" alt="Book 2">
             <div class="discussion-content">
                 <h2>Discussion Title 2</h2>
                 <p><strong>Book:</strong> Book 2</p>
