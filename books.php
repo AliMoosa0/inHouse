@@ -6,27 +6,33 @@ private $bookID;
 private $bookName;
 private $bookAuthor;
 private $bookCategory;
-private $bookPicture;
+private $bookPrice;
 private $publishDate;
 private $bookCondition;
 private $bookBarcode;
+private $bookPic;
 private $inStock;
+private $addedBy;
 
 
 
 
 
-	public function __constructor($bookID, $bookName, $bookAuthor, $bookCategory, $bookPicture, $publishDate, $bookCondition, $bookBarcode, $inStock) {
+	
+
+	public function __constructor($bookID, $bookName, $bookAuthor, $bookCategory, $bookPrice, $publishDate, $bookCondition, $bookBarcode, $bookPic, $inStock, $addedBy) {
 
 		$this->bookID = $bookID;
 		$this->bookName = $bookName;
 		$this->bookAuthor = $bookAuthor;
 		$this->bookCategory = $bookCategory;
-		$this->bookPicture = $bookPicture;
+		$this->bookPrice = $bookPrice;
 		$this->publishDate = $publishDate;
 		$this->bookCondition = $bookCondition;
 		$this->bookBarcode = $bookBarcode;
+		$this->bookPic = $bookPic;
 		$this->inStock = $inStock;
+		$this->addedBy = $addedBy;
 	}
 
 	public function getBookID() {
@@ -61,12 +67,12 @@ private $inStock;
 		$this->bookCategory = $value;
 	}
 
-	public function getBookPicture() {
-		return $this->bookPicture;
+	public function getBookPrice() {
+		return $this->bookPrice;
 	}
 
-	public function setBookPicture($value) {
-		$this->bookPicture = $value;
+	public function setBookPrice($value) {
+		$this->bookPrice = $value;
 	}
 
 	public function getPublishDate() {
@@ -93,6 +99,14 @@ private $inStock;
 		$this->bookBarcode = $value;
 	}
 
+	public function getBookPic() {
+		return $this->bookPic;
+	}
+
+	public function setBookPic($value) {
+		$this->bookPic = $value;
+	}
+
 	public function getInStock() {
 		return $this->inStock;
 	}
@@ -101,65 +115,64 @@ private $inStock;
 		$this->inStock = $value;
 	}
 
+	public function getAddedBy() {
+		return $this->addedBy;
+	}
+
+	public function setAddedBy($value) {
+		$this->addedBy = $value;
+	}
 
 
-
-
-
-	public function getAllBooks() {
-		$db = Database::getInstance();
-		$data = $db->multiFetch('SELECT * FROM books');
-        return $data;
-    }
-
-	public function initWith($bookID, $bookName, $bookAuthor, $bookCategory, $bookPicture, $publishDate, $bookCondition, $bookBarcode, $inStock, $addedBy)
-    {
-        $this->articleID = $bookID;
-        $this->title = $bookName;
-        $this->category = $bookAuthor;
-        $this->text = $bookCategory;
-        $this->status = $bookPicture;
-        $this->publishedBy = $publishDate;
-        $this->publishDate = $bookCondition;
-        $this->publishDate = $bookBarcode;
-        $this->publishDate = $inStock;
-        $this->publishDate = $addedBy;
+		public function initWith($bookID, $bookName, $bookAuthor, $bookCategory, $bookPrice, $publishDate, $bookCondition, $bookBarcode, $bookPic, $inStock, $addedBy) {
+			$this->bookID = $bookID;
+			$this->bookName = $bookName;
+			$this->bookAuthor = $bookAuthor;
+			$this->bookCategory = $bookCategory;
+			$this->bookPrice = $bookPrice;
+			$this->publishDate = $publishDate;
+			$this->bookCondition = $bookCondition;
+			$this->bookBarcode = $bookBarcode;
+			$this->bookPic = $bookPic;
+			$this->inStock = $inStock;
+			$this->addedBy = $addedBy;
+		}
         
-    }
+    
 
 
 	function initWithId($id)
     {
         $db = Database::getInstance();
         $data = $db->singleFetch('select * from books where BookID = ' . $id);
-        $this->initWith($data->bookID, $data->bookName, $data->bookAuthor, $data->bookCategory, $data->bookPicture, $data->publishDate, $data->bookCondition, $data->bookBarcode, $data->inStock, $data->addedBy);
+        $this->initWith($data->BookID, $data->BookName, $data->BookAuthor, $data->BookCategory, $data->BookPrice, $data->PublishDate, $data->BookCondition, $data->BookBarcode, $data->BookPic, $data->InStock, $data->AddedBy);
     }
 
 
 
-	public function isValid()
-	{
-		$errors = true;
-		if (empty($this->bookAuthor)) {
-			$errors = false;
-		}
-		if (empty($this->bookName)) {
-			$errors = false;
-		}
-		if (empty($this->bookCategory)) {
-			$errors = false;
-		}
-		if (empty($this->bookPicture)) {
-			$errors = false;
-		}
-		if (empty($this->bookCondition)) {
-			$errors = false;
-		}
-		if (empty($this->inStock)) {
-			$errors = false;
-		}
+	// public function isValid()
+	// {
+	// 	$errors = true;
+	// 	if (empty($this->bookAuthor)) {
+	// 		$errors = false;
+	// 	}
+	// 	if (empty($this->bookName)) {
+	// 		$errors = false;
+	// 	}
+	// 	if (empty($this->bookCategory)) {
+	// 		$errors = false;
+	// 	}
+	// 	if (empty($this->bookPicture)) {
+	// 		$errors = false;
+	// 	}
+	// 	if (empty($this->bookCondition)) {
+	// 		$errors = false;
+	// 	}
+	// 	if (empty($this->inStock)) {
+	// 		$errors = false;
+	// 	}
 		
 		
-		return $errors;
-	}
+	// 	return $errors;
+	// }
 }
