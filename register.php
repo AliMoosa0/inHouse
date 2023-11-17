@@ -148,8 +148,8 @@ include 'header.php';
             </div>
             <div class="input-box">
                 <select id="role" name="role" class="styled-select">
-                    <option value="user">Reader</option>
-                    <option value="author">Author</option>
+                    <option value="admin">admin</option>
+                    <option value="student">student</option>
                 </select>
 
             </div>
@@ -172,7 +172,7 @@ include 'header.php';
 <?php
 
 //include 'debugging.php';
-
+include 'Users.php';
 if (isset($_POST['submitted'])) {
     $user = new Users;
     $user->setEmail(trim($_POST['Email']));
@@ -191,3 +191,4 @@ if (isset($_POST['submitted'])) {
     }
 }
 ?>
+ 

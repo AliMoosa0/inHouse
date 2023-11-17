@@ -122,24 +122,24 @@ include 'header.php';
 
 
 <?php
-//include 'debugging.php';
+include 'debugging.php';
 
-// if (isset($_POST['submitted'])) {
-//     $lgnObj = new Users();
-//     $username = trim($_POST['Username']);
-//     $password = trim($_POST['Password']);
+if (isset($_POST['submitted'])) {
+    $lgnObj = new Users();
+    $username = trim($_POST['Username']);
+    $password = trim($_POST['Password']);
 
-//     if ($lgnObj->login($username, $password)) {
-//         if ($_SESSION['role'] == "admin") {
-//             header('Location: admin_panel.php');
-//         } elseif ($_SESSION['role'] == "author") {
-//             header('Location: author_panel.php');
-//         } elseif ($_SESSION['role'] == "user") {
-//             header('Location: index.php');
-//             alert("you are logged in");
-//         }
-//     } else {
-//         echo $error = 'wrong login values';
-//     }
-// }
+    if ($lgnObj->login($username, $password)) {
+        if ($_SESSION['role'] == "admin") {
+            header('Location: admin_panel.php');
+        } elseif ($_SESSION['role'] == "author") {
+            header('Location: author_panel.php');
+        } elseif ($_SESSION['role'] == "user") {
+            header('Location: index.php');
+            alert("you are logged in");
+        }
+    } else {
+        echo $error = 'wrong login values';
+    }
+}
 ?>
