@@ -20,7 +20,7 @@ private $addedBy;
 
 	
 
-	public function __constructor($bookID, $bookName, $bookAuthor, $bookCategory, $bookPrice, $publishDate, $bookCondition, $bookBarcode, $bookPic, $inStock, $addedBy) {
+	public function __construct($bookID, $bookName, $bookAuthor, $bookCategory, $bookPrice, $publishDate, $bookCondition, $bookBarcode, $bookPic, $inStock, $addedBy) {
 
 		$this->bookID = $bookID;
 		$this->bookName = $bookName;
@@ -137,16 +137,32 @@ private $addedBy;
 			$this->inStock = $inStock;
 			$this->addedBy = $addedBy;
 		}
-        
+
+	
     
 
 
-	function initWithId($id)
-    {
-        $db = Database::getInstance();
-        $data = $db->singleFetch('select * from books where BookID = ' . $id);
-        $this->initWith($data->BookID, $data->BookName, $data->BookAuthor, $data->BookCategory, $data->BookPrice, $data->PublishDate, $data->BookCondition, $data->BookBarcode, $data->BookPic, $data->InStock, $data->AddedBy);
-    }
+		public function initWithId($id)
+		{
+			$db = Database::getInstance(); // Assuming you have a Database class
+			$data = $db->singleFetch("SELECT * FROM books WHERE BookID = $id");
+	
+			if ($data) {
+				$this->initWith(
+					$data->BookID,
+					$data->BookName,
+					$data->BookAuthor,
+					$data->BookCategory,
+					$data->BookPrice,
+					$data->PublishDate,
+					$data->BookCondition,
+					$data->BookBarcode,
+					$data->BookPic,
+					$data->InStock,
+					$data->AddedBy
+				);
+			}
+		}
 
 
 
