@@ -144,7 +144,7 @@ private $addedBy;
 
 		public function initWithId($id)
 		{
-			$db = Database::getInstance(); // Assuming you have a Database class
+			$db = Database::getInstance(); 
 			$data = $db->singleFetch("SELECT * FROM books WHERE BookID = $id");
 	
 			if ($data) {

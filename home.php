@@ -92,8 +92,7 @@
 
 <?php
 include "header.php";
-include "Connection.php";
-include "Books.php";
+
 
 $db = new Connection();
 $connection = $db->getConnection();
@@ -101,15 +100,14 @@ $connection = $db->getConnection();
 if (isset($_GET['bookId'])) {
     $bookId = $_GET['bookId'];
 
-    $book = new books();
-    $book->initWithId($bookId);
-
-    if ($book->getBookID()) {
-        $bookId = $book->getBookID();
-        $bookName = $book->getBookName();
-        $bookPrice = $book->getBookPrice();
-        $publishDate = $book->getPublishDate();
-        $bookPic = $book->getBookPic();
+    $query = "SELECT * FROM books where bookID = $bookId ";
+    $result = mysqli_query($connection, $query);
+    if ($bookWithID = mysqli_fetch_assoc($result)) {
+        $bookId = $bookWithID['bookID'];
+        $bookName = $bookWithID['bookName'];
+        $bookPrice = $bookWithID['bookPrice'];
+        $publishDate = $bookWithID['publishDate'];
+        $bookPic = $bookWithID['bookPic'];
 
         echo "<div class='book'>";
         echo "<img src='uploads/$bookPic' alt='$bookPic'>";
