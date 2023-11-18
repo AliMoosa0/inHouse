@@ -94,8 +94,7 @@
 include "header.php";
 
 
-$db = new Connection();
-$connection = $db->getConnection();
+
 
 if (isset($_GET['bookId'])) {
     $bookId = $_GET['bookId'];
