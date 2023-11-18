@@ -12,7 +12,7 @@ session_start();
     <nav>
 
          <!--logo image linked to the home page-->
-         <div>
+         <div class>
             <a href=""> <img src="2ndHand3 copy.png" height="60" width="170" alt="Logo" class="nav-logo" /> </a>
         </div>
         <?php
@@ -55,12 +55,21 @@ session_start();
     </nav>
     </div>
     <style>
+      
+
+
+
+
 
     .navbar{
         display: flex;
         align-items: center;
-        padding: 0px;
-        background-color: #323232;
+        padding: 0%;
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
     }
     nav{
         flex: 1;
@@ -134,7 +143,8 @@ session_start();
     body{
         font-size: 12px;
         font-family: sans-serif;
-        background: #606161;
+        
+
     }
     span{
         color: #2bd6b4;

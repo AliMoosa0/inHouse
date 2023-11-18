@@ -27,8 +27,8 @@
 
     .book {
         width: 33.33%;
-        border: 1px solid #ccc;
-        background-color: #fff;
+        border: 1px solid #000;
+        /* background-color: #fff; */
         padding: 10px;
         text-align: center;
         position: relative;
@@ -77,7 +77,6 @@
     }
 
     footer {
-        background-color: #333;
         color: #fff;
         text-align: center;
         padding: 10px 0;
@@ -159,40 +158,6 @@ include "footer.html";
 
 </body>
 </html>
-    <!-- <div class="container">
-        <h1>Welcome to Our Second-Hand Book Store</h1>
 
-
-        <div class="books">
-            <div class="book">
-                <img src="book1.jpg" alt="Book 1">
-                <br>Book 1
-                <div class="book-info">
-                    <p>Book 1</p>
-                    <p>Price: $10</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-
-
-            <div class="book">
-                <img src="book2.jfif" alt="Book 2">
-                <div class="book-info">
-                    <p>Book 2</p>
-                    <p>Price: $12</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-            <div class="book">
-                <img src="book3.jfif" alt="Book 3">
-                <div class="book-info">
-                    <p>Book 3</p>
-                    <p>Price: $15</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-            
-        </div>
-    </div> -->
 
 

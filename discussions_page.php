@@ -10,11 +10,11 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            
         }
 
         header {
-            background-color: #333;
+            
             color: #fff;
             padding: 10px 0;
         }
@@ -36,8 +36,9 @@
             font-weight: bold;
         }
 
-        .container {
-            max-width: 1200px;
+        .container2 {
+            max-width: 80%;
+            max-height: 100%;
             margin: 0 auto;
             padding: 20px;
         }
@@ -79,7 +80,7 @@
         }
 
         footer {
-            background-color: #333;
+            /* background-color: #333; */
             color: #fff;
             text-align: center;
             padding: 10px 0;
@@ -89,7 +90,7 @@
 <body>
     <?php include "header.php"; ?>
 
-    <div class="container">
+    <div class="container2">
         <h1>Discussions Page</h1>
 
         <div class="discussion">
@@ -121,7 +122,7 @@
     </div>
 
     <footer>
-        <!-- Add footer content and links here -->
+        <?php include "footer.php"; ?>
     </footer>
 </body>
 </html>

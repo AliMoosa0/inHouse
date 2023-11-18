@@ -228,13 +228,11 @@ form .signup-link a:hover{
                     <input type="password" id="Password" name="Password" placeholder="Enter your password" autofocus onblur="isValid(this);" required>
                 </div>
                 <div class="data">
+                <label>Role</label> <br>
                     <select id="role" name="role" class="styled-select">
                     <option value="admin">admin</option>
                     <option value="student">student</option>
                     </select>
-                </div>
-                <div class="forgot-pass">
-                    <a href="#">Forgot Password?</a>
                 </div>
                 <div class="btn">
                     <div class="inner"></div>
@@ -242,7 +240,7 @@ form .signup-link a:hover{
                     
                 </div>
                 <div class="signup-link">
-                    alradey a member? <a href="login.php">Login now</a>
+                    Alradey a Member? <a href="login.php">Login now</a>
                 </div>
                 </form>
             </div>
