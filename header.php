@@ -7,6 +7,7 @@ session_start();
 
     <script src="https://kit.fontawesome.com/a9abc608fc.js" ></script>
     <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <div class="navbar">
     <nav>
 
@@ -138,6 +139,8 @@ session_start();
     span{
         color: #2bd6b4;
     }
+</style>
+
 
 </style>
 
