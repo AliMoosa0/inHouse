@@ -93,8 +93,6 @@
 include "header.php";
 
 
-
-
 if (isset($_GET['bookId'])) {
     $bookId = $_GET['bookId'];
 
@@ -128,7 +126,7 @@ if (isset($_GET['bookId'])) {
     echo '
     <form action="" method="GET">
         <label for="bookId">Search by Book ID:</label>
-        <input type="text" id="bookId" name="bookId">
+        <input type="number" id="bookId" name="bookId">
         <button type="submit">Search</button>
     </form>
     ';

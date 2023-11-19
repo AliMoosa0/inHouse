@@ -88,28 +88,33 @@
     </style>
 </head>
 <body>
-    <?php include "header.php"; ?>
+    <?php include "header.php"; 
 
-    <div class="container2">
+    $query = "SELECT * FROM discussions ORDER BY publishDate DESC";
+    $result = mysqli_query($connection, $query);
+
+    echo "<div class='books'>";
+    while ($row = mysqli_fetch_assoc($result)) {
+        $diskIDId = $row['discID'];
+        $discTitle = $row['discTitle'];
+        $discBook = $row['discBook'];
+        $discBody = $row['discBody'];
+        $discBookName = $row['discBookName'];
+        echo '
+        <div class="container2">
         <h1>Discussions Page</h1>
 
         <div class="discussion">
-            <img src="uploads/book1.jpg" alt="Book 1">
+            <img src="uploads/$discBook" alt="Book 1">
             <div class="discussion-content">
-                <h2>Discussion Title 1</h2>
-                <p><strong>Book:</strong> Book 1</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac quam vel odio condimentum imperdiet vel at ligula...</p>
+                <h2>$discTitle</h2>
+                <p><strong>Book:</strong> $discBookName</p>
+                <p class="article-description" . substr($discBody, 0, 100) . "...</p>"
             </div>
-        </div>
+        </div>';
 
-        <div class="discussion">
-            <img src="uploads/book2.jfif" alt="Book 2">
-            <div class="discussion-content">
-                <h2>Discussion Title 2</h2>
-                <p><strong>Book:</strong> Book 2</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac quam vel odio condimentum imperdiet vel at ligula...</p>
-            </div>
-        </div>
+             }
+             echo '
 
         <!-- Repeat similar discussion blocks for other discussions -->
 
@@ -118,8 +123,12 @@
             <a href="#">2</a>
             <a href="#">3</a>
             <!-- Add more pagination links as needed -->
-        </div>
-    </div>
+                </div>
+            </div>
+            
+            </div>'; 
+    ?>
+  
 
     <footer>
         <?php include "footer.php"; ?>
