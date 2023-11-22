@@ -27,8 +27,8 @@
 
     .book {
         width: 33.33%;
-        border: 1px solid #ccc;
-        background-color: #fff;
+        border: 1px solid #000;
+        /* background-color: #fff; */
         padding: 10px;
         text-align: center;
         position: relative;
@@ -77,7 +77,6 @@
     }
 
     footer {
-        background-color: #333;
         color: #fff;
         text-align: center;
         padding: 10px 0;
@@ -92,25 +91,19 @@
 
 <?php
 include "header.php";
-include "Connection.php";
-include "Books.php";
 
-$db = new Connection();
-$connection = $db->getConnection();
-
+$book = new Books(); 
 if (isset($_GET['bookId'])) {
     $bookId = $_GET['bookId'];
+    $bookInfo = $book->initWithId($bookId);
 
-    $book = new books();
-    $book->initWithId($bookId);
-
-    if ($book->getBookID()) {
-        $bookId = $book->getBookID();
-        $bookName = $book->getBookName();
-        $bookPrice = $book->getBookPrice();
-        $publishDate = $book->getPublishDate();
-        $bookPic = $book->getBookPic();
-
+    if ($bookInfo) {
+        $bookId = $bookInfo->bookID; 
+        $bookName = $bookInfo->bookName;
+        $bookPrice = $bookInfo->bookPrice;
+        $publishDate = $bookInfo->publishDate;
+        $bookPic = $bookInfo->bookPic;
+    
         echo "<div class='book'>";
         echo "<img src='uploads/$bookPic' alt='$bookPic'>";
         echo "<div class='book-info'>";
@@ -124,9 +117,10 @@ if (isset($_GET['bookId'])) {
     } else {
         echo "<p>No book found with ID: ".$bookId."</p>";
     }
+
 } else {
-    $query = "SELECT * FROM books where inStock = 1 ORDER BY publishDate DESC";
-    $result = mysqli_query($connection, $query);
+    $books = new Books();
+    $row = $books->getBooks();
 
     echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
     echo '
@@ -136,66 +130,37 @@ if (isset($_GET['bookId'])) {
         <button type="submit">Search</button>
     </form>
     ';
-    echo "<div class='books'>";
-    while ($row = mysqli_fetch_assoc($result)) {
-        $bookId = $row['bookID'];
-        $bookName = $row['bookName'];
-        $bookPrice = $row['bookPrice'];
-        $publishDate = $row['publishDate'];
-        $bookPic = $row['bookPic'];
+  
 
+
+    echo "</div>";
+    echo "<div class='books'>";
+    for ($i = 0; $i < count($row); $i++) {
+        
+        "<div class='book'>";
         echo "<div class='book'>";
-        echo "<img src='uploads/$bookPic' alt='$bookPic'>";
+        echo "<img src='uploads/" . $row[$i]->bookPic . "' />";
         echo "<div class='book-info'>";
-        echo "<h2>".$bookName."</h2>";
-        echo "<p>Price: ".$bookPrice."</p>";
-        echo "<p>Publish Date: ".$publishDate."</p>";
-        echo "<button>Add to Cart</button>";
+        echo "<h2>" . $row[$i]->bookName . "</h2>";
+        echo "<p>Price: " . $row[$i]->bookPrice . "</p>";
+        echo "<p>Publish Date: " . $row[$i]->publishDate . "</p>";
+        echo "<a href='viewBookDetails.php?bookId=" . $row[$i]->bookID . "'>View Book Details</a>";
+        echo "<br>";
+        echo "<button>View details</button>";
+        echo '<a href="edit_books.php?id=' . $row[$i]->bookID . '">Edit</a>';
+        echo '<a href="delete_books.php?id=' . $row[$i]->bookID . '">Delete</a>';
         echo "</div>";
         echo "</div>";
+
     }
+   
+    
     echo "</div>";
 }
+   
 
 include "footer.html";
 ?>
 
 </body>
 </html>
-    <!-- <div class="container">
-        <h1>Welcome to Our Second-Hand Book Store</h1>
-
-
-        <div class="books">
-            <div class="book">
-                <img src="book1.jpg" alt="Book 1">
-                <br>Book 1
-                <div class="book-info">
-                    <p>Book 1</p>
-                    <p>Price: $10</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-
-
-            <div class="book">
-                <img src="book2.jfif" alt="Book 2">
-                <div class="book-info">
-                    <p>Book 2</p>
-                    <p>Price: $12</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-            <div class="book">
-                <img src="book3.jfif" alt="Book 3">
-                <div class="book-info">
-                    <p>Book 3</p>
-                    <p>Price: $15</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-            
-        </div>
-    </div> -->
-
-

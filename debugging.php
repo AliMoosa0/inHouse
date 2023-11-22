@@ -5,7 +5,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
  */
 
-session_start();
+ session_start();
 
 ini_set('show_errors', 'On');
 ini_set('display_errors', 1);
