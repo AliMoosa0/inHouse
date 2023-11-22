@@ -92,19 +92,18 @@
 <?php
 include "header.php";
 
-
+$book = new Books(); 
 if (isset($_GET['bookId'])) {
     $bookId = $_GET['bookId'];
+    $bookInfo = $book->initWithId($bookId);
 
-    $query = "SELECT * FROM books where bookID = $bookId ";
-    $result = mysqli_query($connection, $query);
-    if ($bookWithID = mysqli_fetch_assoc($result)) {
-        $bookId = $bookWithID['bookID'];
-        $bookName = $bookWithID['bookName'];
-        $bookPrice = $bookWithID['bookPrice'];
-        $publishDate = $bookWithID['publishDate'];
-        $bookPic = $bookWithID['bookPic'];
-
+    if ($bookInfo) {
+        $bookId = $bookInfo->bookID; 
+        $bookName = $bookInfo->bookName;
+        $bookPrice = $bookInfo->bookPrice;
+        $publishDate = $bookInfo->publishDate;
+        $bookPic = $bookInfo->bookPic;
+    
         echo "<div class='book'>";
         echo "<img src='uploads/$bookPic' alt='$bookPic'>";
         echo "<div class='book-info'>";
@@ -118,38 +117,50 @@ if (isset($_GET['bookId'])) {
     } else {
         echo "<p>No book found with ID: ".$bookId."</p>";
     }
-} else {
-    $query = "SELECT * FROM books where inStock = 1 ORDER BY publishDate DESC";
-    $result = mysqli_query($connection, $query);
 
+} else {
+    $books = new Books();
+    $row = $books->getBooks();
+
+    
+    // $query = "SELECT * FROM books where inStock = 1 ORDER BY publishDate DESC";
+    // $result = mysqli_query($connection, $query);
     echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
     echo '
     <form action="" method="GET">
         <label for="bookId">Search by Book ID:</label>
-        <input type="number" id="bookId" name="bookId">
+        <input type="text" id="bookId" name="bookId">
         <button type="submit">Search</button>
     </form>
     ';
-    echo "<div class='books'>";
-    while ($row = mysqli_fetch_assoc($result)) {
-        $bookId = $row['bookID'];
-        $bookName = $row['bookName'];
-        $bookPrice = $row['bookPrice'];
-        $publishDate = $row['publishDate'];
-        $bookPic = $row['bookPic'];
+  
 
+
+    echo "</div>";
+    echo "<div class='books'>";
+    for ($i = 0; $i < count($row); $i++) {
+        
+        "<div class='book'>";
         echo "<div class='book'>";
-        echo "<img src='uploads/$bookPic' alt='$bookPic'>";
+        echo "<img src='uploads/" . $row[$i]->bookPic . "' />";
         echo "<div class='book-info'>";
-        echo "<h2>".$bookName."</h2>";
-        echo "<p>Price: ".$bookPrice."</p>";
-        echo "<p>Publish Date: ".$publishDate."</p>";
-        echo "<button>Add to Cart</button>";
+        echo "<h2>" . $row[$i]->bookName . "</h2>";
+        echo "<p>Price: " . $row[$i]->bookPrice . "</p>";
+        echo "<p>Publish Date: " . $row[$i]->publishDate . "</p>";
+        echo "<a href='viewBookDetails.php?bookId=" . $row[$i]->bookID . "'>View Book Details</a>";
+        echo "<br>";
+        echo "<button>View details</button>";
+        echo '<a href="edit_books.php?id=' . $row[$i]->bookID . '">Edit</a>';
+        echo '<a href="delete_books.php?id=' . $row[$i]->bookID . '">Delete</a>';
         echo "</div>";
         echo "</div>";
+
     }
+   
+    
     echo "</div>";
 }
+   
 
 include "footer.html";
 ?>
