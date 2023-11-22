@@ -115,7 +115,6 @@ private $addedBy;
 		$this->addedBy = $value;
 	}
 
-
 		public function initWith($bookID, $bookName, $bookAuthor, $bookCategory, $bookPrice, $publishDate, $bookCondition, $bookPic, $inStock, $addedBy) {
 			$this->bookID = $bookID;
 			$this->bookName = $bookName;
@@ -139,20 +138,85 @@ private $addedBy;
 			$data = $db->singleFetch("SELECT * FROM users WHERE username = $id");
 		}
 		
-	
+		function initWithName() {
 
-		public function deleteBook($id)
-		{
 			$db = Database::getInstance();
-			$db->query("DELETE FROM books WHERE BookID = $id");
+			$q= 'SELECT * FROM books WHERE bookTitle = \'' . $this->bookName . '\'';
+			$data = $db->singleFetch($q);
+			if ($data != null) {
+				return false;
+			}
+			return true;
 		}
 		
-		public function updateBook($id)
-		{
-			$db = Database::getInstance();
-			$db->query("UPDATE books SET BookName = '$this->bookName', BookAuthor = '$this->bookAuthor', BookCategory = '$this->bookCategory', BookPrice = '$this->bookPrice', PublishDate = '$this->publishDate', BookCondition = '$this->bookCondition', BookPic = '$this->bookPic', InStock = '$this->inStock', AddedBy = '$this->addedBy' WHERE BookID = $id");
+		
+		function addBook() {
+			
+				try {
+					$db = Database::getInstance();
+					$q = "INSERT INTO books (bookID, bookName, bookAuthor, bookCategory, bookPrice, publishDate, bookCondition, bookPic, inStock, addedBy)
+						  VALUES (null ,'$this->bookName', '$this->bookAuthor', '$this->bookCategory', '$this->bookPrice', '$this->publishDate', 
+						  '$this->bookCondition', '$this->bookPic', '$this->inStock', '$this->addedBy')";
+					
+					$db->querySQL($q);
+					
+						return true;
+					
+				} catch (Exception $e) {
+					echo 'Exception: ' . $e->getMessage();
+					echo 'Error: Unable to execute the query.';
+						
+					return false;
+				}
+			} 
+		
+
+		
+		
+		
+		
+
+		function deleteBook() {
+			try {
+				$db = Database::getInstance();
+				$data = $db->querySql('Delete from books where bookID=' . $this->bookID);
+				return true;
+			} catch (Exception $e) {
+				echo 'Exception: ' . $e;
+				return false;
+			}
 		}
-    
+		
+		// public function updateBook($id)
+		// {
+		// 	$db = Database::getInstance();
+		// 	$db->query("UPDATE books SET BookName = '$this->bookName',
+		// 	 BookAuthor = '$this->bookAuthor',
+		// 	  BookCategory = '$this->bookCategory',
+		// 	   BookPrice = '$this->bookPrice',
+		// 	    PublishDate = '$this->publishDate',
+		// 		 BookCondition = '$this->bookCondition',
+		// 		  BookPic = '$this->bookPic',
+		// 		   InStock = '$this->inStock',
+		// 		    AddedBy = '$this->addedBy'
+		// 			 WHERE BookID = $id");
+		// }
+		function updateDB() {
+			if ($this->isValid()) {
+				$db = Database::getInstance();
+				$data = "UPDATE books SET BookName = '$this->bookName',
+				 BookAuthor = '$this->bookAuthor',
+				  BookCategory = '$this->bookCategory',
+				   BookPrice = '$this->bookPrice',
+				    PublishDate = '$this->publishDate',
+					 BookCondition = '$this->bookCondition',
+					  BookPic = '$this->bookPic',
+					   InStock = '$this->inStock',
+					    AddedBy = '$this->addedBy'
+						 WHERE BookID = this->bookID";
+				$db->querySql($data);
+			}
+		}
 
 
 		public function initWithId($id)
@@ -168,7 +232,7 @@ private $addedBy;
 		}
 
 
-
+		
 	public function isValid()
 	{
 		$errors = true;

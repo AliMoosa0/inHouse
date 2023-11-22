@@ -122,9 +122,6 @@ if (isset($_GET['bookId'])) {
     $books = new Books();
     $row = $books->getBooks();
 
-    
-    // $query = "SELECT * FROM books where inStock = 1 ORDER BY publishDate DESC";
-    // $result = mysqli_query($connection, $query);
     echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
     echo '
     <form action="" method="GET">
@@ -167,6 +164,3 @@ include "footer.html";
 
 </body>
 </html>
-
-
-

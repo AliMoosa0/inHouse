@@ -1,3 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .book-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }      
+
+    .book-details h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    </style>
+</head>
+<body>
 <?php
 include "header.php";
 
@@ -47,29 +71,5 @@ if (isset($_GET['bookId'])) {
 include "footer.html";
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <style>
-        .book-details {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 5px;
-    margin: 20px 0;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }      
-
-    .book-details h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-    </style>
-</head>
-<body>
-    
 </body>
 </html>
