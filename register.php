@@ -50,6 +50,7 @@ body{
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
+
 .show-btn, .container{
   position: absolute;
   top: 50%;
@@ -67,6 +68,11 @@ input[type="checkbox"]{
   padding: 30px;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
+.center {
+  position: relative;
+  top: 27%; /* Adjust this value to increase or decrease the space */
+}
+
 #show:checked ~ .container{
   display: block;
 }
@@ -204,7 +210,7 @@ form .signup-link a:hover{
             </head>
 
             <body>
-                
+                <br><br><br>
            
 
     <div class="center">

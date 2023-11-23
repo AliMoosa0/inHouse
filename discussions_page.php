@@ -100,20 +100,24 @@
         $discBook = $row['discBook'];
         $discBody = $row['discBody'];
         $discBookName = $row['discBookName'];
+        
         echo '
         <div class="container2">
-        <h1>Discussions Page</h1>
-
-        <div class="discussion">
-            <img src="uploads/$discBook" alt="Book 1">
-            <div class="discussion-content">
-                <h2>$discTitle</h2>
-                <p><strong>Book:</strong> $discBookName</p>
-                <p class="article-description" . substr($discBody, 0, 100) . "...</p>"
+            <h1>Discussions Page</h1>
+        
+            <div class="discussion">
+                <img src="uploads/'.$discBook.'" alt="Book 1">
+                <div class="discussion-content">
+                    <h2>'.$discTitle.'</h2>
+                    <p><strong>Book:</strong> '.$discBookName.'</p>
+                    <p class="article-description"><strong>Title: </strong>'.substr(htmlspecialchars($discBody), 0, 100) . "...".'</p>
+                </div>
             </div>
         </div>';
+    }        
 
-             }
+
+
              echo '
 
         <!-- Repeat similar discussion blocks for other discussions -->
