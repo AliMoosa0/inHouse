@@ -1,5 +1,8 @@
 <?php
-include 'header.php';
+ ob_start();
+
+
+include('header.php');
 
 if (isset($_POST['submitted'])) {
    

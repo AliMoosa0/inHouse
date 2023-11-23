@@ -332,6 +332,7 @@ body {
 include('connection.php');  // Adjust the path accordingly
 include('debugging.php');
 include('users.php');
+include('books.php');
 $db = new Connection();
 $connection = $db->getConnection();
 

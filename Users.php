@@ -81,7 +81,13 @@ public function setRole($role)
   function initWithUid($uid) {
         $db = Database::getInstance();
         $data = $db->singleFetch('select * from users where uid = ' . $uid);
-        $this->initWith($data->uid, $data->username, $data->email, $data->password, $data->regDate, $data->role);
+        $this->initWith(
+        $data->uid,
+         $data->username,
+         $data->email,
+         $data->password,
+         $data->regDate,
+         $data->role);
     }
 
     function initWithUserName() {
