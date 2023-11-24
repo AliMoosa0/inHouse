@@ -1,28 +1,27 @@
 <?php
 
 include 'header.php'; 
-echo $_SESSION['uid'] . empty($_SESSION['uid']);
-echo"<br>";
-echo $_POST['name'];
-echo"<br>";
-echo $_POST['auth'];
-echo"<br>";
-echo $_POST['cat'];
-echo"<br>";
-echo $_POST['publish_date'];
-echo"<br>";
-echo $imgFile;
-echo"<br>";
-echo $_POST['price'];
-echo"<br>";
-echo $_POST['condition'];
-echo"<br>";
-
-foreach ($_FILES as $file) {
-echo $file['name'];
+// echo $_SESSION['uid'] . empty($_SESSION['uid']);
+// echo"<br>";
+// echo $_POST['name'];
+// echo"<br>";
+// echo $_POST['auth'];
+// echo"<br>";
+// echo $_POST['cat'];
+// echo"<br>";
+// echo $_POST['publish_date'];
+// echo"<br>";
+// echo $imgFile;
+// echo"<br>";
+// echo $_POST['price'];
+// echo"<br>";
+// echo $_POST['condition'];
+// echo"<br>";
+// foreach ($_FILES as $file) {
+// echo $file['name'];
 // echo "<img src='uploads/" . $file['name'] . "' />";
-}
-echo $_FILES['picture'];
+// }
+// echo $_FILES['picture'];
 function uploadImg()
     {
         
