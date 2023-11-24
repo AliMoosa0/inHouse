@@ -163,7 +163,7 @@ public function setRole($role)
     function deleteUser() {
         try {
             $db = Database::getInstance();
-            $data = $db->querySQL('delete from users where uid = ' . $this->uid);
+             $db->querySQL('delete from users where uid = ' . $this->uid);
             return true;
         } catch (Exception $ex) {
             echo 'exception: ' . $ex;
