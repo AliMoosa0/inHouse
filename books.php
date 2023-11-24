@@ -168,7 +168,7 @@ private $addedBy;
 						
 					return false;
 				}
-			} 
+		} 
 		
 
 		
@@ -179,7 +179,7 @@ private $addedBy;
 		function deleteBook() {
 			try {
 				$db = Database::getInstance();
-				$data = $db->querySql('Delete from books where bookID=' . $this->bookID);
+				$db->querySql('Delete from books where bookID=' . $this->bookID);
 				return true;
 			} catch (Exception $e) {
 				echo 'Exception: ' . $e;
@@ -204,7 +204,8 @@ private $addedBy;
 		function updateDB() {
 			if ($this->isValid()) {
 				$db = Database::getInstance();
-				$data = "UPDATE books SET BookName = '$this->bookName',
+				$data = "UPDATE books SET 
+				BookName = '$this->bookName',
 				 BookAuthor = '$this->bookAuthor',
 				  BookCategory = '$this->bookCategory',
 				   BookPrice = '$this->bookPrice',

@@ -5,18 +5,18 @@
  */
 include 'header.php';
 
-$article_id = 0;
+$bookID = 0;
 
-if (isset($_GET['article_id'])) {
-    $article_id = $_GET['article_id'];
-} elseif (isset($_POST['article_id'])) {
-    $article_id = $_POST['article_id'];
+if (isset($_GET['bookID'])) {
+    $bookID = $_GET['bookID'];
+} elseif (isset($_POST['bookID'])) {
+    $bookID = $_POST['bookID'];
 }
 
 //echo $article_id;
 
-$article = new Articles();
-$article->initWithId($article_id);
+$book = new Books();
+$book->initWithId($bookID);
 ?>
 
 <style>
@@ -62,24 +62,16 @@ if (isset($_POST['submit'])) {
 
     //test the value of the radio button       
     if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
-        $article->setArticleID($article_id);
+        $book->setBookID($bookID);
 
-        //delete related media
-        $media = new Media();
-        $media->setArticleId($article_id);
-        $media->deleteMedia();
-
-        //delete related downloads
-        $download = new Downloads();
-        $download->setArticleId($article_id);
-        $download->deleteDownload();
+        
 
         //delete article 
-        $article->deleteArticle();
-        $deleted = "Article deleted successfully";
+        $book->deleteBook();
+        $deleted = "Book deleted successfully";
         
     } else {
-        $notDeleted = "Article deletion not confirmed";
+        $notDeleted = "Book deletion not confirmed";
     }
 }
 ?>
@@ -100,8 +92,8 @@ if (isset($_POST['submit'])) {
             <p style="color: red;"><?php echo $notDeleted; ?></p>
         <?php endif; ?>
         <br />
-        <h2 class="form-title">Delete News Article</h2>
-        <h2>Title: <?php echo $article->getTitle(); ?></h2>
+        <h2 class="form-title">Delete Book</h2>
+        <h2>Title: <?php echo $book->getBookName(); ?></h2>
         <p>Are you sure you want to delete this article? <br/><br/>
             <label class="form-radio">
                 <input type="radio" name="sure" value="Yes" /> Yes
@@ -110,7 +102,7 @@ if (isset($_POST['submit'])) {
                 <input type="radio" name="sure" value="No" /> No
             </label>
         </p>
-        <input type="hidden" name="id" value="<?php echo $article_id; ?>"/>
+        <input type="hidden" name="id" value="<?php echo $bookID; ?>"/>
         <p><input type="submit" name="submit" value="Delete" class="form-submit" /></p>
 
     </form>
