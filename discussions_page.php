@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discussions Page</title>
-  
+
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            
+
         }
 
         header {
-            
+
             color: #fff;
             padding: 10px 0;
         }
@@ -87,8 +88,9 @@
         }
     </style>
 </head>
+
 <body>
-    <?php include "header.php"; 
+    <?php include "header.php";
 
     $query = "SELECT * FROM discussions ORDER BY publishDate DESC";
     $result = mysqli_query($connection, $query);
@@ -100,25 +102,25 @@
         $discBook = $row['discBook'];
         $discBody = $row['discBody'];
         $discBookName = $row['discBookName'];
-        
+
         echo '
         <div class="container2">
             <h1>Discussions Page</h1>
         
             <div class="discussion">
-                <img src="uploads/'.$discBook.'" alt="Book 1">
+                <img src="uploads/' . $discBook . '" alt="Book 1">
                 <div class="discussion-content">
-                    <h2>'.$discTitle.'</h2>
-                    <p><strong>Book:</strong> '.$discBookName.'</p>
-                    <p class="article-description"><strong>Title: </strong>'.substr(htmlspecialchars($discBody), 0, 100) . "...".'</p>
+                    <h2>' . $discTitle . '</h2>
+                    <p><strong>Book:</strong> ' . $discBookName . '</p>
+                    <p class="article-description"><strong>Title: </strong>' . substr(htmlspecialchars($discBody), 0, 100) . "..." . '</p>
                 </div>
             </div>
         </div>';
-    }        
+    }
 
 
 
-             echo '
+    echo '
 
         <!-- Repeat similar discussion blocks for other discussions -->
 
@@ -130,12 +132,13 @@
                 </div>
             </div>
             
-            </div>'; 
+            </div>';
     ?>
-  
+
 
     <footer>
         <?php include "footer.php"; ?>
     </footer>
 </body>
+
 </html>

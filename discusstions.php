@@ -1,17 +1,19 @@
 <?php
 
-class Discussions{
-private $discussionID;
-private $discussionTitle;
-private $discussionBody;
-private $discussionBooks;
-private $voteUps;
-private $createdBy;
+class Discussions
+{
+	private $discussionID;
+	private $discussionTitle;
+	private $discussionBody;
+	private $discussionBooks;
+	private $voteUps;
+	private $createdBy;
 
 
 
 
-	public function __constructor($discussionID, $discussionTitle, $discussionBody, $discussionBooks, $voteUps, $createdBy) {
+	public function __constructor($discussionID, $discussionTitle, $discussionBody, $discussionBooks, $voteUps, $createdBy)
+	{
 
 		$this->discussionID = $discussionID;
 		$this->discussionTitle = $discussionTitle;
@@ -21,51 +23,63 @@ private $createdBy;
 		$this->createdBy = $createdBy;
 	}
 
-	public function getDiscussionID() {
+	public function getDiscussionID()
+	{
 		return $this->discussionID;
 	}
 
-	public function setDiscussionID($value) {
+	public function setDiscussionID($value)
+	{
 		$this->discussionID = $value;
 	}
 
-	public function getDiscussionTitle() {
+	public function getDiscussionTitle()
+	{
 		return $this->discussionTitle;
 	}
 
-	public function setDiscussionTitle($value) {
+	public function setDiscussionTitle($value)
+	{
 		$this->discussionTitle = $value;
 	}
 
-	public function getDiscussionBody() {
+	public function getDiscussionBody()
+	{
 		return $this->discussionBody;
 	}
 
-	public function setDiscussionBody($value) {
+	public function setDiscussionBody($value)
+	{
 		$this->discussionBody = $value;
 	}
 
-	public function getDiscussionBooks() {
+	public function getDiscussionBooks()
+	{
 		return $this->discussionBooks;
 	}
 
-	public function setDiscussionBooks($value) {
+	public function setDiscussionBooks($value)
+	{
 		$this->discussionBooks = $value;
 	}
 
-	public function getVoteUps() {
+	public function getVoteUps()
+	{
 		return $this->voteUps;
 	}
 
-	public function setVoteUps($value) {
+	public function setVoteUps($value)
+	{
 		$this->voteUps = $value;
 	}
 
-	public function getCreatedBy() {
+	public function getCreatedBy()
+	{
 		return $this->createdBy;
 	}
 
-	public function setCreatedBy($value) {
+	public function setCreatedBy($value)
+	{
 		$this->createdBy = $value;
 	}
 }

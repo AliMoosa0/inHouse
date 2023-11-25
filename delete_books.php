@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
 } elseif (isset($_POST['id'])) {
     $bookID = $_POST['id'];
 }
-echo $bookID;
+// echo $bookID;
 
 $book = new Books();
 $book->initWithId($bookID);
@@ -60,9 +60,11 @@ if (isset($_POST['submit'])) {
     if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
         $book->setBookID($bookID);
         //delete article 
-        if($book->deleteBook()){$deleted = "Book deleted successfully";}
-        
-        
+        if ($book->deleteBook()) {
+            $deleted = "Book deleted successfully";
+        }
+
+
     } else {
         $notDeleted = "Book deletion not confirmed";
     }
@@ -73,21 +75,29 @@ if (isset($_POST['submit'])) {
 
 
     <form method="post" class="form-container">
-<?php if (isset($error)): ?>
-            <p style="color: red;"><?php echo $error; ?></p>
+        <?php if (isset($error)): ?>
+            <p style="color: red;">
+                <?php echo $error; ?>
+            </p>
         <?php endif; ?>
 
         <?php if (isset($deleted)): ?>
-            <p style="color: green;"><?php echo $deleted; ?></p>
+            <p style="color: green;">
+                <?php echo $deleted; ?>
+            </p>
         <?php endif; ?>
 
         <?php if (isset($notDeleted)): ?>
-            <p style="color: red;"><?php echo $notDeleted; ?></p>
+            <p style="color: red;">
+                <?php echo $notDeleted; ?>
+            </p>
         <?php endif; ?>
         <br />
         <h2 class="form-title">Delete Book</h2>
-        <h2>Title: <?php echo $book->getBookName(); ?></h2>
-        <p>Are you sure you want to delete this article? <br/><br/>
+        <h2>Title:
+            <?php echo $book->getBookName(); ?>
+        </h2>
+        <p>Are you sure you want to delete this article? <br /><br />
             <label class="form-radio">
                 <input type="radio" name="sure" value="Yes" /> Yes
             </label>
@@ -95,10 +105,9 @@ if (isset($_POST['submit'])) {
                 <input type="radio" name="sure" value="No" /> No
             </label>
         </p>
-        <input type="hidden" name="id" value="<?php echo $bookID; ?>"/>
+        <input type="hidden" name="id" value="<?php echo $bookID; ?>" />
         <p><input type="submit" name="submit" value="Delete" class="form-submit" /></p>
 
     </form>
 
 </div>
-
