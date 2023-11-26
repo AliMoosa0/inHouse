@@ -246,11 +246,14 @@ class Books
                 InStock = '$this->inStock',
                 AddedBy = '$this->addedBy'
              WHERE BookID = '$this->bookID'";
-
+	try {
 		$db->querySQL($data);
 		return true;
+	}catch (Exception $e) {
+		echo 'Exception: ' . $e;
+		return false;
 	}
-
+	}
 
 	public function getBookPicWithID($id)
 	{
