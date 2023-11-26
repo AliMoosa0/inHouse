@@ -92,53 +92,67 @@
 <body>
     <?php include "header.php";
 
-    $query = "SELECT * FROM discussions ORDER BY publishDate DESC";
-    $result = mysqli_query($connection, $query);
-
-    echo "<div class='books'>";
-    while ($row = mysqli_fetch_assoc($result)) {
-        $diskIDId = $row['discID'];
-        $discTitle = $row['discTitle'];
-        $discBook = $row['discBook'];
-        $discBody = $row['discBody'];
-        $discBookName = $row['discBookName'];
-
-        echo '
-        <div class="container2">
-            <h1>Discussions Page</h1>
-        
-            <div class="discussion">
-                <img src="uploads/' . $discBook . '" alt="Book 1">
-                <div class="discussion-content">
-                    <h2>' . $discTitle . '</h2>
-                    <p><strong>Book:</strong> ' . $discBookName . '</p>
-                    <p class="article-description"><strong>Title: </strong>' . substr(htmlspecialchars($discBody), 0, 100) . "..." . '</p>
-                </div>
-            </div>
-        </div>';
-    }
-
-
-
     echo '
 
-        <!-- Repeat similar discussion blocks for other discussions -->
+     <a href="addDisc.php">
+     <button>Add a Book</button>
+      </a>
 
-        <div class="pagination">
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <!-- Add more pagination links as needed -->
-                </div>
+
+     ';
+
+    $disc = new Discussions();
+    $row = $disc->getAllDisc();
+    ?>
+    <div class="container2">
+        <h1>Discussions Page</h1>
+        <?php
+        echo "<div class='books'>";
+        for ($i = 0; $i < count($row); $i++) {
+            echo '
+        
+            <div class="discussion">
+                <img src="uploads/' . $row[$i]->discBookPic . '" alt="Book 1">
+                <div class="discussion-content">
+                    <h2>' . $row[$i]->discTitle . '</h2>
+                    <p><strong>Book:</strong> ' . $row[$i]->discBookName . '</p>
+                    <p class="article-description"><strong>Title: </strong>' . substr($row[$i]->discBody, 0, 100) . "..." . '</p>
+                    </div>
             </div>
-            
-            </div>';
+       
+    ';
+        }
+        ?>
+    </div>
+
+    <?php
+    echo '
+
+    <!-- Repeat similar discussion blocks for other discussions -->
+
+    <div class="pagination">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <!-- Add more pagination links as needed -->
+    </div>
+    </div>
+
+    </div>';
     ?>
 
 
-    <footer>
-        <?php include "footer.php"; ?>
-    </footer>
+
+    <?php include "footer.php"; ?>
+
 </body>
 
 </html>
+
+
+
+
+
+
+
+<body>

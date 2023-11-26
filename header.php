@@ -27,6 +27,7 @@ session_start();
           <li><a href="contactUs.php">Contact Us</a></li>
           <li><a href="discussions_page.php">discussions</a></li>
           <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
+          <li><a href="admin_dashboard.php">Admin Panel</a></li>
           <div class="animation start-home"></div>
         </ul>
 
@@ -366,6 +367,7 @@ include('connection.php');  // Adjust the path accordingly
 include('debugging.php');
 include('users.php');
 include('books.php');
+include('discusstions.php');
 $db = new Connection();
 $connection = $db->getConnection();
 

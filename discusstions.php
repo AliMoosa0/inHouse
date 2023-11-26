@@ -1,66 +1,92 @@
 <?php
-
 class Discussions
 {
-	private $discussionID;
-	private $discussionTitle;
-	private $discussionBody;
-	private $discussionBooks;
+	private $discID;
+	private $discTitle;
+	private $discBookName;
+	private $discBookPic;
+	private $discBody;
 	private $voteUps;
 	private $createdBy;
-
-
-
-
-	public function __constructor($discussionID, $discussionTitle, $discussionBody, $discussionBooks, $voteUps, $createdBy)
+	private $publishDate;
+	// Constructor 
+	public function __construct()
 	{
+		$this->discID = null;
+		$this->discTitle = null;
+		$this->discBookName = null;
+		$this->discBookPic = null;
+		$this->discBody = null;
+		$this->voteUps = null;
+		$this->createdBy = null;
+		$this->publishDate = null;
+	}
 
-		$this->discussionID = $discussionID;
-		$this->discussionTitle = $discussionTitle;
-		$this->discussionBody = $discussionBody;
-		$this->discussionBooks = $discussionBooks;
+	// Setters
+	public function setDiscID($discID)
+	{
+		$this->discID = $discID;
+	}
+
+	public function setDiscTitle($discTitle)
+	{
+		$this->discTitle = $discTitle;
+	}
+
+	public function setDiscBookName($discBookName)
+	{
+		$this->discBookName = $discBookName;
+	}
+
+	public function setDiscBookPic($discBookPic)
+	{
+		$this->discBookPic = $discBookPic;
+	}
+
+	public function setDiscBody($discBody)
+	{
+		$this->discBody = $discBody;
+	}
+
+	public function setVoteUps($voteUps)
+	{
 		$this->voteUps = $voteUps;
+	}
+
+	public function setCreatedBy($createdBy)
+	{
 		$this->createdBy = $createdBy;
 	}
 
-	public function getDiscussionID()
+	public function setPublishDate($publishDate)
 	{
-		return $this->discussionID;
+		$this->publishDate = $publishDate;
 	}
 
-	public function setDiscussionID($value)
+	// Getters
+	public function getDiscID()
 	{
-		$this->discussionID = $value;
+		return $this->discID;
 	}
 
-	public function getDiscussionTitle()
+	public function getDiscTitle()
 	{
-		return $this->discussionTitle;
+		return $this->discTitle;
 	}
 
-	public function setDiscussionTitle($value)
+	public function getDiscBookName()
 	{
-		$this->discussionTitle = $value;
+		return $this->discBookName;
 	}
 
-	public function getDiscussionBody()
+	public function getDiscBookPic()
 	{
-		return $this->discussionBody;
+		return $this->discBookPic;
 	}
 
-	public function setDiscussionBody($value)
+	public function getDiscBody()
 	{
-		$this->discussionBody = $value;
-	}
-
-	public function getDiscussionBooks()
-	{
-		return $this->discussionBooks;
-	}
-
-	public function setDiscussionBooks($value)
-	{
-		$this->discussionBooks = $value;
+		return $this->discBody;
 	}
 
 	public function getVoteUps()
@@ -68,18 +94,43 @@ class Discussions
 		return $this->voteUps;
 	}
 
-	public function setVoteUps($value)
-	{
-		$this->voteUps = $value;
-	}
-
 	public function getCreatedBy()
 	{
 		return $this->createdBy;
 	}
 
-	public function setCreatedBy($value)
+	public function getPublishDate()
 	{
-		$this->createdBy = $value;
+		return $this->publishDate;
 	}
+
+
+
+	public function getAllDisc()
+	{
+		$db = Database::getInstance();
+		$data = $db->multiFetch('SELECT * FROM discussions ORDER BY publishDate DESC');
+		return $data;
+	}
+	public function addDisc()
+	{
+		try {
+			$db = Database::getInstance();
+			$query = "INSERT INTO discussions (discID, discTitle, discBookName, discBookPic, discBody, voteUps, createdBy, publishDate)
+			 VALUES (null, '$this->discTitle', '$this->discBookName', '$this->discBookPic', '$this->discBody', '$this->voteUps', '$this->createdBy', NOW())";
+			$db->querySQL($query);
+			return true;
+		} catch (Exception $e) {
+			echo 'Exception: ' . $e->getMessage();
+			echo 'Error: Unable to execute the query.';
+
+			return false;
+		}
+
+	}
+
+
+
+
+
 }

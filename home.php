@@ -131,7 +131,14 @@
         <button type="submit">Search</button>
     </form>
     ';
+        echo '
 
+        <a href="addBooks.php">
+        <button>Add a Book</button>
+         </a>
+
+
+        ';
 
 
         echo "</div>";
