@@ -155,7 +155,20 @@ class Books
 	{
 		$db = Database::getInstance();
 		$data = $db->singleFetch("SELECT * FROM books WHERE BookID = $id");
-		$this->initWith($data->BookID, $data->BookName, $data->BookAuthor, $data->BookCategory, $data->BookPrice, $data->PublishDate, $data->BookCondition, $data->BookPic, $data->InStock, $data->AddedBy);
+
+		$this->initWith(
+			$data->bookID,
+			$data->bookName,
+			$data->bookAuthor,
+			$data->bookCategory,
+			$data->bookPrice,
+			$data->publishDate,
+			$data->bookCondition,
+			$data->bookPic,
+			$data->inStock,
+			$data->addedBy
+		);
+		return $data;
 	}
 
 	public function getUserNameWithID($id)
@@ -220,22 +233,25 @@ class Books
 
 	function updateDB()
 	{
-		if ($this->isValid()) {
-			$db = Database::getInstance();
-			$data = "UPDATE books SET 
-				BookName = '$this->bookName',
-				 BookAuthor = '$this->bookAuthor',
-				  BookCategory = '$this->bookCategory',
-				   BookPrice = '$this->bookPrice',
-				    PublishDate = '$this->publishDate',
-					 BookCondition = '$this->bookCondition',
-					  BookPic = '$this->bookPic',
-			  		   InStock = '$this->inStock',
-					    AddedBy = '$this->addedBy'
-						 WHERE BookID = this->bookID";
-			$db->querySql($data);
-		}
+		$db = Database::getInstance();
+		$data = "UPDATE books SET 
+				bookID = '$this->bookID',
+                BookName = '$this->bookName',
+                BookAuthor = '$this->bookAuthor',
+                BookCategory = '$this->bookCategory',
+                BookPrice = '$this->bookPrice',
+                PublishDate = '$this->publishDate',
+                BookCondition = '$this->bookCondition',
+                BookPic = '$this->bookPic',
+                InStock = '$this->inStock',
+                AddedBy = '$this->addedBy'
+             WHERE BookID = '$this->bookID'";
+
+		$db->querySQL($data);
+		return true;
 	}
+
+
 	public function getBookPicWithID($id)
 	{
 		$db = Database::getInstance();
