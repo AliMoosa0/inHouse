@@ -3,11 +3,8 @@
 include "header.php";
 
 
-foreach ($_FILES as $file) {
-    echo $file['name'];
-    echo "<img src='uploads/" . $file['name'] . "' />";
-}
-echo $_FILES['picture']; {
+function uploadImg()
+{
 
     if (isset($_FILES['picture'])) {
         $name = "uploads//" . $_FILES['picture']['name'];
@@ -19,11 +16,18 @@ echo $_FILES['picture']; {
             return $_FILES['picture']['name'];
         }
     }
+    echo $_FILES['picture']['name'];
     return $_FILES['picture']['name'];
 }
 
 
+
+
 if (isset($_POST['submitted'])) {
+
+
+
+
     $Disc = new Discussions();
     $Disc->setDiscTitle($_POST['discTitle']);
     $Disc->setDiscBookName($_POST['discBookName']);
@@ -32,7 +36,6 @@ if (isset($_POST['submitted'])) {
     $Disc->setDiscBookPic($imgFile);
     $Disc->setCreatedBy($_SESSION['uid']);
     $Disc->setVoteUps("0");
-
     if ($Disc->addDisc()) {
         echo '<p style="color:green"><b>Added Successfully</b></p>';
     } else {
@@ -44,8 +47,6 @@ if (isset($_POST['submitted'])) {
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -118,7 +119,7 @@ if (isset($_POST['submitted'])) {
 <body>
     <div class="form-container">
         <h1>Add Discussion</h1>
-        <form action="addDisc.php" method="POST">
+        <form action="addDisc.php" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <label for="discTitle">Discussion Title:</label>
                 <input type="text" id="discTitle" name="discTitle" required>
