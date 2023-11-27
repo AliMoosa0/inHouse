@@ -3,6 +3,15 @@
 include "header.php";
 
 
+$discID = 0;
+
+if (isset($_GET['id'])) {
+    $discID = $_GET['id'];
+} elseif (isset($_POST['id'])) {
+    $discID = $_POST['id'];
+}
+// echo $discID;
+
 function uploadImg()
 {
 
@@ -16,11 +25,13 @@ function uploadImg()
             return $_FILES['picture']['name'];
         }
     }
-    echo $_FILES['picture']['name'];
     return $_FILES['picture']['name'];
 }
 
 
+$Disc = new Discussions();
+$Disc->getDiscWithID($discID);
+$discVoteUps = $Disc->getVoteUpsWithID($discID);
 
 
 if (isset($_POST['submitted'])) {
@@ -32,9 +43,12 @@ if (isset($_POST['submitted'])) {
     $imgFile = uploadImg();
     $Disc->setDiscBookPic($imgFile);
     $Disc->setCreatedBy($_SESSION['uid']);
-    $Disc->setVoteUps("0");
-    if ($Disc->addDisc()) {
-        echo '<p style="color:green"><b>Added Successfully</b></p>';
+    $Disc->setVoteUps($discVoteUps);
+    $Disc->setDiscID($discID);
+
+
+    if ($Disc->updateDB()) {
+        echo '<p style="color:green"><b>edited Successfully</b></p>';
     } else {
         echo '<p class="error"> Not Successfull </p>';
     }
@@ -47,7 +61,7 @@ if (isset($_POST['submitted'])) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Add Discussion</title>
+    <title>Edit Discussion</title>
     <style>
         /* Basic Reset */
         * {
@@ -113,24 +127,32 @@ if (isset($_POST['submitted'])) {
     </style>
 </head>
 
+
+<?php
+$listDiscInfo = new Discussions();
+$listDiscInfo->getDiscWithID($discID);
+?>
+
 <body>
     <div class="form-container">
-        <h1>Add Discussion</h1>
-        <form action="addDisc.php" method="POST" enctype="multipart/form-data">
+        <h1>Edit Discussion</h1>
+        <form action="editDisc.php" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <label for="discTitle">Discussion Title:</label>
-                <input type="text" id="discTitle" name="discTitle" required>
+                <input type="text" id="discTitle" name="discTitle" value="<?php echo $listDiscInfo->getDiscTitle() ?>"
+                    required>
 
                 <label for="discBookName">Book Name:</label>
-                <input type="text" id="discBookName" name="discBookName" required>
+                <input type="text" id="discBookName" name="discBookName"
+                    value="<?php echo $listDiscInfo->getDiscBookName() ?>" required>
 
                 <label><b>Book picture </b></label>
                 <input type="file" name="picture" /><br>
 
                 <label for="discBody">Discussion Body:</label>
-                <textarea id="discBody" name="discBody" required></textarea>
+                <textarea id="discBody" name="discBody" required><?php echo $listDiscInfo->getDiscBody() ?></textarea>
                 <br /><br />
-                <input type="submit" class="button" value="Add" />
+                <input type="submit" class="button" value="Edit" />
                 </p>
                 <input type="hidden" name="submitted" value="1" />
 

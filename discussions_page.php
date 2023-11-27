@@ -95,7 +95,7 @@
     echo '
 
      <a href="addDisc.php">
-     <button>Add a Book</button>
+     <button>Add a Discusstion</button>
       </a>
 
 
@@ -117,6 +117,10 @@
                     <h2>' . $row[$i]->discTitle . '</h2>
                     <p><strong>Book:</strong> ' . $row[$i]->discBookName . '</p>
                     <p class="article-description"><strong>Title: </strong>' . substr($row[$i]->discBody, 0, 100) . "..." . '</p>
+                    <br>
+                        <a href="editDisc.php?id=' . $row[$i]->discID . '"><button>edit Book</button></a>
+                        <br>
+                        <a href="deleteDisc.php?id=' . $row[$i]->discID . '"><button>Delete Book</button></a>
                     </div>
             </div>
        

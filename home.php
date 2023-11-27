@@ -152,11 +152,11 @@
             echo "<h2>" . $row[$i]->bookName . "</h2>";
             echo "<p>Price: " . $row[$i]->bookPrice . "</p>";
             echo "<p>Publish Date: " . $row[$i]->publishDate . "</p>";
-            echo "<a href='viewBookDetails.php?bookId=" . $row[$i]->bookID . "'>View Book Details</a>";
+            echo "<a href='viewBookDetails.php?bookId=" . $row[$i]->bookID . "'><button>View details</button></a>";
             echo "<br>";
-            echo "<button>View details</button>";
-            echo '<a href="edit_books.php?id=' . $row[$i]->bookID . '">Edit</a>';
-            echo '<a href="delete_books.php?id=' . $row[$i]->bookID . '">Delete</a>';
+            echo '<a href="edit_books.php?id=' . $row[$i]->bookID . '"><button>edit Book</button></a>';
+            echo "<br>";
+            echo '<a href="delete_books.php?id=' . $row[$i]->bookID . '"><button>Delete Book</button></a>';
             echo "</div>";
             echo "</div>";
 
