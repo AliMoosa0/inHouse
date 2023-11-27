@@ -5,12 +5,14 @@ include "header.php";
 
 $discID = 0;
 
-if (isset($_GET['id'])) {
-    $discID = $_GET['id'];
-} elseif (isset($_POST['id'])) {
-    $discID = $_POST['id'];
+if (isset($_GET['discid'])) {
+    $discID = $_GET['discid'];
+} elseif (isset($_POST['discid'])) {
+    $discID = $_POST['discid'];
+    //  echo $discID;
 }
-// echo $discID;
+
+echo '<br>';
 
 function uploadImg()
 {
@@ -29,21 +31,20 @@ function uploadImg()
 }
 
 
-$Disc = new Discussions();
-$Disc->getDiscWithID($discID);
-$discVoteUps = $Disc->getVoteUpsWithID($discID);
 
 
 if (isset($_POST['submitted'])) {
 
+
     $Disc = new Discussions();
+    $discVoteUps = $Disc->getVoteUpsWithID($discID);
     $Disc->setDiscTitle($_POST['discTitle']);
     $Disc->setDiscBookName($_POST['discBookName']);
     $Disc->setDiscBody($_POST['discBody']);
     $imgFile = uploadImg();
     $Disc->setDiscBookPic($imgFile);
     $Disc->setCreatedBy($_SESSION['uid']);
-    $Disc->setVoteUps($discVoteUps);
+    $Disc->setVoteUps('0');
     $Disc->setDiscID($discID);
 
 
@@ -136,7 +137,7 @@ $listDiscInfo->getDiscWithID($discID);
 <body>
     <div class="form-container">
         <h1>Edit Discussion</h1>
-        <form action="editDisc.php" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <label for="discTitle">Discussion Title:</label>
                 <input type="text" id="discTitle" name="discTitle" value="<?php echo $listDiscInfo->getDiscTitle() ?>"

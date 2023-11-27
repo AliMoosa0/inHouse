@@ -117,7 +117,13 @@ class Discussions
 		try {
 			$db = Database::getInstance();
 			$query = "INSERT INTO discussions (discID, discTitle, discBookName, discBookPic, discBody, voteUps, createdBy, publishDate)
-			 VALUES (null, '$this->discTitle', '$this->discBookName', '$this->discBookPic', '$this->discBody', '$this->voteUps', '$this->createdBy', NOW())";
+			 VALUES (null, '$this->discTitle',
+			  '$this->discBookName', 
+			  '$this->discBookPic',
+			   '$this->discBody', 
+			   '$this->voteUps',
+			    '$this->createdBy',
+				 NOW())";
 			$db->querySQL($query);
 			return true;
 		} catch (Exception $e) {
@@ -170,13 +176,13 @@ class Discussions
 			    discBody = '$this->discBody',
 				 voteUps = '$this->voteUps',
 				  createdBy = '$this->createdBy',
-				   publishDate = '$this->publishDate'
+				   publishDate = now()
 				    WHERE discID = $this->discID";
 			$db->querySQL($query);
 			return true;
 		} catch (Exception $e) {
 			echo 'Exception: ' . $e->getMessage();
-			echo 'Error: Unable to execute the query.';
+			echo ' Error: Unable to execute the query.';
 
 			return false;
 		}

@@ -118,9 +118,9 @@
                     <p><strong>Book:</strong> ' . $row[$i]->discBookName . '</p>
                     <p class="article-description"><strong>Title: </strong>' . substr($row[$i]->discBody, 0, 100) . "..." . '</p>
                     <br>
-                        <a href="editDisc.php?id=' . $row[$i]->discID . '"><button>edit Book</button></a>
+                        <a href="editDisc.php?discid=' . $row[$i]->discID . '"><button>edit Discussion</button></a>
                         <br>
-                        <a href="deleteDisc.php?id=' . $row[$i]->discID . '"><button>Delete Book</button></a>
+                        <a href="deleteDisc.php?discid=' . $row[$i]->discID . '"><button>Delete Discussion</button></a>
                     </div>
             </div>
        
