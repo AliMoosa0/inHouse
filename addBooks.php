@@ -1,43 +1,34 @@
 <?php
 
 include 'header.php';
-// echo $_SESSION['uid'] . empty($_SESSION['uid']);
-// echo"<br>";
-// echo $_POST['name'];
-// echo"<br>";
-// echo $_POST['auth'];
-// echo"<br>";
-// echo $_POST['cat'];
-// echo"<br>";
-// echo $_POST['publish_date'];
-// echo"<br>";
-// echo $imgFile;
-// echo"<br>";
-// echo $_POST['price'];
-// echo"<br>";
-// echo $_POST['condition'];
-// echo"<br>";
 
-// foreach ($_FILES as $file) {
-// echo $file['name'];
-// echo "<img src='uploads/" . $file['name'] . "' />";
-// }
-// echo $_FILES['picture'];
-function uploadImg()
-{
-
-    if (isset($_FILES['picture'])) {
-        $name = "uploads//" . $_FILES['picture']['name'];
-        move_uploaded_file($_FILES['picture']['tmp_name'], $name);
-        if ($_FILES['picture']['error'] > 0) {
-            echo "<p>There was an error</p>";
-            echo $_FILES['picture']['error'];
-        } else {
-            return $_FILES['picture']['name'];
-        }
+foreach ($_FILES as $file) {
+    echo $file['name'];
+    echo "<img src='uploads/" . $file['name'] . "' />";
     }
-    return $_FILES['picture']['name'];
-}
+    echo $_FILES['picture'];
+
+
+    function uploadImg()
+    {
+
+        if (isset($_FILES['picture']) )
+        {
+            $name = "uploads//".$_FILES['picture']['name'];
+            move_uploaded_file($_FILES['picture']['tmp_name'], $name); 
+            if($_FILES['picture']['error'] > 0)
+            {
+                echo "<p>There was an error</p>";
+                echo $_FILES['picture']['error'];
+            }
+            else
+            {
+                return $_FILES['picture']['name'];
+            }
+        }
+        return $_FILES['picture']['name'];
+    }
+
 
 
 if (isset($_POST['submitted'])) {
@@ -87,13 +78,13 @@ if (isset($_POST['submitted'])) {
                                         <b>Category </b><br>
                                         <select name="cat">
                                             <option value="ICT">ICT</option>
-                                            <option value="WEBMEDIA">Web Media</option>
-                                            <option value="ENGINEERING">Engineering</option>
-                                            <option value="LOGISTiCS">Logistercs</option>
-                                            <option value="BUSINESS">business</option>
-                                            <option value="VISUALDESIGN">Visual Design</option>
-                                            <option value="ANIME">Anime</option>
-                                            <option value="others">Others</option>
+                                            <option value="Web Media">Web Media</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Logistercs">Logistercs</option>
+                                            <option value="business">business</option>
+                                            <option value="Visual Design">Visual Design</option>
+                                            <option value="Anime">Anime</option>
+                                            <option value="Others">Others</option>
                                         </select>
                                         <br>
 

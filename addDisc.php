@@ -1,8 +1,13 @@
 <?php
 
 include "header.php";
-function uploadImg()
-{
+
+
+foreach ($_FILES as $file) {
+    echo $file['name'];
+    echo "<img src='uploads/" . $file['name'] . "' />";
+}
+echo $_FILES['picture']; {
 
     if (isset($_FILES['picture'])) {
         $name = "uploads//" . $_FILES['picture']['name'];
@@ -114,23 +119,24 @@ if (isset($_POST['submitted'])) {
     <div class="form-container">
         <h1>Add Discussion</h1>
         <form action="addDisc.php" method="POST">
-            <label for="discTitle">Discussion Title:</label>
-            <input type="text" id="discTitle" name="discTitle" required>
+            <fieldset>
+                <label for="discTitle">Discussion Title:</label>
+                <input type="text" id="discTitle" name="discTitle" required>
 
-            <label for="discBookName">Book Name:</label>
-            <input type="text" id="discBookName" name="discBookName" required>
+                <label for="discBookName">Book Name:</label>
+                <input type="text" id="discBookName" name="discBookName" required>
 
-            <label><b>Book picture </b></label>
-            <input type="file" name="picture" /><br>
+                <label><b>Book picture </b></label>
+                <input type="file" name="picture" /><br>
 
-            <label for="discBody">Discussion Body:</label>
-            <textarea id="discBody" name="discBody" required></textarea>
-            <br /><br />
-            <input type="submit" class="button" value="Add" />
-            </p>
-            <input type="hidden" name="submitted" value="1" />
+                <label for="discBody">Discussion Body:</label>
+                <textarea id="discBody" name="discBody" required></textarea>
+                <br /><br />
+                <input type="submit" class="button" value="Add" />
+                </p>
+                <input type="hidden" name="submitted" value="1" />
 
-
+            </fieldset>
         </form>
     </div>
 </body>
