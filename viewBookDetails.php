@@ -50,7 +50,7 @@
             echo "<div class='book-details'>";
             echo "<img src='uploads/" . $bookPic . "' alt='Book Cover'>";
             echo "<h2>" . $bookName . "</h2>";
-            echo "<p><strong>ID:</strong> " . $bookId . "</p>";
+            echo "<p><strong>Book Number:</strong> " . $bookId . "</p>";
             echo "<p><strong>Author:</strong> " . $bookAuthor . "</p>";
             echo "<p><strong>Category:</strong> " . $bookCategory . "</p>";
             echo "<p><strong>Price:</strong> " . $bookPrice . "</p>";

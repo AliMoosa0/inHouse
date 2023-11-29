@@ -121,6 +121,8 @@
                         <a href="editDisc.php?discid=' . $row[$i]->discID . '"><button>edit Discussion</button></a>
                         <br>
                         <a href="deleteDisc.php?discid=' . $row[$i]->discID . '"><button>Delete Discussion</button></a>
+                        <br>
+                        <a href="viewDisc.php?discid=' . $row[$i]->discID . '"><button>View Discusstion</button></a>
                     </div>
             </div>
        

@@ -230,7 +230,7 @@ form .signup-link a:hover{
                 </div>
                 <div class="data">
                     <label>Email</label>
-                    <input type="text" id="Email" name="Email" placeholder="Enter your email" autofocus onblur="isValid(this);" required>
+                    <input type="email" id="Email" name="Email" placeholder="Enter your email" autofocus onblur="isValid(this);" required>
                 </div>
                 <div class="data">
                     <label>Password</label>
@@ -245,7 +245,7 @@ form .signup-link a:hover{
                 </div>
                 <div class="btn">
                     <div class="inner"></div>
-                    <button type="submit" name="submitted" >login</button>
+                    <button type="submit" name="submitted" >Register</button>
                     
                 </div>
                 <div class="signup-link">
