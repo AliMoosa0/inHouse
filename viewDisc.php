@@ -72,7 +72,7 @@ if (isset($_GET['discid'])) {
 if ($discID != 0) {
     $disc = new Discussions();
     $discInfo = $disc->getDiscWithID($discID);
-
+    
     if ($discInfo) {
 
         $discName = $discInfo->discTitle;

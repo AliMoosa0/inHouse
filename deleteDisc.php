@@ -5,15 +5,17 @@ include "header.php";
 
 $discID = 0;
 
-if (isset($_GET['id'])) {
-    $discID = $_GET['id'];
-} elseif (isset($_POST['id'])) {
-    $discID = $_POST['id'];
+if (isset($_GET['discid'])) {
+    $discID = $_GET['discid'];
+} elseif (isset($_POST['discid'])) {
+    $discID = $_POST['discid'];
 }
 // echo $discID;
+// die();
+$disc = new Discussions();
+$discInfo = $disc->getDiscWithID($discID);
+// $disc->getDiscTitle();
 
-$Disc = new Discussions();
-$Disc->getDiscWithID($bookID);
 ?>
 
 <style>
@@ -91,12 +93,13 @@ if (isset($_POST['submit'])) {
         <?php if (isset($notDeleted)): ?>
             <p style="color: red;">
                 <?php echo $notDeleted; ?>
+                
             </p>
         <?php endif; ?>
         <br />
         <h2 class="form-title">Delete Discussion</h2>
         <h2>Title:
-            <?php echo $Disc->getDiscTitle(); ?>
+            <?php echo $disc->getDiscTitle(); ?>
         </h2>
         <p>Are you sure you want to delete this Discussion? <br /><br />
             <label class="form-radio">

@@ -131,22 +131,7 @@
         ?>
     </div>
 
-    <?php
-    echo '
-
-    <!-- Repeat similar discussion blocks for other discussions -->
-
-    <div class="pagination">
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <!-- Add more pagination links as needed -->
-    </div>
-    </div>
-
-    </div>';
-    ?>
-
+ 
 
 
     <?php include "footer.php"; ?>
