@@ -239,7 +239,7 @@ if (isset($_POST['likeButton'])) {
             $stmt = mysqli_prepare($connection, $insertQuery);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, 'ii', $userId, $discID);
+                mysqli_stmt_bind_param($stmt, 'ii', $discID, $userId);
                 $insertResult = mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
 
