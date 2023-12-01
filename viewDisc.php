@@ -72,7 +72,7 @@ if (isset($_GET['discid'])) {
 if ($discID != 0) {
     $disc = new Discussions();
     $discInfo = $disc->getDiscWithID($discID);
-    
+
     if ($discInfo) {
 
         $discName = $discInfo->discTitle;
@@ -136,14 +136,17 @@ if (isset($_POST['submit-comment'])) {
     $author = $_SESSION['username'];
     $comment = $_POST['comment'];
 
-
     // Prepare the query using prepared statements
-    $insertQuery = "INSERT INTO comments (cid, commentedBy, discID, uid, comment,createdAT) VALUES (?, ?, ?, NOW())";
+    $insertQuery = "INSERT INTO comments (commentedBy, discID, uid, comment, commentedAT) VALUES (?, ?, ?, ?, NOW())";
     $stmt = mysqli_prepare($connection, $insertQuery);
 
     if ($stmt) {
         // Bind the parameters
-        mysqli_stmt_bind_param($stmt, 'iss', $discID, $author, $comment);
+        mysqli_stmt_bind_param($stmt, 'siss', $author, $discID, $uid, $comment);
+
+        // Assign values to $discID and $uid
+        $discID = $_GET['discid'];
+        $uid = $_SESSION['uid'];
 
         // Execute the statement
         $insertResult = mysqli_stmt_execute($stmt);
@@ -153,17 +156,12 @@ if (isset($_POST['submit-comment'])) {
         } else {
             echo "<p class='error'>Error adding comment: " . mysqli_stmt_error($stmt) . "</p>";
         }
-
-        // Close the statement
-        mysqli_stmt_close($stmt);
-
-        // Refresh the page to show the new comment
-        // header("Location: article.php?article_id=$articleId");
-        // exit();
-    } else {
-        echo "<p class='error'>Error preparing the insert statement: " . mysqli_error($connection) . "</p>";
     }
+
+
 }
+
+
 
 // Display the existing comments for the article
 $commentQuery = "SELECT * FROM comments WHERE discID = $discID ORDER BY 'createdAT' DESC";
@@ -183,11 +181,40 @@ if (mysqli_num_rows($commentResult) > 0) {
         echo "</li>";
     }
 
+
     echo "</ul>";
 } else {
     echo "<p>No comments found for this article.</p>";
 }
 
 echo "</div>";
+?>
+<!-- Inside the discussion div -->
+<div class="discussion">
+    <!-- Other discussion information -->
+    <!-- Like button and counter -->
+    <button class="like-btn">Like</button>
+    <span class="like-counter">0</span>
+</div>
 
-
+<!-- At the end of your HTML body or in a separate script file -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.like-btn').on('click', function () {
+            var discID = <?php echo $discID; ?>; // Get the discussion ID
+            $.ajax({
+                url: 'like_handler.php', // PHP file to handle like requests
+                method: 'POST',
+                data: { discID: discID },
+                success: function (response) {
+                    // Update like counter after successful like/unlike action
+                    $('.like-counter').text(response.likes);
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                }
+            });
+        });
+    });
+</script>
