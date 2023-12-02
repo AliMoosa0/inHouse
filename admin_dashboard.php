@@ -621,12 +621,30 @@
                     <div class="box box1">
                         <i class="uil uil-thumbs-up"></i>
                         <span class="text">Total Likes</span>
-                        <span class="number">50,120</span>
+                        <span class="number">
+                            <?php
+
+                            include "Database.php";
+                            $db = Database::getInstance();
+                            $result = $db->singleFetch("SELECT COUNT(*) AS like_count FROM likes");
+
+                            $likeCount = $result->like_count;
+                            echo $likeCount;
+                            ?>
+                        </span>
                     </div>
                     <div class="box box2">
                         <i class="uil uil-comments"></i>
                         <span class="text">Comments</span>
-                        <span class="number">20,120</span>
+                        <span class="number">
+                            <?php
+
+                            $comresult = $db->singleFetch("SELECT COUNT(*) AS com_count FROM comments");
+
+                            $comlikeCount = $comresult->com_count;
+                            echo $comlikeCount;
+                            ?>
+                        </span>
                     </div>
                     <div class="box box3">
                         <i class="uil uil-share"></i>
