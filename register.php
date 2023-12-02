@@ -53,6 +53,7 @@ body{
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
+
 .show-btn, .container{
   position: absolute;
   top: 50%;
@@ -70,6 +71,11 @@ input[type="checkbox"]{
   padding: 30px;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
+.center {
+  position: relative;
+  top: 27%; /* Adjust this value to increase or decrease the space */
+}
+
 #show:checked ~ .container{
   display: block;
 }
@@ -207,7 +213,7 @@ form .signup-link a:hover{
             </head>
 
             <body>
-                
+                <br><br><br>
            
 
     <div class="center">
@@ -224,7 +230,7 @@ form .signup-link a:hover{
                 </div>
                 <div class="data">
                     <label>Email</label>
-                    <input type="text" id="Email" name="Email" placeholder="Enter your email" autofocus onblur="isValid(this);" required>
+                    <input type="email" id="Email" name="Email" placeholder="Enter your email" autofocus onblur="isValid(this);" required>
                 </div>
                 <div class="data">
                     <label>Password</label>
@@ -239,7 +245,7 @@ form .signup-link a:hover{
                 </div>
                 <div class="btn">
                     <div class="inner"></div>
-                    <button type="submit" name="submitted" >login</button>
+                    <button type="submit" name="submitted" >Register</button>
                     
                 </div>
                 <div class="signup-link">

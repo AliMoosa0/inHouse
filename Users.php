@@ -1,96 +1,100 @@
 <?php
 class Users
 {
-private $uid;
-private $username;
-private $email;
-private $regDate;
-private $password;
-private $role;
+    private $uid;
+    private $username;
+    private $email;
+    private $regDate;
+    private $password;
+    private $role;
 
-function __construct() {
-    $this->uid = null;
-    $this->username = null;
-    $this->email = null;
-    $this->regDate = null;
-    $this->password = null;
-    $this->role = null;
-}
+    function __construct()
+    {
+        $this->uid = null;
+        $this->username = null;
+        $this->email = null;
+        $this->regDate = null;
+        $this->password = null;
+        $this->role = null;
+    }
 
-public function getUid()
-{
-    return $this->uid;
-}
+    public function getUid()
+    {
+        return $this->uid;
+    }
 
-public function setUid($uid)
-{
-    $this->uid = $uid;
-}
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
+    }
 
-public function getUsername()
-{
-    return $this->username;
-}
+    public function getUsername()
+    {
+        return $this->username;
+    }
 
-public function setUsername($username)
-{
-    $this->username = $username;
-}
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
 
-public function getEmail()
-{
-    return $this->email;
-}
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-public function setEmail($email)
-{
-    $this->email = $email;
-}
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
 
-public function getRegDate()
-{
-    return $this->regDate;
-}
+    public function getRegDate()
+    {
+        return $this->regDate;
+    }
 
-public function setRegDate($regDate)
-{
-    $this->regDate = $regDate;
-}
+    public function setRegDate($regDate)
+    {
+        $this->regDate = $regDate;
+    }
 
-public function getPassword()
-{
-    return $this->password;
-}
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
-public function setPassword($password)
-{
-    $this->password = $password;
-}
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
 
-public function getRole()
-{
-    return $this->role;
-}
+    public function getRole()
+    {
+        return $this->role;
+    }
 
-public function setRole($role)
-{
-    $this->role = $role;
-}
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
 
 
-  function initWithUid($uid) {
+    function initWithUid($uid)
+    {
         $db = Database::getInstance();
         $data = $db->singleFetch('select * from users where uid = ' . $uid);
         $this->initWith(
-        $data->uid,
-         $data->username,
-         $data->email,
-         $data->password,
-         $data->regDate,
-         $data->role);
+            $data->uid,
+            $data->username,
+            $data->email,
+            $data->password,
+            $data->regDate,
+            $data->role
+        );
     }
 
-    function initWithUserName() {
+    function initWithUserName()
+    {
         $db = Database::getInstance();
         $data = $db->singleFetch('select * from users where username = \'' . $this->username . '\'');
         if ($data != null) {
@@ -99,7 +103,8 @@ public function setRole($role)
         return true;
     }
 
-    function initWith($uid, $userName, $email, $password, $regDate, $role) {
+    function initWith($uid, $userName, $email, $password, $regDate, $role)
+    {
         $this->uid = $uid;
         $this->username = $userName;
         $this->email = $email;
@@ -108,7 +113,8 @@ public function setRole($role)
         $this->role = $role;
     }
 
-    public function isValid() {
+    public function isValid()
+    {
         $errors = true;
         if (empty($this->username)) {
             $errors = false;
@@ -129,8 +135,9 @@ public function setRole($role)
         return $errors;
     }
 
-    
-    function registerUser() {
+
+    function registerUser()
+    {
         if ($this->isValid()) {
             try {
                 $hashed_pwd = password_hash($this->password, PASSWORD_DEFAULT);
@@ -147,9 +154,10 @@ public function setRole($role)
             return false;
         }
     }
-    
 
-    function updateDB() {
+
+    function updateDB()
+    {
         if ($this->isValid()) {
 
             $db = Database::getInstance();
@@ -160,21 +168,23 @@ public function setRole($role)
         return false;
     }
 
-    function deleteUser() {
+    function deleteUser()
+    {
         try {
             $db = Database::getInstance();
-            $data = $db->querySQL('delete from users where uid = ' . $this->uid);
+            $db->querySQL('delete from users where uid = ' . $this->uid);
             return true;
         } catch (Exception $ex) {
             echo 'exception: ' . $ex;
             return false;
         }
     }
-    function checkUser($username, $password) {
+    function checkUser($username, $password)
+    {
         $db = Database::getInstance();
-    
+
         $userData = $db->singleFetch("SELECT * FROM users WHERE username = '$username'");
-    
+
         if ($userData) {
             $retrieved_pwd = $userData->password;
             if (password_verify($password, $retrieved_pwd)) {
@@ -191,14 +201,15 @@ public function setRole($role)
         }
         return false;
     }
-    
-    function login($username, $password) {
+
+    function login($username, $password)
+    {
         try {
             if ($this->checkUser($username, $password)) {
                 $_SESSION['uid'] = $this->getUid();
                 $_SESSION['username'] = $this->getUsername();
                 $_SESSION['role'] = $this->getRole();
-                
+
                 return true;
             } else {
                 $error = 'Wrong username or password';
@@ -208,13 +219,14 @@ public function setRole($role)
         }
         return false;
     }
-    
-    
 
-    function logout() {
+
+
+    function logout()
+    {
         unset($_SESSION['uid'],
-        $_SESSION['username'],
-        $_SESSION['role']);
+            $_SESSION['username'],
+            $_SESSION['role']);
         session_destroy();
     }
 }

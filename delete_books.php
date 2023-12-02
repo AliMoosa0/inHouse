@@ -1,19 +1,15 @@
 <?php
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
+
 include 'header.php';
 
 $bookID = 0;
 
-if (isset($_GET['bookID'])) {
-    $bookID = $_GET['bookID'];
-} elseif (isset($_POST['bookID'])) {
-    $bookID = $_POST['bookID'];
+if (isset($_GET['id'])) {
+    $bookID = $_GET['id'];
+} elseif (isset($_POST['id'])) {
+    $bookID = $_POST['id'];
 }
-
-//echo $article_id;
+// echo $bookID;
 
 $book = new Books();
 $book->initWithId($bookID);
@@ -63,12 +59,11 @@ if (isset($_POST['submit'])) {
     //test the value of the radio button       
     if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
         $book->setBookID($bookID);
-
-
-
         //delete article 
-        $book->deleteBook();
-        $deleted = "Book deleted successfully";
+        if ($book->deleteBook()) {
+            $deleted = "Book deleted successfully";
+        }
+
 
     } else {
         $notDeleted = "Book deletion not confirmed";

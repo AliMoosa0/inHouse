@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discussions Page</title>
-  
+
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            
+
         }
 
         header {
-            
+
             color: #fff;
             padding: 10px 0;
         }
@@ -87,51 +88,62 @@
         }
     </style>
 </head>
+
 <body>
-    <?php include "header.php"; 
+    <?php include "header.php";
 
-    $query = "SELECT * FROM discussions ORDER BY publishDate DESC";
-    $result = mysqli_query($connection, $query);
+    echo '
 
-    echo "<div class='books'>";
-    while ($row = mysqli_fetch_assoc($result)) {
-        $diskIDId = $row['discID'];
-        $discTitle = $row['discTitle'];
-        $discBook = $row['discBook'];
-        $discBody = $row['discBody'];
-        $discBookName = $row['discBookName'];
-        echo '
-        <div class="container2">
-        <h1>Discussions Page</h1>
+     <a href="addDisc.php">
+     <button>Add a Discusstion</button>
+      </a>
 
-        <div class="discussion">
-            <img src="uploads/$discBook" alt="Book 1">
-            <div class="discussion-content">
-                <h2>$discTitle</h2>
-                <p><strong>Book:</strong> $discBookName</p>
-                <p class="article-description" . substr($discBody, 0, 100) . "...</p>"
-            </div>
-        </div>';
 
-             }
-             echo '
+     ';
 
-        <!-- Repeat similar discussion blocks for other discussions -->
-
-        <div class="pagination">
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <!-- Add more pagination links as needed -->
-                </div>
-            </div>
-            
-            </div>'; 
+    $disc = new Discussions();
+    $row = $disc->getAllDisc();
     ?>
-  
+    <div class="container2">
+        <h1>Discussions Page</h1>
+        <?php
+        echo "<div class='books'>";
+        for ($i = 0; $i < count($row); $i++) {
+            echo '
+        
+            <div class="discussion">
+                <img src="uploads/' . $row[$i]->discBookPic . '" alt="Book 1">
+                <div class="discussion-content">
+                    <h2>' . $row[$i]->discTitle . '</h2>
+                    <p><strong>Book:</strong> ' . $row[$i]->discBookName . '</p>
+                    <p class="article-description"><strong>Title: </strong>' . substr($row[$i]->discBody, 0, 100) . "..." . '</p>
+                    <br>
+                        <a href="editDisc.php?discid=' . $row[$i]->discID . '"><button>edit Discussion</button></a>
+                        <br>
+                        <a href="deleteDisc.php?discid=' . $row[$i]->discID . '"><button>Delete Discussion</button></a>
+                        <br>
+                        <a href="viewDisc.php?discid=' . $row[$i]->discID . '"><button>View Discusstion</button></a>
+                    </div>
+            </div>
+       
+    ';
+        }
+        ?>
+    </div>
 
-    <footer>
-        <?php include "footer.php"; ?>
-    </footer>
+ 
+
+
+    <?php include "footer.php"; ?>
+
 </body>
+
 </html>
+
+
+
+
+
+
+
+<body>

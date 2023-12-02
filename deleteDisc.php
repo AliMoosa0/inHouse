@@ -1,23 +1,23 @@
 <?php
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
-include 'header.php';
 
-$bookID = 0;
+include "header.php";
 
-if (isset($_GET['bookID'])) {
-    $bookID = $_GET['bookID'];
-} elseif (isset($_POST['bookID'])) {
-    $bookID = $_POST['bookID'];
+
+$discID = 0;
+
+if (isset($_GET['discid'])) {
+    $discID = $_GET['discid'];
+} elseif (isset($_POST['discid'])) {
+    $discID = $_POST['discid'];
 }
+// echo $discID;
+// die();
+$disc = new Discussions();
+$discInfo = $disc->getDiscWithID($discID);
+// $disc->getDiscTitle();
 
-//echo $article_id;
-
-$book = new Books();
-$book->initWithId($bookID);
 ?>
+
 
 <style>
     /* Form container styles */
@@ -62,16 +62,15 @@ if (isset($_POST['submit'])) {
 
     //test the value of the radio button       
     if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
-        $book->setBookID($bookID);
-
-
-
+        $Disc->setDiscID($discID);
         //delete article 
-        $book->deleteBook();
-        $deleted = "Book deleted successfully";
+        if ($Disc->deleteDisc()) {
+            $deleted = "Discussion deleted successfully";
+        }
+
 
     } else {
-        $notDeleted = "Book deletion not confirmed";
+        $notDeleted = "Discussion deletion not confirmed";
     }
 }
 ?>
@@ -95,14 +94,15 @@ if (isset($_POST['submit'])) {
         <?php if (isset($notDeleted)): ?>
             <p style="color: red;">
                 <?php echo $notDeleted; ?>
+                
             </p>
         <?php endif; ?>
         <br />
-        <h2 class="form-title">Delete Book</h2>
+        <h2 class="form-title">Delete Discussion</h2>
         <h2>Title:
-            <?php echo $book->getBookName(); ?>
+            <?php echo $disc->getDiscTitle(); ?>
         </h2>
-        <p>Are you sure you want to delete this article? <br /><br />
+        <p>Are you sure you want to delete this Discussion? <br /><br />
             <label class="form-radio">
                 <input type="radio" name="sure" value="Yes" /> Yes
             </label>
