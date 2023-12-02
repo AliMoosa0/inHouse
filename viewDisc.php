@@ -188,6 +188,9 @@ if (mysqli_num_rows($commentResult) > 0) {
 
     echo "</ul>";
 }
+
+
+
 $uid = $_SESSION['uid'];
 // Display the thumbs-up button and count
 // Check if the user has already liked the discussion
@@ -224,7 +227,7 @@ if (isset($_POST['likeButton'])) {
         $deleteResult = mysqli_query($connection, $deleteQuery);
     } else {
         if ($userId == null) {
-            echo "<p class='error'>Please login to like the article.</p>";
+            echo "<p class='error'>Please login to like the discussion.</p>";
         } else {
             // Normal user like operation
             $insertQuery = "INSERT INTO likes (likeON, likeBY) VALUES (?, ?)";
