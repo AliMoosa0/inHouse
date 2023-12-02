@@ -160,7 +160,7 @@ if (isset($_POST['submit-comment'])) {
 
 
 }
-echo "</div>";  
+echo "</div>";
 
 
 
@@ -188,13 +188,12 @@ if (mysqli_num_rows($commentResult) > 0) {
 
     echo "</ul>";
 }
-
 $uid = $_SESSION['uid'];
 // Display the thumbs-up button and count
-// Check if the user has already liked the article
+// Check if the user has already liked the discussion
 $sessionid = $_SESSION['uid'];
-$query = "SELECT COUNT(*) AS liked FROM likes WHERE discID = $discID AND likeBY = $uid";
-$allLikeQry = "SELECT COUNT(*) AS liked FROM likes WHERE discID = $discID";
+$query = "SELECT COUNT(*) AS liked FROM likes WHERE likeON = $discID AND likeBY = $uid";
+$allLikeQry = "SELECT COUNT(*) AS liked FROM likes WHERE likeON = $discID";
 $result = mysqli_query($connection, $query);
 $theresult = mysqli_query($connection, $allLikeQry);
 $row = mysqli_fetch_assoc($result);
@@ -205,31 +204,24 @@ echo '<div class="bigdiv">';
 echo "<div class='like-button'>";
 echo "<h3 class='likeTit'>likes</h3>";
 echo "<form method='post' id ='likeForm' action=''>
-    <button name='likeButton' type='submit' id='likeButton' value='like'><i class='fa-solid fa-thumbs-up' id='like-btn' data-article-id='$articleId'>&#128077;</i></button>
+    <button name='likeButton' type='submit' id='likeButton' value='like'><i class='fa-solid fa-thumbs-up' id='like-btn' data-article-id=''>&#128077;</i></button>
 </form>";
 
-echo "<div class='like-count' id ='likebuttonid'><span id='like-count'>Likes: $theliked</span></div>";
-$liked = $row['liked'];
 
 // Check if the like button is pressed
 if (isset($_POST['likeButton'])) {
     $userId = $_SESSION['uid'];
+    $liked = $row['liked'];
+    $discID = $_GET['discid'];
 
-    // Check if the user has already liked the article
-    $query = "SELECT * FROM likes WHERE likeON = $diskID AND likeBY = $userId";
+    // Check if the user has already liked the discussion
+    $query = "SELECT * FROM likes WHERE likeON = $discID AND likeBY = $userId";
     $result = mysqli_query($connection, $query);
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        // User has already liked, so unlike the article
-        $deleteQuery = "DELETE FROM ProjectLikes WHERE artical_id = $diskID AND likeBY = $userId";
+    if (mysqli_num_rows($result) > 0) {
+        // User has already liked, so unlike the discussion
+        $deleteQuery = "DELETE FROM likes WHERE likeON = $discID AND likeBY = $userId";
         $deleteResult = mysqli_query($connection, $deleteQuery);
-
-        if ($deleteResult) {
-            // Refresh the page to reflect the updated like count
-            // header("Refresh:0");
-        } else {
-            echo "<p class='error'>Error unliking the article: " . mysqli_error($connection) . "</p>";
-        }
     } else {
         if ($userId == null) {
             echo "<p class='error'>Please login to like the article.</p>";
@@ -242,19 +234,23 @@ if (isset($_POST['likeButton'])) {
                 mysqli_stmt_bind_param($stmt, 'ii', $discID, $userId);
                 $insertResult = mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
-
-                if ($insertResult) {
-                    // Refresh the page to reflect the updated like count
-                    //header("Refresh:0");
-                } else {
-                    echo "<p class='error'>Error liking the article: " . mysqli_error($connection) . "</p>";
-                }
-            } else {
-                echo "<p class='error'>Error preparing the like statement: " . mysqli_error($connection) . "</p>";
             }
         }
     }
+
+    // Update the like count after performing the like or unlike action
+    $likeCountQuery = "SELECT COUNT(*) AS liked FROM likes WHERE likeON = $discID";
+    $likeCountResult = mysqli_query($connection, $likeCountQuery);
+    $likeCountRow = mysqli_fetch_assoc($likeCountResult);
+    $updatedLikeCount = $likeCountRow['liked'];
+
+    if ($updatedLikeCount !== null) {
+        $theliked = $updatedLikeCount;
+    }
 }
+
+// Update the like count display
+echo "<div class='like-count' id='likebuttonid'><span id='like-count'>Likes: $theliked</span></div>";
 
 echo "</div>";
 echo "</div>";
