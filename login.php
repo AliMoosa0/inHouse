@@ -242,8 +242,8 @@ include('header.php');
             onblur="isValid(this);" required>
         </div>
         <div class="forgot-pass">
-          <a href="#">Forgot Password?</a>
-        </div>
+                    <a href="change_password.php">Forgot Password?</a>
+                </div>
         <div class="btn">
           <div class="inner"></div>
           <button type="submit" name="submitted">login</button>

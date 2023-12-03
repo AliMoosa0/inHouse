@@ -154,6 +154,22 @@ class Users
             return false;
         }
     }
+    function changePassword($uid, $password)
+    {
+        try {
+            $hashed_pwd = password_hash($password, PASSWORD_DEFAULT);
+            $db = Database::getInstance();
+            $data = "UPDATE users SET `password` = '$hashed_pwd' where uid = $uid";
+            // var_dump($data);
+            // die();
+            $db->querySQL($data);
+            //echo $data;
+            return true;
+        } catch (Exception $ex) {
+            echo 'exception: ' . $ex;
+            return false;
+        }
+    }
 
 
     function updateDB()
@@ -219,7 +235,7 @@ class Users
         }
         return false;
     }
-function getAllUsers()
+    function getAllUsers()
     {
         $db = Database::getInstance();
         $data = $db->multiFetch('select * from users');
