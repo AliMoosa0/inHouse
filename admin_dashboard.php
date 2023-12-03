@@ -549,6 +549,24 @@
         .hidden {
             display: none;
         }
+
+        #manageComments {
+            margin-top: 50px;
+            /* Adjust this value according to your navbar's height */
+            /* or */
+            padding-top: 50px;
+            /* Adjust this value according to your navbar's height */
+            margin-left: 30%;
+        }
+
+        #manageUsers {
+            margin-top: 50px;
+            /* Adjust this value according to your navbar's height */
+            /* or */
+            padding-top: 50px;
+            /* Adjust this value according to your navbar's height */
+            margin-left: 30%;
+        }
     </style>
 
 </head>
@@ -812,5 +830,6 @@
     </script>
 
 </body>
+
 
 </html>
