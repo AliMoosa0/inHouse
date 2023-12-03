@@ -9,50 +9,42 @@ session_start();
   <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <div class="navbar">
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Blog</a>
-      <a href="#">Portfolio</a>
-      <a href="#">Contact</a>
-      <div class="animation start-home"></div>
-    </nav>
-    <nav>
 
-      <!--logo image linked to the home page-->
-      <div class>
-        <a href=""> <img src="2ndHand3 copy.png" height="60" width="170" alt="Logo" class="nav-logo" /> </a>
-      </div>
-      <nav class="navbar">
-        <input type="checkbox" id="menu-toggle" />
-        <label for="menu-toggle" id="hamburger-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-        </label>
-        <ul class="links">
-          <li><a href="home.php">Home</a></li>
-          <li><a href="contactUs.php">Contact Us</a></li>
-          <li><a href="discussions_page.php">discussions</a></li>
-          <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
-          <li><a href="admin_dashboard.php">Admin Panel</a></li>
-          <div class="animation start-home"></div>
-        </ul>
+  <nav>
 
-        <?php
-        if ($_SESSION['uid'] != null) {
+    <!--logo image linked to the home page-->
+    <div class>
+      <a href=""> <img src="2ndHand3 copy.png" height="60" width="170" alt="Logo" class="nav-logo" /> </a>
+    </div>
+    <nav class="navbar">
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" id="hamburger-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </label>
+      <ul class="links">
+        <li><a href="home.php">Home</a></li>
+        <li><a href="contactUs.php">Contact Us</a></li>
+        <li><a href="discussions_page.php">discussions</a></li>
+        <li><a href="admin_dashboard.php">Admin Panel</a></li>
+        <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
 
-          echo '
+        <div class="animation start-home"></div>
+      </ul>
+
+      <?php
+      if ($_SESSION['uid'] != null) {
+
+        echo '
             
             <div class="buttons">
             <a href="logout.php" class="signup">Log Out</a>
           </div>
             
             ';
-
-        } else {
-          echo '
+      } else {
+        echo '
             <div class="buttons">
             <a href="login.php" class="signin">Sign In</a>
             <a href="register.php" class="signup">Sign Up</a>
@@ -60,15 +52,13 @@ session_start();
             
             
             ';
+      }
 
+      ?>
 
-        }
+      </div>
 
-        ?>
-
-  </div>
-
-  </nav>
+    </nav>
 
   </nav>
   <style>
@@ -77,15 +67,16 @@ session_start();
 
     * {
       margin: 0;
-      padding: 0;
+      padding: 0.5%;
       box-sizing: border-box;
       font-family: "Open Sans", sans-serif;
     }
 
     body {
-      height: 100vh;
+      height: auto;
       width: 100%;
-      background: linear-gradient(to bottom, #175d69 23%, #330c43 95%);
+      background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+      background-repeat: no-repeat;
     }
 
     .header {
@@ -270,12 +261,8 @@ session_start();
         display: none;
       }
     }
-
-
   </style>
 
-
-  </style>
 
 </header>
 
