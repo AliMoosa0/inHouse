@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discussions Page</title>
-  
+
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+
         }
 
         header {
-            background-color: #333;
+
             color: #fff;
             padding: 10px 0;
         }
@@ -36,8 +37,9 @@
             font-weight: bold;
         }
 
-        .container {
-            max-width: 1200px;
+        .container2 {
+            max-width: 80%;
+            max-height: 100%;
             margin: 0 auto;
             padding: 20px;
         }
@@ -79,49 +81,69 @@
         }
 
         footer {
-            background-color: #333;
+            /* background-color: #333; */
             color: #fff;
             text-align: center;
             padding: 10px 0;
         }
     </style>
 </head>
+
 <body>
-    <?php include "header.php"; ?>
+    <?php include "header.php";
 
-    <div class="container">
+    echo '
+
+     <a href="addDisc.php">
+     <button>Add a Discusstion</button>
+      </a>
+
+
+     ';
+
+    $disc = new Discussions();
+    $row = $disc->getAllDisc();
+    ?>
+    <div class="container2">
         <h1>Discussions Page</h1>
-
-        <div class="discussion">
-            <img src="book1.jpg" alt="Book 1">
-            <div class="discussion-content">
-                <h2>Discussion Title 1</h2>
-                <p><strong>Book:</strong> Book 1</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac quam vel odio condimentum imperdiet vel at ligula...</p>
+        <?php
+        echo "<div class='books'>";
+        for ($i = 0; $i < count($row); $i++) {
+            echo '
+        
+            <div class="discussion">
+                <img src="uploads/' . $row[$i]->discBookPic . '" alt="Book 1">
+                <div class="discussion-content">
+                    <h2>' . $row[$i]->discTitle . '</h2>
+                    <p><strong>Book:</strong> ' . $row[$i]->discBookName . '</p>
+                    <p class="article-description"><strong>Title: </strong>' . substr($row[$i]->discBody, 0, 100) . "..." . '</p>
+                    <br>
+                        <a href="editDisc.php?discid=' . $row[$i]->discID . '"><button>edit Discussion</button></a>
+                        <br>
+                        <a href="deleteDisc.php?discid=' . $row[$i]->discID . '"><button>Delete Discussion</button></a>
+                        <br>
+                        <a href="viewDisc.php?discid=' . $row[$i]->discID . '"><button>View Discusstion</button></a>
+                    </div>
             </div>
-        </div>
-
-        <div class="discussion">
-            <img src="book2.jfif" alt="Book 2">
-            <div class="discussion-content">
-                <h2>Discussion Title 2</h2>
-                <p><strong>Book:</strong> Book 2</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac quam vel odio condimentum imperdiet vel at ligula...</p>
-            </div>
-        </div>
-
-        <!-- Repeat similar discussion blocks for other discussions -->
-
-        <div class="pagination">
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <!-- Add more pagination links as needed -->
-        </div>
+       
+    ';
+        }
+        ?>
     </div>
 
-    <footer>
-        <!-- Add footer content and links here -->
-    </footer>
+ 
+
+
+    <?php include "footer.php"; ?>
+
 </body>
+
 </html>
+
+
+
+
+
+
+
+<body>

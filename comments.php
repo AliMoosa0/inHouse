@@ -1,13 +1,15 @@
-<?php 
-class comeents{ 
-    private $commentID;
-    private $studentID;
-    private $commentBody;
-    private $commentedBy;
- 
+<?php
+class comeents
+{
+	private $commentID;
+	private $studentID;
+	private $commentBody;
+	private $commentedBy;
 
 
-	public function __constructor($commentID, $studentID, $commentBody, $commentedBy) {
+
+	public function __constructor($commentID, $studentID, $commentBody, $commentedBy)
+	{
 
 		$this->commentID = $commentID;
 		$this->studentID = $studentID;
@@ -15,35 +17,43 @@ class comeents{
 		$this->commentedBy = $commentedBy;
 	}
 
-	public function getCommentID() {
+	public function getCommentID()
+	{
 		return $this->commentID;
 	}
 
-	public function setCommentID($value) {
+	public function setCommentID($value)
+	{
 		$this->commentID = $value;
 	}
 
-	public function getStudentID() {
+	public function getStudentID()
+	{
 		return $this->studentID;
 	}
 
-	public function setStudentID($value) {
+	public function setStudentID($value)
+	{
 		$this->studentID = $value;
 	}
 
-	public function getCommentBody() {
+	public function getCommentBody()
+	{
 		return $this->commentBody;
 	}
 
-	public function setCommentBody($value) {
+	public function setCommentBody($value)
+	{
 		$this->commentBody = $value;
 	}
 
-	public function getCommentedBy() {
+	public function getCommentedBy()
+	{
 		return $this->commentedBy;
 	}
 
-	public function setCommentedBy($value) {
+	public function setCommentedBy($value)
+	{
 		$this->commentedBy = $value;
 	}
 }

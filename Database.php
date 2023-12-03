@@ -25,7 +25,12 @@ class Database
 
     function connect()
     {
-        $this->dblink = mysqli_connect('localhost', 'root', '', '2ndhand') or die('CAN NOT CONNECT');
+        $this->dblink = mysqli_connect(
+            'localhost',
+            'u201902206',
+            'u201902206',
+            'db201902206'
+        ) or die('CAN NOT CONNECT');
     }
 
     function __destruct()
@@ -90,8 +95,9 @@ class Database
 
         return $string;
     }
-    
-    function getRows($sql) {
+
+    function getRows($sql)
+    {
         $rows = 0;
         if ($sql != null || $sql != '') {
             $result = mysqli_query($this->dblink, $sql);
