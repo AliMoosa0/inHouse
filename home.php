@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Second-Hand Book Store</title>
     <style>
         .container {
@@ -123,23 +123,29 @@
     } else {
         $books = new Books();
         $row = $books->getBooks();
-
         echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
         echo '
-    <form action="" method="GET">
-        <label for="bookId">Search by Book ID:</label>
-        <input type="text" id="bookId" name="bookId">
-        <button type="submit">Search</button>
-    </form>
-    ';
-        echo '
+            <form action="" method="GET">
+                <label for="bookId">Search by Book ID:</label>
+                <input type="text" id="bookId" name="bookId">
+                <button type="submit">Search</button>
+            </form>
+            ';
 
-        <a href="addBooks.php">
-        <button>Add a Book</button>
-         </a>
+        if (isset($_SESSION['username'])) {
+            echo "<h1>Welcome, " . $_SESSION['username'] . "</h1>";
+
+            echo '
+
+            <a href="addBooks.php">
+            <button>Add a Book</button>
+             </a>
+    
+    
+            ';
+        }
 
 
-        ';
 
 
         echo "</div>";

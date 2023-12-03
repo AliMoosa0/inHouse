@@ -782,9 +782,52 @@
     <section id="manageUsers" class="hidden">
         <!-- Manage Users content -->
         <div class="data type">
-            <span class="data-title">this is the comment management section </span>
+            <span class="data-title">this is the Users management section </span>
 
         </div>
+        <?php
+        include "Users.php";
+        $users = new Users();
+        $row = $users->getAllUsers();
+
+        // Display the existing users in a table
+        if (!empty($row)) {
+            echo "<table>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>User ID</th>";
+            echo "<th>Username</th>";
+            echo "<th>Role</th>";
+            echo "<th>Action</th>";
+            echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+
+            foreach ($row as $userRow) {
+                $userID = $userRow->uid; 
+                $userName = $userRow->username;
+                $Role = $userRow->role;
+
+                echo "<tr>";
+                echo "<td>$userID</td>";
+                echo "<td>$userName</td>";
+                echo "<td>$Role</td>";
+                echo "<td>";
+                echo "<a href='delete_user.php?id=$userID'>Delete</a>";
+                echo " | ";
+                echo "<a href='change_password.php?id=$userID'>Change Password</a>";
+                echo "</td>";
+                echo "</tr>";
+            }
+
+            echo "</tbody>";
+            echo "</table>";
+        } else {
+            echo "No users found.";
+        }
+        ?>
+
+
     </section>
 
 

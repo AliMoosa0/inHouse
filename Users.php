@@ -219,7 +219,12 @@ class Users
         }
         return false;
     }
-
+function getAllUsers()
+    {
+        $db = Database::getInstance();
+        $data = $db->multiFetch('select * from users');
+        return $data;
+    }
 
 
     function logout()

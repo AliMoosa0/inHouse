@@ -91,7 +91,7 @@
 
 <body>
     <?php include "header.php";
-
+ if (isset($_SESSION['username'])) {
     echo '
 
      <a href="addDisc.php">
@@ -99,7 +99,7 @@
       </a>
 
 
-     ';
+     ';}
 
     $disc = new Discussions();
     $row = $disc->getAllDisc();
