@@ -544,6 +544,29 @@
                 width: 100%;
             }
         }
+
+        /* Add this to your CSS */
+        .hidden {
+            display: none;
+        }
+
+        #manageComments {
+            margin-top: 50px;
+            /* Adjust this value according to your navbar's height */
+            /* or */
+            padding-top: 50px;
+            /* Adjust this value according to your navbar's height */
+            margin-left: 30%;
+        }
+
+        #manageUsers {
+            margin-top: 50px;
+            /* Adjust this value according to your navbar's height */
+            /* or */
+            padding-top: 50px;
+            /* Adjust this value according to your navbar's height */
+            margin-left: 30%;
+        }
     </style>
 
 </head>
@@ -555,7 +578,7 @@
         </div>
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="#">
+                <li><a href="admin_dashboard.php">
                         <i class="uil uil-estate"></i>
                         <span class="link-name">Dahsboard</span>
                     </a></li>
@@ -566,21 +589,14 @@
                     </a>
                 </li>
 
-                <li><a href="#">
-                        <i class="uil uil-chart"></i>
-                        <span class="link-name">Analytics</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-thumbs-up"></i>
-                        <span class="link-name">Like</span>
-                    </a></li>
+
                 <li><a href="#">
                         <i class="uil uil-comments"></i>
-                        <span class="link-name">Comment</span>
+                        <span class="link-name">manage Comment</span>
                     </a></li>
                 <li><a href="#">
-                        <i class="uil uil-share"></i>
-                        <span class="link-name">Share</span>
+                        <i class="uil uil-user"></i>
+                        <span class="link-name">Manage Users</span>
                     </a></li>
             </ul>
 
@@ -601,7 +617,8 @@
             </ul>
         </div>
     </nav>
-    <section class="dashboard">
+    <section id="dashboard" class="dashboard">
+        <!-- Dashboard content -->
         <div class="top">
             <i class="uil uil-bars sidebar-toggle"></i>
             <div class="search-box">
@@ -621,24 +638,47 @@
                     <div class="box box1">
                         <i class="uil uil-thumbs-up"></i>
                         <span class="text">Total Likes</span>
-                        <span class="number">50,120</span>
+                        <span class="number">
+                            <?php
+
+                            include "Database.php";
+                            $db = Database::getInstance();
+                            $result = $db->singleFetch("SELECT COUNT(*) AS like_count FROM likes");
+
+                            $likeCount = $result->like_count;
+                            echo $likeCount;
+                            ?>
+                        </span>
                     </div>
                     <div class="box box2">
                         <i class="uil uil-comments"></i>
                         <span class="text">Comments</span>
-                        <span class="number">20,120</span>
+                        <span class="number">
+                            <?php
+                            $comresult = $db->singleFetch("SELECT COUNT(*) AS com_count FROM comments");
+                            $comlikeCount = $comresult->com_count;
+                            echo $comlikeCount;
+                            ?>
+                        </span>
                     </div>
                     <div class="box box3">
-                        <i class="uil uil-share"></i>
-                        <span class="text">Total Share</span>
-                        <span class="number">10,120</span>
+                        <i class="uil uil-user"></i>
+                        <span class="text">Total Users</span>
+                        <span class="number">
+                            <?php
+                            $usmresult = $db->singleFetch("SELECT COUNT(*) AS user_count FROM users");
+                            $uslikeCount = $usmresult->user_count;
+                            echo $uslikeCount;
+                            ?>
+
+                        </span>
                     </div>
                 </div>
             </div>
             <div class="activity">
                 <div class="title">
-                    <i class="uil uil-clock-three"></i>
-                    <span class="text">Recent Activity</span>
+                    <i class="uil uil-file"></i>
+                    <span class="text">Recent Logs</span>
                 </div>
                 <div class="activity-data">
                     <div class="data names">
@@ -724,6 +764,115 @@
                 localStorage.setItem("status", "open");
             }
         })</script>
+
+
+
+
+    </section>
+
+    <section id="manageComments" class="hidden">
+        <!-- Manage Comments content -->
+        <div class="activity-data">
+            <div class="data type">
+                <span class="data-title">this is the comment management section</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="manageUsers" class="hidden">
+        <!-- Manage Users content -->
+        <div class="data type">
+            <span class="data-title">this is the Users management section </span>
+
+        </div>
+        <?php
+        include "Users.php";
+        $users = new Users();
+        $row = $users->getAllUsers();
+
+        // Display the existing users in a table
+        if (!empty($row)) {
+            echo "<table>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>User ID</th>";
+            echo "<th>Username</th>";
+            echo "<th>Role</th>";
+            echo "<th>Action</th>";
+            echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+
+            foreach ($row as $userRow) {
+                $userID = $userRow->uid; 
+                $userName = $userRow->username;
+                $Role = $userRow->role;
+
+                echo "<tr>";
+                echo "<td>$userID</td>";
+                echo "<td>$userName</td>";
+                echo "<td>$Role</td>";
+                echo "<td>";
+                echo "<a href='delete_user.php?id=$userID'>Delete</a>";
+                echo " | ";
+                echo "<a href='change_password.php?id=$userID'>Change Password</a>";
+                echo "</td>";
+                echo "</tr>";
+            }
+
+            echo "</tbody>";
+            echo "</table>";
+        } else {
+            echo "No users found.";
+        }
+        ?>
+
+
+    </section>
+
+
+    <script>
+        // Get references to menu items and content sections
+        const dashboardSection = document.getElementById('dashboard');
+        const manageCommentsSection = document.getElementById('manageComments');
+        const manageUsersSection = document.getElementById('manageUsers');
+
+        const dashboardLink = document.querySelector('.nav-links li:nth-child(1) a');
+        const manageCommentsLink = document.querySelector('.nav-links li:nth-child(3) a');
+        const manageUsersLink = document.querySelector('.nav-links li:nth-child(4) a');
+
+        // Function to hide all sections
+        function hideAllSections() {
+            dashboardSection.classList.add('hidden');
+            manageCommentsSection.classList.add('hidden');
+            manageUsersSection.classList.add('hidden');
+        }
+
+        // Function to show specific section
+        function showSection(section) {
+            hideAllSections();
+            section.classList.remove('hidden');
+        }
+
+        // Event listeners for menu items
+        dashboardLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            showSection(dashboardSection);
+        });
+
+        manageCommentsLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            showSection(manageCommentsSection);
+        });
+
+        manageUsersLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            showSection(manageUsersSection);
+        });
+
+    </script>
+
 </body>
+
 
 </html>
