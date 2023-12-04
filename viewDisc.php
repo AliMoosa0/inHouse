@@ -134,6 +134,7 @@ echo "</form>";
 if (isset($_POST['submit-comment'])) {
     // Get the values from the form
     $author = $_SESSION['username'];
+    // var_dump($author);
     $comment = $_POST['comment'];
 
     // Prepare the query using prepared statements

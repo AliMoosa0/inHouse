@@ -172,18 +172,6 @@ class Users
     }
 
 
-    function updateDB()
-    {
-        if ($this->isValid()) {
-
-            $db = Database::getInstance();
-            $data = 'update users set email = \'' . $this->email . '\', username = \'' . $this->username . '\', password = \'' . $this->password . '\' where uid = ' . $this->uid;
-            $db->querySQL($data);
-            return true;
-        }
-        return false;
-    }
-
     function deleteUser()
     {
         try {
@@ -206,7 +194,7 @@ class Users
             if (password_verify($password, $retrieved_pwd)) {
                 $this->initWith(
                     $userData->uid,
-                    $userData->userName,
+                    $userData->username,
                     $userData->email,
                     $userData->password,
                     $userData->regDate,
