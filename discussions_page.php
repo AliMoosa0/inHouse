@@ -74,6 +74,20 @@
         .discBtn:hover{
             background-color: #9A8CEF;
         }
+
+        .addDiscBtn{
+            margin: 0 10px;
+            width: 10%;
+            padding: 1%;
+            background-color: #8c7ceb;
+            color: #fff;
+            margin-bottom: 1%;
+        }
+
+        .addDiscBtn:hover{
+            background-color: #9A8CEF;
+
+        }
         
 
     </style>
@@ -82,14 +96,7 @@
 <body>
     <?php include "header.php";
 
-    echo '
-
-     <a href="addDisc.php">
-     <button>Add a Discusstion</button>
-      </a>
-
-
-     ';
+    
 
     $disc = new Discussions();
     $row = $disc->getAllDisc();
@@ -97,6 +104,14 @@
     <div class="container2">
         <h1>Discussions Page</h1>
         <?php
+        echo '
+
+        <a href="addDisc.php">
+        <button class="addDiscBtn">Add a Discusstion</button>
+         </a>
+   
+   
+        ';
         for ($i = 0; $i < count($row); $i++) {
             echo '
         

@@ -13,8 +13,8 @@ session_start();
   <nav>
 
     <!--logo image linked to the home page-->
-    <div class>
-      <a href=""> <img src="2ndHand3 copy.png" height="60" width="170" alt="Logo" class="nav-logo" /> </a>
+    <div>
+      <a href=""> <img src="bp.png" height="140" width="170" alt="Logo" class="nav-logo" /> </a>
     </div>
     <nav class="navbar">
       <input type="checkbox" id="menu-toggle" />
@@ -79,6 +79,13 @@ session_start();
       background-repeat: no-repeat;
     }
 
+    nav{
+      display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+    }
+
     .header {
       position: fixed;
       top: 0;
@@ -90,7 +97,7 @@ session_start();
       display: flex;
       align-items: center;
       justify-content: space-between;
-      max-width: 1200px;
+      width: 100%;
       margin: 0 auto;
       padding: 20px 15px;
     }
@@ -105,7 +112,7 @@ session_start();
       display: flex;
       align-items: center;
       list-style: none;
-      gap: 35px;
+      gap: 15%;
     }
 
     .navbar .links a {
@@ -117,7 +124,7 @@ session_start();
     }
 
     .navbar .links a:hover {
-      color: #47b2e4;
+      color: #8476DA;
     }
 
     .navbar .buttons a {
