@@ -7,61 +7,37 @@
     <title>Discussions Page</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-
-        }
-
-        header {
-
-            color: #fff;
-            padding: 10px 0;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav ul li {
-            margin: 0 20px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #fff;
-            font-weight: bold;
-        }
-
+       
         .container2 {
-            max-width: 80%;
+            max-width: 90%;
             max-height: 100%;
             margin: 0 auto;
             padding: 20px;
         }
 
+        .container2 h1{
+            color: #fff;
+        }
+
         .discussion {
             display: flex;
             border: 1px solid #ccc;
-            background-color: #fff;
+            background-color: rgba(1, 1, 2, 0.5);;
             margin-bottom: 20px;
             padding: 10px;
+            color: #fff;
         }
 
-        .discussion img {
-            max-width: 100px;
-            margin-right: 20px;
+        .discImg {
+            width: 20%;
+            height: 30%;
         }
 
         .discussion-content {
             flex: 1;
         }
 
-        h2 {
+        .discH2 {
             margin-top: 0;
         }
 
@@ -80,12 +56,40 @@
             border-radius: 5px;
         }
 
-        footer {
-            /* background-color: #333; */
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
+        .discBtns{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
         }
+        .discBtn{
+            margin: 0 10px;
+            width: 90%;
+            padding: 10%;
+            background-color: #8c7ceb;
+            color: #fff;
+        }
+
+        .discBtn:hover{
+            background-color: #9A8CEF;
+        }
+
+        .addDiscBtn{
+            margin: 0 10px;
+            width: 10%;
+            padding: 1%;
+            background-color: #8c7ceb;
+            color: #fff;
+            margin-bottom: 1%;
+        }
+
+        .addDiscBtn:hover{
+            background-color: #9A8CEF;
+
+        }
+        
+
     </style>
 </head>
 
@@ -107,22 +111,31 @@
     <div class="container2">
         <h1>Discussions Page</h1>
         <?php
-        echo "<div class='books'>";
+        echo '
+
+        <a href="addDisc.php">
+        <button class="addDiscBtn">Add a Discusstion</button>
+         </a>
+   
+   
+        ';
         for ($i = 0; $i < count($row); $i++) {
             echo '
         
             <div class="discussion">
-                <img src="uploads/' . $row[$i]->discBookPic . '" alt="Book 1">
+                <img class="discImg" src="uploads/' . $row[$i]->discBookPic . '" alt="Book 1">
                 <div class="discussion-content">
-                    <h2>' . $row[$i]->discTitle . '</h2>
+                    <h2 class="discH2">' . $row[$i]->discTitle . '</h2>
                     <p><strong>Book:</strong> ' . $row[$i]->discBookName . '</p>
                     <p class="article-description"><strong>Title: </strong>' . substr($row[$i]->discBody, 0, 100) . "..." . '</p>
                     <br>
-                        <a href="editDisc.php?discid=' . $row[$i]->discID . '"><button>edit Discussion</button></a>
+                    <div class="discBtns">
+                        <a href="editDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">Edit Discussion</button></a>
                         <br>
-                        <a href="deleteDisc.php?discid=' . $row[$i]->discID . '"><button>Delete Discussion</button></a>
+                        <a href="deleteDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">Delete Discussion</button></a>
                         <br>
-                        <a href="viewDisc.php?discid=' . $row[$i]->discID . '"><button>View Discusstion</button></a>
+                        <a href="viewDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">View Discusstion</button></a>
+                    </div>
                     </div>
             </div>
        
@@ -134,7 +147,7 @@
  
 
 
-    <?php include "footer.php"; ?>
+    <?php include "footer.html"; ?>
 
 </body>
 
