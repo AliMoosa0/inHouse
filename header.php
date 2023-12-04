@@ -24,7 +24,7 @@ session_start();
           </svg>
         </label>
         <ul class="links">
-          <li><a href="home.php">Home</a></li>
+          <li><a href="home.php">Home Page</a></li>
           <li><a href="contactUs.php">Contact Us</a></li>
           <li><a href="discussions_page.php">discussions</a></li>
           <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>

@@ -1,5 +1,5 @@
 <?php
-class comeents
+class Comments
 {
 	private $commentID;
 	private $studentID;
@@ -56,4 +56,12 @@ class comeents
 	{
 		$this->commentedBy = $value;
 	}
+
+
+
+function getAllComments(){
+	$db = Database::getInstance();
+        $data = $db->multiFetch('select * from comments');
+        return $data;
+}
 }

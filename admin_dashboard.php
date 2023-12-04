@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+   
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -772,11 +773,53 @@
 
     <section id="manageComments" class="hidden">
         <!-- Manage Comments content -->
-        <div class="activity-data">
-            <div class="data type">
-                <span class="data-title">this is the comment management section</span>
-            </div>
+        <!-- Manage Users content -->
+        <div class="data type">
+            <span class="data-title">this is the Users management section </span>
+
         </div>
+        <?php
+        include "comments.php";
+        $comm = new Comments();
+        $row = $comm->getAllComments();
+
+        // Display the existing users in a table
+        if (!empty($row)) {
+            echo "<table>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>comment ID</th>";
+            echo "<th>Username</th>";
+            echo "<th>comment</th>";
+            echo "<th>Action</th>";
+            echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+
+            foreach ($row as $commentRow) {
+                $commentID = $commentRow->commentID;
+                $commentedBY = $commentRow->commentedBy;
+                $comment = $commentRow->comment;
+
+
+                echo "<tr>";
+                echo "<td>$commentID</td>";
+                echo "<td>$commentedBY</td>";
+                echo "<td>$comment</td>";
+                echo "<td>";
+                echo "<a href='delete_user.php?id=$userID'><button> Delete Comment</button></a>";
+              
+                echo "</td>";
+                echo "</tr>";
+            }
+
+            echo "</tbody>";
+            echo "</table>";
+        } else {
+            echo "No users found.";
+        }
+        ?>
+
     </section>
 
     <section id="manageUsers" class="hidden">
@@ -804,7 +847,7 @@
             echo "<tbody>";
 
             foreach ($row as $userRow) {
-                $userID = $userRow->uid; 
+                $userID = $userRow->uid;
                 $userName = $userRow->username;
                 $Role = $userRow->role;
 
@@ -813,9 +856,9 @@
                 echo "<td>$userName</td>";
                 echo "<td>$Role</td>";
                 echo "<td>";
-                echo "<a href='delete_user.php?id=$userID'>Delete</a>";
+                echo "<a href='delete_user.php?id=$userID'><button> Delete</button></a>";
                 echo " | ";
-                echo "<a href='change_password.php?id=$userID'>Change Password</a>";
+                echo "<a href='change_password.php?id=$userID'><button>Change Password</button></a>";
                 echo "</td>";
                 echo "</tr>";
             }
