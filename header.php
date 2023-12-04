@@ -9,33 +9,34 @@ session_start();
   <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <div class="navbar">
-    <nav>
 
-      <!--logo image linked to the home page-->
-      <div class>
-        <a href=""> <img src="2ndHand3 copy.png" height="60" width="170" alt="Logo" class="nav-logo" /> </a>
-      </div>
-      <nav class="navbar">
-        <input type="checkbox" id="menu-toggle" />
-        <label for="menu-toggle" id="hamburger-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-        </label>
-        <ul class="links">
-          <li><a href="home.php">Home Page</a></li>
-          <li><a href="contactUs.php">Contact Us</a></li>
-          <li><a href="discussions_page.php">discussions</a></li>
-          <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
+  <nav>
+
+    <!--logo image linked to the home page-->
+    <div>
+      <a href=""> <img src="bp.png" height="140" width="170" alt="Logo" class="nav-logo" /> </a>
+    </div>
+    <nav class="navbar">
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" id="hamburger-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </label>
+      <ul class="links">
+        <li><a href="home.php">Home Page</a></li>
+        <li><a href="contactUs.php">Contact Us</a></li>
+        <li><a href="discussions_page.php">discussions</a></li>
+        <li><a href="admin_dashboard.php">Admin Panel</a></li>
+        <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
           <?php if ($_SESSION['role'] == 'admin') { ?>
-            <li><a href="admin_dashboard.php">Admin Panel</a></li>
+  
           <?php } ?>
-          <div class="animation start-home"></div>
-        </ul>
+        <div class="animation start-home"></div>
+      </ul>
 
-        <?php
-        if ($_SESSION['uid'] != null) {
+      <?php
+      if ($_SESSION['uid'] != null) {
 
           echo '
             <div class="buttons">
@@ -43,9 +44,8 @@ session_start();
           </div>
             
             ';
-
-        } else {
-          echo '
+      } else {
+        echo '
             <div class="buttons">
             <a href="login.php" class="signin">Sign In</a>
             <a href="register.php" class="signup">Sign Up</a>
@@ -53,11 +53,9 @@ session_start();
             
             
             ';
+      }
 
-
-        }
-
-        ?>
+      ?>
 
   </div>
   <!-- Google Website Translator -->
@@ -76,18 +74,26 @@ session_start();
       /* Importing Google font - Open Sans */
       @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Open Sans", sans-serif;
-      }
+    * {
+      margin: 0;
+      padding: 0.5%;
+      box-sizing: border-box;
+      font-family: "Open Sans", sans-serif;
+    }
 
-      body {
-        height: 100vh;
-        width: 100%;
-        background: linear-gradient(to bottom, #175d69 23%, #330c43 95%);
-      }
+    body {
+      height: auto;
+      width: 100%;
+      background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+      background-repeat: no-repeat;
+    }
+
+    nav{
+      display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+    }
 
       .header {
         position: fixed;
@@ -96,14 +102,14 @@ session_start();
         width: 100%;
       }
 
-      .navbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px 15px;
-      }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 15px;
+    }
 
       .navbar .logo a {
         font-size: 1.8rem;
@@ -111,12 +117,12 @@ session_start();
         color: #fff;
       }
 
-      .navbar .links {
-        display: flex;
-        align-items: center;
-        list-style: none;
-        gap: 35px;
-      }
+    .navbar .links {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 15%;
+    }
 
       .navbar .links a {
         font-weight: 500;
@@ -126,9 +132,9 @@ session_start();
         transition: 0.2s ease;
       }
 
-      .navbar .links a:hover {
-        color: #47b2e4;
-      }
+    .navbar .links a:hover {
+      color: #8476DA;
+    }
 
       .navbar .buttons a {
         text-decoration: none;
@@ -267,14 +273,12 @@ session_start();
           text-align: center;
         }
 
-        .hero-section img {
-          display: none;
-        }
+      .hero-section img {
+        display: none;
       }
-    </style>
+    }
+  </style>
 
-
-    </style>
 
 </header>
 
