@@ -154,19 +154,23 @@ class Users
             return false;
         }
     }
-
-
-    function updateDB()
+    function changePassword($uid, $password)
     {
-        if ($this->isValid()) {
-
+        try {
+            $hashed_pwd = password_hash($password, PASSWORD_DEFAULT);
             $db = Database::getInstance();
-            $data = 'update users set email = \'' . $this->email . '\', username = \'' . $this->username . '\', password = \'' . $this->password . '\' where uid = ' . $this->uid;
+            $data = "UPDATE users SET `password` = '$hashed_pwd' where uid = $uid";
+            // var_dump($data);
+            // die();
             $db->querySQL($data);
+            //echo $data;
             return true;
+        } catch (Exception $ex) {
+            echo 'exception: ' . $ex;
+            return false;
         }
-        return false;
     }
+
 
     function deleteUser()
     {
@@ -190,7 +194,7 @@ class Users
             if (password_verify($password, $retrieved_pwd)) {
                 $this->initWith(
                     $userData->uid,
-                    $userData->userName,
+                    $userData->username,
                     $userData->email,
                     $userData->password,
                     $userData->regDate,
@@ -219,7 +223,12 @@ class Users
         }
         return false;
     }
-
+    function getAllUsers()
+    {
+        $db = Database::getInstance();
+        $data = $db->multiFetch('select * from users');
+        return $data;
+    }
 
 
     function logout()

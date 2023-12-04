@@ -95,8 +95,15 @@
 
 <body>
     <?php include "header.php";
+ if (isset($_SESSION['username'])) {
+    echo '
 
-    
+     <a href="addDisc.php">
+     <button>Add a Discusstion</button>
+      </a>
+
+
+     ';}
 
     $disc = new Discussions();
     $row = $disc->getAllDisc();
