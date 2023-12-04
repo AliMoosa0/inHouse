@@ -98,9 +98,10 @@
  if (isset($_SESSION['username'])) {
     echo '
 
-     <a href="addDisc.php">
-     <button>Add a Discusstion</button>
-      </a>
+    <a href="addDisc.php">
+    <button class="addDiscBtn">Add a Discusstion</button>
+     </a>
+
 
 
      ';}
@@ -111,14 +112,7 @@
     <div class="container2">
         <h1>Discussions Page</h1>
         <?php
-        echo '
-
-        <a href="addDisc.php">
-        <button class="addDiscBtn">Add a Discusstion</button>
-         </a>
-   
-   
-        ';
+       
         for ($i = 0; $i < count($row); $i++) {
             echo '
         
