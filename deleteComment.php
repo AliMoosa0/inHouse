@@ -11,9 +11,8 @@ if (isset($_GET['id'])) {
     $comID = $_POST['id'];
 }
 // echo $comID;
-// die();
-$comment = new Comments();
-$discInfo = $comment->getCommentWithID($comID);
+$comm = new Comments();
+$commentInfo = $comm->getCommentWithID($comID);
 // $disc->getDiscTitle();
 
 ?>
@@ -99,8 +98,8 @@ if (isset($_POST['submit'])) {
         <?php endif; ?>
         <br />
         <h2 class="form-title">Delete a Comment</h2>
-        <h2>Title:
-            <?php echo $comment->get(); ?>
+        <h2>Comment:
+            <?php echo $comment->getComment(); ?>
         </h2>
         <p>Are you sure you want to delete this Discussion? <br /><br />
             <label class="form-radio">

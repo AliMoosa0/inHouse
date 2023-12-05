@@ -22,7 +22,8 @@
         .discussion {
             display: flex;
             border: 1px solid #ccc;
-            background-color: rgba(1, 1, 2, 0.5);;
+            background-color: rgba(1, 1, 2, 0.5);
+            
             margin-bottom: 20px;
             padding: 10px;
             color: #fff;
@@ -95,23 +96,25 @@
 
 <body>
     <?php include "header.php";
- if (isset($_SESSION['username'])) {
-    echo '
 
-    <a href="addDisc.php">
-    <button class="addDiscBtn">Add a Discusstion</button>
-     </a>
-
-
-
-     ';}
 
     $disc = new Discussions();
     $row = $disc->getAllDisc();
     ?>
     <div class="container2">
         <h1>Discussions Page</h1>
+        
         <?php
+         if (isset($_SESSION['username'])) {
+            echo '
+        
+            <a href="addDisc.php">
+            <button class="addDiscBtn">Add a Discusstion</button>
+             </a>
+        
+        
+        
+             ';}
        
         for ($i = 0; $i < count($row); $i++) {
             echo '

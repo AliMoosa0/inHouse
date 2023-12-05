@@ -284,8 +284,8 @@ h1 {
 
 .discussion {
     display: flex;
-    border: 1px solid #ccc;
-    background-color: #fff;
+    border: 1px solid #ff0000;
+    background-color: rgba(1, 1, 2, 0.5);
     margin-bottom: 20px;
     padding: 10px;
 }

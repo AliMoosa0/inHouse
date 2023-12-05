@@ -103,8 +103,8 @@ class Comments
 	function delteComment($id)
 	{
 		$db = Database::getInstance();
-		$data = $db->multiFetch('delete from comments where commentID = $id');
-		return $data;
+		 $db->querySQL('delete from comments where commentID = $id');
+		return true;
 	}
 	function getCommentWithID($id)
 	{
