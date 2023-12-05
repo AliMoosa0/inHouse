@@ -807,7 +807,7 @@
                 echo "<td>$commentedBY</td>";
                 echo "<td>$comment</td>";
                 echo "<td>";
-                echo "<a href='delete_user.php?id=$userID'><button> Delete Comment</button></a>";
+                echo "<a href='deleteComment.php?id=$commentID'><button> Delete Comment</button></a>";
               
                 echo "</td>";
                 echo "</tr>";

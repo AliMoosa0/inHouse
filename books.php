@@ -229,11 +229,8 @@ class Books
 			return false;
 		}
 	}
-
-
 	function updateDB()
 	{
-		try {
 		$db = Database::getInstance();
 		$data = "UPDATE books SET 
 				bookID = '$this->bookID',
@@ -246,15 +243,14 @@ class Books
                 BookPic = '$this->bookPic',
                 InStock = '$this->inStock',
                 AddedBy = '$this->addedBy'
-             	WHERE BookID = '$this->bookID'";
-	
+             WHERE BookID = '$this->bookID'";
+
 		$db->querySQL($data);
 		return true;
-	}catch (Exception $e) {
-		echo 'Exception: ' . $e;
-		return false;
 	}
-	}
+
+
+
 
 	public function getBookPicWithID($id)
 	{

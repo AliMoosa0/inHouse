@@ -47,12 +47,12 @@ if (isset($_POST['submitted'])) {
     $imgFile = uploadImg();
     $book->setBookPic($imgFile);
     $book->setAddedBy($_SESSION['uid']);
-
+    $book->setBookID($bookID);
 
 
 
     if ($book->updateDB()) {
-        echo '<p style="color:green"><b>Added Successfully</b></p>';
+        echo '<p style="color:green"><b>Edited Successfully</b></p>';
     } else {
         echo '<p class="error"> Not Successfull </p>';
     }
@@ -162,7 +162,7 @@ $listBookInfo->initWithId($bookID);
                                             value="<?php echo $listBookInfo->getBookName() ?>" /><br>
 
                                         <label><b>Book Author </b></label>
-                                        <input type="text" name="name" size="50"
+                                        <input type="text" name="auth" size="50"
                                             value="<?php echo $listBookInfo->getBookAuthor() ?>" /><br>
 
 
