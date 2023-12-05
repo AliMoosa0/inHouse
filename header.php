@@ -29,15 +29,15 @@ session_start();
         <li><a href="contactUs.php">Contact Us</a></li>
         <li><a href="discussions_page.php">discussions</a></li>
         <li><a href="admin_dashboard.php">Admin Panel</a></li>
-        <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
-        <?php if ($_SESSION['role'] == 'admin') { ?>
+        <li><a href="cart_page.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
+        <?php if($_SESSION['role'] == 'admin') { ?>
 
         <?php } ?>
         <div class="animation start-home"></div>
       </ul>
 
       <?php
-      if ($_SESSION['uid'] != null) {
+      if($_SESSION['uid'] != null) {
 
         echo '
             <div class="buttons">
