@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Second-Hand Book Store</title>
-    
-
 
 
 </head>
