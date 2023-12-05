@@ -1,14 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+class Cart
+{
+    private $cartID;
+    private $userID;
+    private $bookID;
+    private $price;
+    private $bookName;
+    private $bookPic;
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    // Constructor
+    public function __construct()
+    {
+        $this->cartID = null;
+        $this->userID = null;
+        $this->bookID = null;
+        $this->price = null;
+        $this->bookName = null;
+        $this->bookPic = null;
+    }
 
-<body>
-    <?php include "header.php"; ?>
-</body>
+    // Setters
+    public function setCartID($cartID)
+    {
+        $this->cartID = $cartID;
+    }
 
-</html>
+    public function setUserID($userID)
+    {
+        $this->userID = $userID;
+    }
+
+    public function setBookID($bookID)
+    {
+        $this->bookID = $bookID;
+    }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    public function setBookName($bookName)
+    {
+        $this->bookName = $bookName;
+    }
+
+    public function setBookPic($bookPic)
+    {
+        $this->bookPic = $bookPic;
+    }
+
+    // Getters
+    public function getCartID()
+    {
+        return $this->cartID;
+    }
+
+    public function getUserID()
+    {
+        return $this->userID;
+    }
+
+    public function getBookID()
+    {
+        return $this->bookID;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getBookName()
+    {
+        return $this->bookName;
+    }
+
+    public function getBookPic()
+    {
+        return $this->bookPic;
+    }
+    function initWith($userId, $bookID, $bookName, $price, $bookPic)
+    {
+        $this->userId = $userId;
+        $this->bookID = $bookID;
+        $this->bookName = $bookName;
+        $this->price = $price;
+        $this->bookPic = $bookPic;
+    }
+
+    function addToCart($Bookid)
+    {
+        $db = Database::getInstance();
+        //         var_dump($this->userId, $this->bookID . $this->price . $this->bookName . $this->bookPic);
+// die();
+        $sql = "INSERT INTO carts (cartID, userID, bookID, price, bookName, bookPic) VALUES (null, '$this->userId', '$this->bookID', '$this->price', '$this->bookName', '$this->bookPic')";
+        // var_dump($sql);
+        // die();
+        $db->querySQL($sql);
+
+        return true;
+    }
+
+
+    function getCart()
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM cart where userID = $this->userID";
+        $data = $db->multiFetch($sql);
+        return $data;
+    }
+
+    function deleteCart()
+    {
+        $db = Database::getInstance();
+        $sql = "DELETE * FROM cart WHERE userID = $this->userID";
+        $db->querySQL($sql);
+        return true;
+    }
+
+
+
+
+}
