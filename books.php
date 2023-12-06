@@ -147,11 +147,16 @@ class Books {
 	}
 
 
-	public function getWithIdOrName($id) {
+	function initWithIdOrName($keyword) {
 		$db = Database::getInstance();
-		$data = $db->singleFetch("SELECT * FROM users WHERE username = $id");
-		return $data;
+		$lowerKeyword = strtolower($keyword); // Convert keyword to lowercase
+		$sql = "SELECT * FROM books WHERE bookID = '$keyword' OR LOWER(bookName) LIKE '$lowerKeyword'";
+		$results = $db->multiFetch($sql);
+		return $results;
 	}
+
+
+
 
 	function initWithName() {
 

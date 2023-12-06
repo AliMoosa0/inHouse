@@ -128,7 +128,7 @@
             echo "<p>No items in the cart or total not available.</p>";
         }
 
-        echo'</div>';
+        echo '</div>';
 
     }
     displayCart();
