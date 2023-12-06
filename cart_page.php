@@ -42,6 +42,15 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
+        .cart-total {
+            border-top: 2px solid #ccc;
+            padding-top: 20px;
+            margin-top: 20px;
+            text-align: right;
+            font-size: 18px;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -104,12 +113,30 @@
             echo "<p>Your cart is empty.</p>";
         }
 
+        echo ' <div class="cart-total">';
+
+        // Get total cost for the user's cart
+        $cart = new Cart();
+        $userID = $_SESSION['uid'];
+        $total = $cart->getTotal($userID);
+
+        if($total) {
+            // Display total cost
+            echo "<p>Total Cost: BHD".$total->total."</p>";
+        } else {
+            // Handle the case when the cart is empty or total is not available
+            echo "<p>No items in the cart or total not available.</p>";
+        }
+
+        echo'</div>';
 
     }
     displayCart();
+    ?>
 
 
-
+    <?php
+    include "footer.html"; // Include your footer file
     ?>
     <script>
         function updateCart(cartItemId) {
@@ -127,7 +154,3 @@
     </script>
 
 </body>
-<?php
-
-include "footer.html"; // Include your footer file
-?>

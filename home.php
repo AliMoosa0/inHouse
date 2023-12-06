@@ -35,8 +35,10 @@
             echo "<p>Price: " . $bookPrice . "</p>";
             echo "<p>Publish Date: " . $publishDate . "</p>";
             echo "<button>Add to Cart</button>";
+
             echo "</div>";
             echo "</div>";
+
             echo "</div>";
         } 
 
@@ -68,6 +70,11 @@
             echo "<h2>" . $row[$i]->bookName . "</h2>";
             echo "<p>Price: " . $row[$i]->bookPrice . "</p>";
             echo "<p>Publish Date: " . $row[$i]->publishDate . "</p>";
+            echo "<a href='viewBookDetails.php?bookId=" . $row[$i]->bookID . "'><button>View details</button></a>";
+            echo "<br>";
+            echo '<a href="edit_books.php?id=' . $row[$i]->bookID . '"><button>edit Book</button></a>';
+            echo "<br>";
+            echo '<a href="delete_books.php?id=' . $row[$i]->bookID . '"><button>Delete Book</button></a>';
             
             // Form for adding a book to the cart
             echo "<form method='post'>";
@@ -83,7 +90,7 @@
                     echo "Book added to cart";
                 } else {
                     echo "Failed to add book to cart";
-                }
+                } 
             }
             
             echo "</div>"; // Closing div for 'book-info'

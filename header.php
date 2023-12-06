@@ -24,16 +24,14 @@ session_start();
         </svg>
       </label>
       <ul class="links">
-
         <li><a href="home.php">Home Page</a></li>
         <li><a href="contactUs.php">Contact Us</a></li>
-        <li><a href="discussions_page.php">discussions</a></li>
-        <li><a href="admin_dashboard.php">Admin Panel</a></li>
+        <li><a href="discussions_page.php">Discussions</a></li>
+
         <li><a href="cart_page.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
         <?php if($_SESSION['role'] == 'admin') { ?>
-
+          <li><a href="admin_dashboard.php">Admin Panel</a></li>
         <?php } ?>
-        <div class="animation start-home"></div>
       </ul>
 
       <?php
@@ -241,44 +239,54 @@ session_start();
       order: 1;
     }
 
-    @media screen and (max-width: 1023px) {
-      .navbar .logo a {
-        font-size: 1.5rem;
-      }
+   @media screen and (max-width: 1023px) {
+  .navbar .logo a {
+    font-size: 1.5rem;
+  }
 
-      .links {
-        position: fixed;
-        left: -100%;
-        top: 75px;
-        width: 100%;
-        height: 100vh;
-        padding-top: 50px;
-        background: #175d69;
-        flex-direction: column;
-        transition: 0.3s ease;
-      }
+  .links {
+    position: fixed;
+    left: -100%;
+    top: 75px;
+    width: 100%;
+    height: 100vh;
+    padding-top: 50px;
+    background: #175d69;
+    display: flex; /* Display links in a row */
+    flex-direction: column;
+    align-items: center; /* Center align links */
+    transition: 0.3s ease;
+  }
 
-      .navbar #menu-toggle:checked~.links {
-        left: 0;
-      }
+  .links a {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+  }
 
-      .navbar #hamburger-btn {
-        display: block;
-      }
+  .navbar #menu-toggle:checked~.links {
+    left: 0;
+  }
 
-      .header .buttons {
-        display: none;
-      }
+  .navbar #hamburger-btn {
+    display: block;
+  }
 
-      .hero-section .hero {
-        max-width: 100%;
-        text-align: center;
-      }
+  .header .buttons {
+    display: none;
+  }
 
-      .hero-section img {
-        display: none;
-      }
-    }
+  .hero-section .hero {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-section img {
+    display: none;
+  }
+}
+
   </style>
 
 

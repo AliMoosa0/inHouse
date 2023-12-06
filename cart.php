@@ -110,6 +110,12 @@ class Cart {
         return true;
     }
 
+    function getTotal($userID) {
+        $db = Database::getInstance();
+        $sql = "SELECT SUM(price) as total FROM carts WHERE userID = $userID";
+        $data = $db->singleFetch($sql);
+        return $data;
+    }
 
 
 
