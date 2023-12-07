@@ -123,6 +123,9 @@
         if($total) {
             // Display total cost
             echo "<p>Total Cost: BHD".$total->total."</p>";
+            echo'<form action="checkout.php">';
+            echo '<input type="submit" name="checkoutBtn" value="Proceed to Checkout">';
+            echo'</form>';
         } else {
             // Handle the case when the cart is empty or total is not available
             echo "<p>No items in the cart or total not available.</p>";
@@ -133,7 +136,7 @@
     }
     displayCart();
     ?>
-
+    
 
     <?php
     include "footer.html"; // Include your footer file

@@ -145,12 +145,24 @@ class Books {
 		);
 		return $data;
 	}
+	function getBooksByCategory($category) {
+		$db = Database::getInstance();
+		$data = $db->multiFetch("Select * from books where bookCategory = '$category' and inStock = 1 order by publishDate desc");
+		return $data;
+	}
+
+	function getBooksByAddedBy($addedBy) {
+		$db = Database::getInstance();
+		$data = $db->multiFetch("Select * from books where addedBy = '$addedBy' order by publishDate desc");
+		return $data;
+	}
 
 
 	function initWithIdOrName($keyword) {
 		$db = Database::getInstance();
 		$lowerKeyword = strtolower($keyword); // Convert keyword to lowercase
-		$sql = "SELECT * FROM books WHERE bookID = '$keyword' OR LOWER(bookName) LIKE '$lowerKeyword'";
+		$searchTerm = '%'.$lowerKeyword.'%'; // Add wildcards for partial matching
+		$sql = "SELECT * FROM books WHERE bookID = '$keyword' OR LOWER(bookName) LIKE '$searchTerm'";
 		$results = $db->multiFetch($sql);
 		return $results;
 	}
