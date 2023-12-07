@@ -295,7 +295,8 @@ session_start();
 
 
 <?php
-include('connection.php');  // Adjust the path accordingly
+//inculdin the important classes
+include('connection.php'); 
 include('debugging.php');
 include('Comments.php');
 include('users.php');

@@ -100,16 +100,17 @@ class Comments
 		$data = $db->multiFetch('select * from comments');
 		return $data;
 	}
-	function delteComment($id)
+	function deleteComment($id)
 	{
 		$db = Database::getInstance();
-		 $db->querySQL('delete from comments where commentID = $id');
+		 $db->querySQL('delete from comments where commentID = '.$id.'');
 		return true;
 	}
+	
 	function getCommentWithID($id)
 	{
 		$db = Database::getInstance();
-		$data = $db->multiFetch('select * from comments where commentID = $id');
+		$data = $db->singleFetch('select * from comments where commentID = ' .$id .'');
 		$this->initWith(
 			$data->commentID,
 			$data->commentedBY,

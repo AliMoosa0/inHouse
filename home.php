@@ -59,7 +59,7 @@
     
     
         ';
-
+    
         if(isset($_SESSION['username'])) {
             // Displaying user-specific content if logged in
             echo "<h1>Welcome, ".$_SESSION['username']."</h1>";
