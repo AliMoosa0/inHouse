@@ -154,6 +154,8 @@ class Users
             return false;
         }
     }
+    
+    //TODO: make it with username
     function changePassword($uid, $password)
     {
         try {
