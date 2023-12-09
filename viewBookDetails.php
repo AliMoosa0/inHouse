@@ -8,7 +8,7 @@
 
     <style>
         .book-details {
-            background-color: #f9f9f9;
+            background-color:rgba(249, 249, 249, 0.8);
             padding: 20px;
             border-radius: 5px;
             margin: 20px 0;
@@ -44,7 +44,18 @@
             $bookCondition = $bookInfo->bookCondition;
             $bookPic = $bookInfo->bookPic;
             $inStock = $bookInfo->inStock;
+            if ($inStock == 1) {
+                $inStock = "Yes";
+            } else {
+                $inStock = "No";
+            }
             $addedBy = $bookInfo->addedBy;
+            $db = Database::getInstance();
+		    $q = 'SELECT username FROM users WHERE uid = \''.$addedBy.'\'';
+		    $data = $db->singleFetch($q);
+            $addedBy = $data->username;
+
+//TODO: add a button to add to cart
 
             // Display book details
             echo "<div class='book-details'>";

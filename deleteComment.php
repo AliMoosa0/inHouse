@@ -1,5 +1,6 @@
 <?php
 
+
 include "header.php";
 
 
@@ -11,10 +12,10 @@ if (isset($_GET['id'])) {
     $comID = $_POST['id'];
 }
 // echo $comID;
+include "comments.php";
 $comm = new Comments();
 $commentInfo = $comm->getCommentWithID($comID);
-// $disc->getDiscTitle();
-
+//  echo $commentInfo->comment;
 ?>
 
 
@@ -61,9 +62,9 @@ if (isset($_POST['submit'])) {
 
     //test the value of the radio button       
     if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
-        $comment->setCommentID($comID);
+        
         //delete article 
-        if ($comment->delteComment($comID)) {
+        if ($comm->deleteComment($comID)) {
             $deleted = "Comment deleted successfully";
         }
 
@@ -99,9 +100,9 @@ if (isset($_POST['submit'])) {
         <br />
         <h2 class="form-title">Delete a Comment</h2>
         <h2>Comment:
-            <?php echo $comment->getComment(); ?>
+            <?php echo $commentInfo->comment ; ?>
         </h2>
-        <p>Are you sure you want to delete this Discussion? <br /><br />
+        <p>Are you sure you want to delete this comment? <br /><br />
             <label class="form-radio">
                 <input type="radio" name="sure" value="Yes" /> Yes
             </label>
