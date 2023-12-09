@@ -61,10 +61,10 @@
     include "header.php"; // Include your header file
     
     // Check if 'Delete' button for a specific cart item is clicked
-    if(isset($_POST['deleteBtn']) && isset($_POST['cartID'])) {
+    if (isset($_POST['deleteBtn']) && isset($_POST['cartID'])) {
         $cart = new Cart();
         $cartIDToDelete = $_POST['cartID'];
-        if($cart->deleteItem($cartIDToDelete)) {
+        if ($cart->deleteItem($cartIDToDelete)) {
             echo "Item deleted from cart";
             displayCart(); // Display the cart contents after deletion
             // Optionally, return a success message or an indicator of successful deletion
@@ -79,32 +79,60 @@
 
 
     // Check if the user is logged in
-    if(!isset($_SESSION['uid'])) {
+    if (!isset($_SESSION['uid'])) {
         // Redirect or show a message indicating that the user needs to log in
         // Example: header("Location: login.php");
         echo "Please log in to view your cart.";
         exit();
     }
 
-    function displayCart() {
+    //handel the place order button
+    if (isset($_POST['checkoutBtn'])) {
+        $cart = new Cart();
+        $userID = $_SESSION['uid'];
+        $total = $cart->getTotal($userID);
+        $order = new Order();
+        $order->setUserID($userID);
+        $order->setTotal($total);
+        $order->setOrderDate(date("Y-m-d H:i:s"));
+        $order->setOrderStatus("Pending");
+        $order->setPaymentStatus("Pending");
+        $order->setPaymentMethod("Cash on Delivery");
+        $order->setShippingAddress("Manama");
+        $order->setShippingMethod("Standard");
+        $order->setShippingCost(0);
+        $order->setTax(0);
+        $order->setDiscount(0);
+        $order->setGrandTotal($total);
+        $order->setOrderItems($userCart);
+        if ($order->placeOrder()) {
+            echo "Order placed successfully";
+            exit();
+        } else {
+            echo "Failed to place order";
+        }
+    }
+
+    function displayCart()
+    {
         $userID = $_SESSION['uid'];
         // Retrieve cart information for the logged-in user
         $cart = new Cart();
         $userCart = $cart->getCart($userID); // Replace this with your method to get cart by user ID
     
         // Display cart contents
-        if($userCart) {
+        if ($userCart) {
             echo "<h1>Your Cart</h1>";
 
-            foreach($userCart as $cartItem) {
-                echo "<div class='cart-item' id='cartItem-".$cartItem->cartID."'>";
-                echo "<img src='uploads/".$cartItem->bookPic."' />";
-                echo "<h2>".$cartItem->bookName."</h2>";
-                echo "<p>Price: ".$cartItem->price."</p>";
+            foreach ($userCart as $cartItem) {
+                echo "<div class='cart-item' id='cartItem-" . $cartItem->cartID . "'>";
+                echo "<img src='uploads/" . $cartItem->bookPic . "' />";
+                echo "<h2>" . $cartItem->bookName . "</h2>";
+                echo "<p>Price: " . $cartItem->price . "</p>";
                 // Add a 'Delete' button for each item
                 echo "<form method='post'>";
-                echo "<input type='hidden' name='cartID' value='".$cartItem->cartID."'>";
-                echo "<input type='submit' name='deleteBtn' value='Delete' onclick='updateCart(".$cartItem->cartID.")'>";
+                echo "<input type='hidden' name='cartID' value='" . $cartItem->cartID . "'>";
+                echo "<input type='submit' name='deleteBtn' value='Delete' onclick='updateCart(" . $cartItem->cartID . ")'>";
                 echo "</form>";
                 echo "</div>";
             }
@@ -120,12 +148,12 @@
         $userID = $_SESSION['uid'];
         $total = $cart->getTotal($userID);
 
-        if($total) {
+        if ($total) {
             // Display total cost
-            echo "<p>Total Cost: BHD".$total->total."</p>";
-            echo'<form action="checkout.php">';
-            echo '<input type="submit" name="checkoutBtn" value="Proceed to Checkout">';
-            echo'</form>';
+            echo "<p>Total Cost: BHD" . $total->total . "</p>";
+            echo '<form action="checkout.php">';
+            echo '<input type="submit" name="checkoutBtn" value="Place Order">';
+            echo '</form>';
         } else {
             // Handle the case when the cart is empty or total is not available
             echo "<p>No items in the cart or total not available.</p>";
@@ -133,10 +161,14 @@
 
         echo '</div>';
 
+
+
+
+
     }
     displayCart();
     ?>
-    
+
 
     <?php
     include "footer.html"; // Include your footer file

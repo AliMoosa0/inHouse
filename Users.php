@@ -4,6 +4,7 @@ class Users
     private $uid;
     private $username;
     private $email;
+    private $phoneNumber;
     private $regDate;
     private $password;
     private $role;
@@ -13,9 +14,11 @@ class Users
         $this->uid = null;
         $this->username = null;
         $this->email = null;
+        $this->phoneNumber = null;
         $this->regDate = null;
         $this->password = null;
         $this->role = null;
+
     }
 
     public function getUid()
@@ -46,6 +49,15 @@ class Users
     public function setEmail($email)
     {
         $this->email = $email;
+    }
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
     }
 
     public function getRegDate()
@@ -87,6 +99,7 @@ class Users
             $data->uid,
             $data->username,
             $data->email,
+            $data->phoneNumber,
             $data->password,
             $data->regDate,
             $data->role
@@ -103,11 +116,12 @@ class Users
         return true;
     }
 
-    function initWith($uid, $userName, $email, $password, $regDate, $role)
+    function initWith($uid, $userName, $phoneNumber, $email, $password, $regDate, $role)
     {
         $this->uid = $uid;
         $this->username = $userName;
         $this->email = $email;
+        $this->phoneNumber = $phoneNumber;
         $this->password = $password;
         $this->regDate = $regDate;
         $this->role = $role;
@@ -142,7 +156,8 @@ class Users
             try {
                 $hashed_pwd = password_hash($this->password, PASSWORD_DEFAULT);
                 $db = Database::getInstance();
-                $data = "insert into users (uid, username, email, RegDate, password, role) values (null, '$this->username', '$this->email', NOW(), '$hashed_pwd', '$this->role')";
+                $data = "insert into users (uid, username,  email, phoneNumber, RegDate, password, role) values (null, '$this->username', '$this->email', '$this->phoneNumber', NOW(), '$hashed_pwd', '$this->role')";
+              
                 $db->querySQL($data);
                 //echo $data;
                 return true;
@@ -154,7 +169,7 @@ class Users
             return false;
         }
     }
-    
+
     //TODO: make it with username
     function changePassword($uid, $password)
     {
@@ -197,6 +212,7 @@ class Users
                 $this->initWith(
                     $userData->uid,
                     $userData->username,
+                    $userData->phoneNumber,
                     $userData->email,
                     $userData->password,
                     $userData->regDate,
@@ -214,6 +230,7 @@ class Users
             if ($this->checkUser($username, $password)) {
                 $_SESSION['uid'] = $this->getUid();
                 $_SESSION['username'] = $this->getUsername();
+                $_SESSION['phoneNumber'] = $this->getPhoneNumber();
                 $_SESSION['role'] = $this->getRole();
 
                 return true;
@@ -237,6 +254,7 @@ class Users
     {
         unset($_SESSION['uid'],
             $_SESSION['username'],
+            $_SESSION['phoneNumber'],
             $_SESSION['role']);
         session_destroy();
     }
