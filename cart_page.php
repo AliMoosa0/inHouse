@@ -89,7 +89,7 @@
     //handel the place order button
     if (isset($_POST['checkoutBtn'])) {
         // echo "Order placed successfully*************************************";
-
+        
         $order = new order();
 
         if ($order->insert()) {

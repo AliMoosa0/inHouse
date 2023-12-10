@@ -67,7 +67,7 @@ class order
     function initWithID()
     {
         $db = Database::getInstance();
-        $data = $db->multiFetch('select * from orders where uid = ' . $_SESSION['uid']);
+        $data = $db->multiFetch('select * from orders where orderedBY = ' . $_SESSION['uid']);
         // $this->initWith(
         //     $data->orderID,
         //     $data->orderedBY,
@@ -100,11 +100,12 @@ class order
         $data = $this->listOfCarts($_SESSION['uid']);
         foreach ($data as $cart) {
             $db = Database::getInstance();
-            $sql = 'insert into orders (orderID, orderedBY, cartID, orderedON)
-            values (\'' . $this->orderID . '\', \'' . $cart->userID . '\', \'' . $cart->cartID . '\',   NOW() )';
+            $sql = 'insert into orders (orderID, orderedBY, cartID, orderStatus , orderedON)
+            values (\'' . $this->orderID . '\', \'' . $cart->userID . '\', \'' . $cart->cartID . '\', "Placed" ,   NOW() )';
             $db->querySQL($sql);
-            $delete = 'delete from carts where cartID = ' . $cart->cartID;
-            $db->querySQL($delete);
+            $update = 'update carts set status = "hide" where cartID = ' . $cart->cartID;
+            $db->querySQL($update);
+            //TODO: update the status of the book to sold
         }
         return true;
     }
