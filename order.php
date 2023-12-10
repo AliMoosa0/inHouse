@@ -64,35 +64,50 @@ class order
         $this->orderedON = $orderedON;
 
     }
-    function initWithID($orderID)
+    function initWithID()
     {
         $db = Database::getInstance();
-        $data = $db->singleFetch('select * from orders where uid = ' . $orderID);
-        $this->initWith(
-            $data->orderID,
-            $data->orderedBY,
-            $data->cartID,
-            $data->orderedBY,
-        );
+        $data = $db->multiFetch('select * from orders where uid = ' . $_SESSION['uid']);
+        // $this->initWith(
+        //     $data->orderID,
+        //     $data->orderedBY,
+        //     $data->cartID,
+        //     $data->orderedBY
+        // );
+        return $data;
 
     }
+
     function findNextID($userID)
     {
         $db = Database::getInstance();
         $data = $db->singleFetch('select max(cartID) as cartID from carts where userID = ' . $userID);
         $this->orderID = $data->cartID + 10000;
     }
-
-    function insert()
+    function listOfCarts($userID)
     {
-        $this->findNextID($_SESSION['userID']);
         $db = Database::getInstance();
-        $sql = 'insert into orders (orderID, orderedBY, cartID, orderedON)
-         values (\'' . $this->orderID . '\', \'' . $this->orderedBY . '\',\'' . $this->cartID . '\',\'' . $this->orderedON . '\')';
-        $db->querySQL($sql);
+        $data = $db->multiFetch('select * from carts where userID = ' . $userID);
+        return $data;
 
     }
 
+    function insert()
+    {
+        $this->findNextID($_SESSION['uid']);
+        // var_dump($this->orderID);
+        // die();
+        $data = $this->listOfCarts($_SESSION['uid']);
+        foreach ($data as $cart) {
+            $db = Database::getInstance();
+            $sql = 'insert into orders (orderID, orderedBY, cartID, orderedON)
+            values (\'' . $this->orderID . '\', \'' . $cart->userID . '\', \'' . $cart->cartID . '\',   NOW() )';
+            $db->querySQL($sql);
+            $delete = 'delete from carts where cartID = ' . $cart->cartID;
+            $db->querySQL($delete);
+        }
+        return true;
+    }
 
 
 }

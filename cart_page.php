@@ -88,24 +88,11 @@
 
     //handel the place order button
     if (isset($_POST['checkoutBtn'])) {
-        $cart = new Cart();
-        $userID = $_SESSION['uid'];
-        $total = $cart->getTotal($userID);
-        $order = new Order();
-        $order->setUserID($userID);
-        $order->setTotal($total);
-        $order->setOrderDate(date("Y-m-d H:i:s"));
-        $order->setOrderStatus("Pending");
-        $order->setPaymentStatus("Pending");
-        $order->setPaymentMethod("Cash on Delivery");
-        $order->setShippingAddress("Manama");
-        $order->setShippingMethod("Standard");
-        $order->setShippingCost(0);
-        $order->setTax(0);
-        $order->setDiscount(0);
-        $order->setGrandTotal($total);
-        $order->setOrderItems($userCart);
-        if ($order->placeOrder()) {
+        // echo "Order placed successfully*************************************";
+
+        $order = new order();
+
+        if ($order->insert()) {
             echo "Order placed successfully";
             exit();
         } else {
@@ -151,7 +138,7 @@
         if ($total) {
             // Display total cost
             echo "<p>Total Cost: BHD" . $total->total . "</p>";
-            echo '<form action="checkout.php">';
+            echo '<form method="POST">';
             echo '<input type="submit" name="checkoutBtn" value="Place Order">';
             echo '</form>';
         } else {

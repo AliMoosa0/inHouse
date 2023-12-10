@@ -28,14 +28,15 @@ session_start();
         <li><a href="contactUs.php">Contact Us</a></li>
         <li><a href="discussions_page.php">Discussions</a></li>
         <li><a href="MyBooks.php">My Books</a></li>
+        <li><a href="myOrders.php">My Orders</a></li>
         <li><a href="cart_page.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
-        <?php if($_SESSION['role'] == 'admin') { ?>
+        <?php if ($_SESSION['role'] == 'admin') { ?>
           <li><a href="admin_dashboard.php">Admin Panel</a></li>
         <?php } ?>
       </ul>
 
       <?php
-      if($_SESSION['uid'] != null) {
+      if ($_SESSION['uid'] != null) {
 
         echo '
             <div class="buttons">
@@ -59,14 +60,15 @@ session_start();
       </div>
 
 
-      
+
       <!-- Google Website Translator -->
       <script type="text/javascript">
         function googleTranslateElementInit() {
           new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
         }
       </script>
-     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit&hl=en"></script>
+      <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit&hl=en"></script>
       <div id="google_translate_element"></div>
 
     </nav>
@@ -299,7 +301,7 @@ session_start();
 
 <?php
 //inculdin the important classes
-include('connection.php'); 
+include('connection.php');
 include('debugging.php');
 include('Comments.php');
 include('users.php');
