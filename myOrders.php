@@ -27,9 +27,9 @@ if ($userOrder) {
         $firstIteration = true;
 
         foreach ($orders as $orderItem) {
-            // if (!$firstIteration) {
-            //     echo "<hr>";
-            // }
+            if (!$firstIteration) {
+                // echo "<hr>";
+            }
 
             $bookNameQuery = 'SELECT bookName FROM carts WHERE cartID = ' . $orderItem->cartID;
             $db = Database::getInstance();
@@ -47,7 +47,7 @@ if ($userOrder) {
                 echo "<p>No book information found for this order.</p>";
             }
 
-            // $firstIteration = false;
+            $firstIteration = false;
         }
 
         echo "</div>";

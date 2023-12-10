@@ -84,10 +84,13 @@ class order
         $data = $db->singleFetch('select max(cartID) as cartID from carts where userID = ' . $userID);
         $this->orderID = $data->cartID + 10000;
     }
-    function listOfCarts($userID)
+    function listOfCarts()
     {
         $db = Database::getInstance();
-        $data = $db->multiFetch('select * from carts where userID = ' . $userID);
+        $query = 'select * from carts where userID = ' . $_SESSION['uid'] . ' and status = "show"';
+
+        $data = $db->multiFetch($query);
+
         return $data;
 
     }
@@ -95,9 +98,8 @@ class order
     function insert()
     {
         $this->findNextID($_SESSION['uid']);
-        // var_dump($this->orderID);
-        // die();
-        $data = $this->listOfCarts($_SESSION['uid']);
+
+        $data = $this->listOfCarts();
         foreach ($data as $cart) {
             $db = Database::getInstance();
             $sql = 'insert into orders (orderID, orderedBY, cartID, orderStatus , orderedON)
