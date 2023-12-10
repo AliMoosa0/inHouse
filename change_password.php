@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
 } elseif (isset($_POST['id'])) {
     $userID = $_POST['id'];
 }
-
+//TODO: make it with username
 
 ?>
 
@@ -235,7 +235,7 @@ if (isset($_GET['id'])) {
                     <label>user ID</label>
 
                     <input type="text" id="Username" name="Username" placeholder="Enter your user ID" autofocus
-                        onblur="isValid(this);" required  value="<?php echo $userID; ?>">
+                        onblur="isValid(this);" required value="<?php echo $userID; ?>">
 
                 </div>
                 <div class="data">

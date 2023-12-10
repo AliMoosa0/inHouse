@@ -1,20 +1,26 @@
 <?php
-class comeents
+class Comments
 {
 	private $commentID;
-	private $studentID;
-	private $commentBody;
-	private $commentedBy;
+	private $commentedBY;
+	private $discID;
+	private $uid;
+	private $comment;
+	private $commentedAT;
 
 
 
-	public function __constructor($commentID, $studentID, $commentBody, $commentedBy)
+
+
+	public function __construct()
 	{
 
-		$this->commentID = $commentID;
-		$this->studentID = $studentID;
-		$this->commentBody = $commentBody;
-		$this->commentedBy = $commentedBy;
+		$this->commentID = null;
+		$this->commentedBY = null;
+		$this->discID = null;
+		$this->uid = null;
+		$this->comment = null;
+		$this->commentedAT = null;
 	}
 
 	public function getCommentID()
@@ -27,33 +33,92 @@ class comeents
 		$this->commentID = $value;
 	}
 
-	public function getStudentID()
+	public function getCommentedBY()
 	{
-		return $this->studentID;
+		return $this->commentedBY;
 	}
 
-	public function setStudentID($value)
+	public function setCommentedBY($value)
 	{
-		$this->studentID = $value;
+		$this->commentedBY = $value;
 	}
 
-	public function getCommentBody()
+	public function getDiscID()
 	{
-		return $this->commentBody;
+		return $this->discID;
 	}
 
-	public function setCommentBody($value)
+	public function setDiscID($value)
 	{
-		$this->commentBody = $value;
+		$this->discID = $value;
 	}
 
-	public function getCommentedBy()
+	public function getUid()
 	{
-		return $this->commentedBy;
+		return $this->uid;
 	}
 
-	public function setCommentedBy($value)
+	public function setUid($value)
 	{
-		$this->commentedBy = $value;
+		$this->uid = $value;
+	}
+
+	public function getComment()
+	{
+		return $this->comment;
+	}
+
+	public function setComment($value)
+	{
+		$this->comment = $value;
+	}
+
+	public function getCommentedAT()
+	{
+		return $this->commentedAT;
+	}
+
+	public function setCommentedAT($value)
+	{
+		$this->commentedAT = $value;
+	}
+
+
+	function initWith($commentID, $commentedBY, $discID, $uid, $comment, $commentedAT)
+	{
+		$this->commentID = $commentID;
+		$this->commentedBY = $commentedBY;
+		$this->discID = $discID;
+		$this->uid = $uid;
+		$this->comment = $comment;
+		$this->commentedAT = $commentedAT;
+	}
+
+	function getAllComments()
+	{
+		$db = Database::getInstance();
+		$data = $db->multiFetch('select * from comments');
+		return $data;
+	}
+	function deleteComment($id)
+	{
+		$db = Database::getInstance();
+		 $db->querySQL('delete from comments where commentID = '.$id.'');
+		return true;
+	}
+	
+	function getCommentWithID($id)
+	{
+		$db = Database::getInstance();
+		$data = $db->singleFetch('select * from comments where commentID = ' .$id .'');
+		$this->initWith(
+			$data->commentID,
+			$data->commentedBY,
+			$data->discID,
+			$data->uid,
+			$data->comment,
+			$data->commentedAT
+		);
+		return $data;
 	}
 }

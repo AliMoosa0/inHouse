@@ -1,22 +1,21 @@
 <?php
 
+
 include "header.php";
 
 
-$discID = 0;
+$comID = 0;
 
-if (isset($_GET['discid'])) {
-    $discID = $_GET['discid'];
-} elseif (isset($_POST['discid'])) {
-    $discID = $_POST['discid'];
+if (isset($_GET['id'])) {
+    $comID = $_GET['id'];
+} elseif (isset($_POST['id'])) {
+    $comID = $_POST['id'];
 }
-// echo $discID;
-// die();
-$disc = new Discussions();
-$discInfo = $disc->getDiscWithID($discID);
-// $disc->getDiscTitle();
-// var_dump($discInfo->discID);
-// die();
+// echo $comID;
+include "comments.php";
+$comm = new Comments();
+$commentInfo = $comm->getCommentWithID($comID);
+//  echo $commentInfo->comment;
 ?>
 
 
@@ -56,26 +55,22 @@ $discInfo = $disc->getDiscWithID($discID);
         background-color: #23527c;
     }
 </style>
+
+
 <?php
-$Disk = new Discussions();
-$discInfo = $Disk->getDiscWithID($discID);
-//     var_dump($discID);
-// die();
 if (isset($_POST['submit'])) {
 
     //test the value of the radio button       
     if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
-        $Disk->getDiscWithID($discID);
-
-
-        //delete discussion 
-        if ($Disk->deleteDisc()) {
-            $deleted = "Discussion deleted successfully";
+        
+        //delete article 
+        if ($comm->deleteComment($comID)) {
+            $deleted = "Comment deleted successfully";
         }
 
 
     } else {
-        $notDeleted = "Discussion deletion not confirmed";
+        $notDeleted = "comment deletion not confirmed";
     }
 }
 ?>
@@ -103,11 +98,11 @@ if (isset($_POST['submit'])) {
             </p>
         <?php endif; ?>
         <br />
-        <h2 class="form-title">Delete Discussion</h2>
-        <h2>Title:
-            <?php echo $discInfo->discTitle; ?>
+        <h2 class="form-title">Delete a Comment</h2>
+        <h2>Comment:
+            <?php echo $commentInfo->comment ; ?>
         </h2>
-        <p>Are you sure you want to delete this Discussion? <br /><br />
+        <p>Are you sure you want to delete this comment? <br /><br />
             <label class="form-radio">
                 <input type="radio" name="sure" value="Yes" /> Yes
             </label>
@@ -115,7 +110,7 @@ if (isset($_POST['submit'])) {
                 <input type="radio" name="sure" value="No" /> No
             </label>
         </p>
-        <input type="hidden" name="id" value="<?php echo $discID; ?>" />
+        <input type="hidden" name="id" value="<?php echo $bookID; ?>" />
         <p><input type="submit" name="submit" value="Delete" class="form-submit" /></p>
 
     </form>
