@@ -170,16 +170,16 @@ class Books {
 
 
 
-	function initWithName() {
+	// function initWithName() {
 
-		$db = Database::getInstance();
-		$q = 'SELECT * FROM books WHERE bookTitle = \''.$this->bookName.'\'';
-		$data = $db->singleFetch($q);
-		if($data != null) {
-			return false;
-		}
-		return true;
-	}
+	// 	$db = Database::getInstance();
+	// 	$q = 'SELECT * FROM books WHERE bookTitle = \''.$this->bookName.'\'';
+	// 	$data = $db->singleFetch($q);
+	// 	if($data != null) {
+	// 		return false;
+	// 	}
+	// 	return true;
+	// }
 
 
 	function addBook() {
@@ -240,39 +240,39 @@ class Books {
 
 
 
-	public function getBookPicWithID($id) {
-		$db = Database::getInstance();
-		$data = $db->singleFetch("SELECT bookPic FROM books WHERE BookID = $id");
-		return $data;
-	}
+	// public function getBookPicWithID($id) {
+	// 	$db = Database::getInstance();
+	// 	$data = $db->singleFetch("SELECT bookPic FROM books WHERE BookID = $id");
+	// 	return $data;
+	// }
 
 
 
 
-	public function isValid() {
-		$errors = true;
-		if(empty($this->bookAuthor)) {
-			$errors = false;
-		}
-		if(empty($this->bookName)) {
-			$errors = false;
-		}
-		if(empty($this->bookCategory)) {
-			$errors = false;
-		}
-		if(empty($this->BookPic)) {
-			$errors = false;
-		}
-		if(empty($this->bookCondition)) {
-			$errors = false;
-		}
-		if(empty($this->BookPrice)) {
-			$errors = false;
-		}
-		if(empty($this->addedBy)) {
-			$errors = false;
-		}
+	// public function isValid() {
+	// 	$errors = true;
+	// 	if(empty($this->bookAuthor)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->bookName)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->bookCategory)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->BookPic)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->bookCondition)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->BookPrice)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->addedBy)) {
+	// 		$errors = false;
+	// 	}
 
-		return $errors;
-	}
+	// 	return $errors;
+	// }
 }

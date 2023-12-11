@@ -1,118 +1,145 @@
-<?php
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
-include 'header.php';
+<!DOCTYPE html>
+<html lang="en">
 
-$bookID = 0;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-if (isset($_GET['bookID'])) {
-    $bookID = $_GET['bookID'];
-} elseif (isset($_POST['bookID'])) {
-    $bookID = $_POST['bookID'];
-}
+    <title>Second-Hand Book Store</title>
 
-//echo $article_id;
 
-$book = new Books();
-$book->initWithId($bookID);
-?>
+</head>
 
-<style>
-    /* Form container styles */
-    .form-container {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #f2f2f2;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+
+<body>
+    <?php
+    include "header.php";
+
+    $book = new Books();
+    function displayBooks($books)
+    {
+        if ($books) {
+            echo "<div class='books'>";
+            foreach ($books as $bookInfo) {
+                // Your code to display book information for each book in $books
+                $bookId = $bookInfo->bookID;
+                $bookName = $bookInfo->bookName;
+                $bookPrice = $bookInfo->bookPrice;
+                $publishDate = $bookInfo->publishDate;
+                $bookPic = $bookInfo->bookPic;
+                $publishedBY = $bookInfo->addedBy;
+
+                echo "<div class='book'>";
+                echo "<img src='uploads/" . $bookPic . "' />";
+                echo "<div class='book-info'>";
+                echo "<h2>" . $bookName . "</h2>";
+                echo "<p>Price: " . $bookPrice . "</p>";
+                echo "<p>Publish Date: " . $publishDate . "</p>";
+                echo "<a href='viewBookDetails.php?bookId=" . $bookId . "'><button>View details</button></a>";
+                echo "<br>";
+                if ($publishedBY == $_SESSION['uid']){
+                    echo '<a href="edit_books.php?id=' . $bookId . '"><button>edit Book</button></a>';
+                    echo "<br>";
+                    echo '<a href="delete_books.php?id=' . $bookId . '"><button>Delete Book</button></a>';
+                }
+                // Form for adding a book to the cart
+                echo "<form method='post'>";
+                echo "<input type='hidden' name='bookID' value='" . $bookId . "'>";
+                echo "<input type='submit' name='btnCart' value='Add to Cart'>";
+                echo "</form>";
+
+                // Check if 'Add to Cart' button for a specific book is clicked
+                if (isset($_POST['btnCart']) && isset($_POST['bookID']) && $_POST['bookID'] == $bookId) {
+                    $cart = new Cart();
+                    $cart->initWith($_SESSION['uid'], $bookId, $bookName, $bookPrice, $bookPic, "show");
+                    if ($cart->addToCart($_SESSION['uid'])) { // Pass the necessary argument (in this case, user ID)
+                        echo "Book added to cart";
+                    } else {
+                        echo "Failed to add book to cart";
+                    }
+                }
+
+                echo "</div>"; // Closing div for 'book-info'
+                echo "</div>"; // Closing div for 'book'
+            }
+            echo "</div>"; // Closing div for 'books'
+        } else {
+            echo "No books found.";
+        }
     }
+    ?>
+    <div>
+        <button onclick="filterBooks('ICT')">ICT</button>
+        <button onclick="filterBooks('Web Media')">Web Media</button>
+        <button onclick="filterBooks('Engineering')">Engineering</button>
+        <button onclick="filterBooks('Logistics')">Logistics</button>
+        <button onclick="filterBooks('Business')">Business</button>
+        <button onclick="filterBooks('Visual Design')">Visual Design</button>
+        <button onclick="filterBooks('Anime')">Anime</button>
+        <button onclick="filterBooks('Others')">Others</button>
+    </div>
 
-    /* Form title styles */
-    .form-title {
-        margin-top: 0;
-        margin-bottom: 20px;
-        font-size: 24px;
-    }
+    <div id="bookDisplay">
+        <!-- Book display area -->
+        <!-- Display books based on the selected category using AJAX -->
+        <!-- display all books  -->
+        <?php
+        if (isset($_GET['keyword'])) {
+            echo '
+            <form action="" method="GET">
+            <label for="keyword">Search by Book ID or Name:</label>
+            <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+            <button type="submit">Search</button>
+             </form>';
 
-    /* Radio button styles */
-    .form-radio {
-        margin-bottom: 10px;
-    }
+            $keyword = $_GET['keyword'];
+            $books = $book->initWithIdOrName($keyword);
+            displayBooks($books);
+        } else {
+            // Code for displaying multiple books
+        
+            $books = $book->getBooks();
 
-    /* Submit button styles */
-    .form-submit {
-        background-color: #337ab7;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-    }
+            echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
+            echo '
+        <form action="" method="GET">
+        <label for="keyword">Search by Book ID or Name:</label>
+        <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+        <button type="submit">Search</button>
+         </form>';
 
-    .form-submit:hover {
-        background-color: #23527c;
-    }
-</style>
-
-
-<?php
-if (isset($_POST['submit'])) {
-
-    //test the value of the radio button       
-    if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
-        $book->setBookID($bookID);
-
-
-
-        //delete article 
-        $book->deleteBook();
-        $deleted = "Book deleted successfully";
-
-    } else {
-        $notDeleted = "Book deletion not confirmed";
-    }
-}
-?>
-
-<div id="main">
+            if (isset($_SESSION['username'])) {
+                // Displaying user-specific content if logged in
+                echo "<h1>Welcome, " . $_SESSION['username'] . "</h1>";
+                echo '<a href="addBooks.php"><button>Add a Book</button></a>';
+            }
 
 
-    <form method="post" class="form-container">
-        <?php if (isset($error)): ?>
-            <p style="color: red;">
-                <?php echo $error; ?>
-            </p>
-        <?php endif; ?>
+            // Displaying multiple books with an 'Add to Cart' button for each
+            displayBooks($books);
+        }
 
-        <?php if (isset($deleted)): ?>
-            <p style="color: green;">
-                <?php echo $deleted; ?>
-            </p>
-        <?php endif; ?>
+        include "footer.php";
 
-        <?php if (isset($notDeleted)): ?>
-            <p style="color: red;">
-                <?php echo $notDeleted; ?>
-            </p>
-        <?php endif; ?>
-        <br />
-        <h2 class="form-title">Delete Book</h2>
-        <h2>Title:
-            <?php echo $book->getBookName(); ?>
-        </h2>
-        <p>Are you sure you want to delete this article? <br /><br />
-            <label class="form-radio">
-                <input type="radio" name="sure" value="Yes" /> Yes
-            </label>
-            <label class="form-radio">
-                <input type="radio" name="sure" value="No" /> No
-            </label>
-        </p>
-        <input type="hidden" name="id" value="<?php echo $bookID; ?>" />
-        <p><input type="submit" name="submit" value="Delete" class="form-submit" /></p>
+        ?>
 
-    </form>
+    </div>
 
-</div>
+    <script>
+        // JavaScript function to filter books based on category without page reload
+        function filterBooks(category) {
+            // AJAX call to fetch books based on category
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById("bookDisplay").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "category.php?category=" + category, true);
+            xhttp.send();
+        }
+    </script>
+
+</body>
+
+</html>

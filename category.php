@@ -48,7 +48,7 @@ if (isset($_GET['category'])) {
             echo "</div>"; // Closing div for 'book'
         }
     } else {
-        echo "No books found for this category.";
+        echo "No books available for this category.";
     }
 } elseif (isset($_GET['keyword'])) {
     $keyword = $_GET['keyword'];

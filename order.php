@@ -112,5 +112,37 @@ class order
         return true;
     }
 
+    function getOrders()
+    {
+        $db = Database::getInstance();
+        $data = $db->multiFetch('SELECT DISTINCT b.*, c.userID AS cartUserID, o.orderStatus, o.orderID
+        FROM books b
+        INNER JOIN carts c ON b.bookID = c.bookID
+        INNER JOIN orders o ON c.cartID = o.cartID
+        WHERE b.addedBy = ' . $_SESSION['uid']);
+
+        return $data;
+    }
+
+    function changeState($bookID, $state)
+    {
+        $db = Database::getInstance();
+        $sql = 'UPDATE orders 
+                SET orderStatus = "' . $state . '" 
+                WHERE cartID IN (
+                    SELECT cartID 
+                    FROM carts 
+                    WHERE bookID = ' . $bookID . '
+                )';
+           
+        $db->querySQL($sql);
+    
+        return true;
+    }
+    
+    
+    
+
+    
 
 }

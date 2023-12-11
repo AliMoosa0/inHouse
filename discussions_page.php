@@ -7,7 +7,6 @@
     <title>Discussions Page</title>
 
     <style>
-       
         .container2 {
             max-width: 90%;
             max-height: 100%;
@@ -15,7 +14,7 @@
             padding: 20px;
         }
 
-        .container2 h1{
+        .container2 h1 {
             color: #fff;
         }
 
@@ -23,7 +22,7 @@
             display: flex;
             border: 1px solid #ccc;
             background-color: rgba(1, 1, 2, 0.5);
-            
+
             margin-bottom: 20px;
             padding: 10px;
             color: #fff;
@@ -57,14 +56,15 @@
             border-radius: 5px;
         }
 
-        .discBtns{
+        .discBtns {
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
 
         }
-        .discBtn{
+
+        .discBtn {
             margin: 0 10px;
             width: 90%;
             padding: 10%;
@@ -72,11 +72,11 @@
             color: #fff;
         }
 
-        .discBtn:hover{
+        .discBtn:hover {
             background-color: #9A8CEF;
         }
 
-        .addDiscBtn{
+        .addDiscBtn {
             margin: 0 10px;
             width: 10%;
             padding: 1%;
@@ -85,75 +85,76 @@
             margin-bottom: 1%;
         }
 
-        .addDiscBtn:hover{
+        .addDiscBtn:hover {
             background-color: #9A8CEF;
 
         }
-        
-
     </style>
 </head>
 
 <body>
-    <?php include "header.php";
-
-
+    <?php
+    include "header.php";
     $disc = new Discussions();
-    $row = $disc->getAllDisc();
+
+    // Check if the search form is submitted with a keyword
+    if (isset($_GET['keyword'])) {
+        $keyword = $_GET['keyword'];
+        $discussions = $disc->searchForDisc($keyword); // Retrieve discussions based on the keyword
+    } else {
+        $discussions = $disc->getAllDisc(); // If no keyword, fetch all discussions
+    }
     ?>
-    <div class="container2">
-        <h1>Discussions Page</h1>
-        
-        <?php
-         if (isset($_SESSION['username'])) {
-            echo '
-        
-            <a href="addDisc.php">
-            <button class="addDiscBtn">Add a Discusstion</button>
-             </a>
-        
-        
-        
-             ';}
-       
-        for ($i = 0; $i < count($row); $i++) {
-            echo '
-        
-            <div class="discussion">
-                <img class="discImg" src="uploads/' . $row[$i]->discBookPic . '" alt="Book 1">
-                <div class="discussion-content">
-                    <h2 class="discH2">' . $row[$i]->discTitle . '</h2>
-                    <p><strong>Book:</strong> ' . $row[$i]->discBookName . '</p>
-                    <p class="article-description"><strong>Title: </strong>' . substr($row[$i]->discBody, 0, 100) . "..." . '</p>
-                    <br>
-                    <div class="discBtns">
-                        <a href="editDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">Edit Discussion</button></a>
-                        <br>
-                        <a href="deleteDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">Delete Discussion</button></a>
-                        <br>
-                        <a href="viewDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">View Discusstion</button></a>
+
+
+
+    <body>
+        <div class="container2">
+            <h1>Discussions Page</h1>
+
+            <form action="" method="GET">
+                <label for="keyword">Search By Name:</label>
+                <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+                <button type="submit">Search</button>
+            </form>
+
+            <?php
+            if (isset($_SESSION['username'])) {
+                echo '<a href="addDisc.php"><button class="addDiscBtn">Add a Discussion</button></a>';
+            }
+
+            foreach ($discussions as $discussion) {
+                $addedBy = $discussion->createdBy;
+                echo '
+                    <div class="discussion">
+                        <img class="discImg" src="uploads/' . $discussion->discBookPic . '" alt="Book Image">
+                        <div class="discussion-content">
+                            <h2 class="discH2">' . $discussion->discTitle . '</h2>
+                            <p><strong>Book:</strong> ' . $discussion->discBookName . '</p>
+                            <p class="article-description"><strong>Title: </strong>' . substr($discussion->discBody, 0, 100) . "..." . '</p>
+                            <br>
+                            <div class="discBtns">';
+                            
+                            if($addedBy == $_SESSION["uid"]) {
+                                echo '
+                                    <a href="editDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Edit Discussion</button></a>
+                                    <br>
+                                    <a href="deleteDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Delete Discussion</button></a>
+                                    <br>';
+                            }
+                            
+                            echo '
+                                <a href="viewDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">View Discussion</button></a>
+                            </div>
+                        </div>
                     </div>
-                    </div>
-            </div>
-       
-    ';
-        }
-        ?>
-    </div>
+                ';
+            }
+            
+            ?>
+        </div>
 
- 
-
-
-    <?php include "footer.html"; ?>
-
-</body>
+        <?php include "footer.html"; ?>
+    </body>
 
 </html>
-
-
-
-
-
-
-
-<body>

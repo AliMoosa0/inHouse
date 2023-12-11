@@ -205,5 +205,15 @@ class Discussions
 		$data = $db->singleFetch("SELECT voteUps FROM discussions WHERE discID = $id");
 		return $data;
 	}
+	function searchForDisc($keyword) {
+		$db = Database::getInstance();
+		$lowerKeyword = strtolower($keyword); // Convert keyword to lowercase
+		$searchTerm = '%'.$lowerKeyword.'%'; // Add wildcards for partial matching
+		$sql = "SELECT * FROM discussions WHERE  LOWER(discTitle) LIKE '$searchTerm'";
+		$results = $db->multiFetch($sql);
+		return $results;
+	}
+
+
 
 }
