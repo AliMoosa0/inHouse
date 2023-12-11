@@ -73,12 +73,9 @@ if (isset($_POST['bookID']) && isset($_POST['state'])) {
     $orders->changeState($bookID, $state);
     // Redirect to the myOrders.php page to display updated information
 
-    header("Location: myOrders.php?id=11");
+    header("Location: myOrders.php");
    
 }
-
-
-
 
 // Display incoming orders
 function displayOrders($incomingOrders)

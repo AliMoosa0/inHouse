@@ -162,7 +162,7 @@ class Books {
 		$db = Database::getInstance();
 		$lowerKeyword = strtolower($keyword); // Convert keyword to lowercase
 		$searchTerm = '%'.$lowerKeyword.'%'; // Add wildcards for partial matching
-		$sql = "SELECT * FROM books WHERE bookID = '$keyword' OR LOWER(bookName) LIKE '$searchTerm'";
+		$sql = "SELECT * FROM books WHERE bookID = '$keyword' OR LOWER(bookName) LIKE '$searchTerm' and inStock = 1 order by publishDate desc";
 		$results = $db->multiFetch($sql);
 		return $results;
 	}

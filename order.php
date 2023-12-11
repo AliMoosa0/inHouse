@@ -108,6 +108,8 @@ class order
             $update = 'update carts set status = "hide" where cartID = ' . $cart->cartID;
             $db->querySQL($update);
             //TODO: update the status of the book to sold
+            $updateBook = 'update books set inStock = 0 where bookID = ' . $cart->bookID;
+            $db->querySQL($updateBook);
         }
         return true;
     }
@@ -134,15 +136,15 @@ class order
                     FROM carts 
                     WHERE bookID = ' . $bookID . '
                 )';
-           
+
         $db->querySQL($sql);
-    
+
         return true;
     }
-    
-    
-    
 
-    
+
+
+
+
 
 }
