@@ -20,6 +20,7 @@
     {
         if ($books) {
             echo "<div class='books'>";
+
             foreach ($books as $bookInfo) {
                 // Your code to display book information for each book in $books
                 $bookId = $bookInfo->bookID;
@@ -35,18 +36,18 @@
                 echo "<h2>" . $bookName . "</h2>";
                 echo "<p>Price: " . $bookPrice . "</p>";
                 echo "<p>Publish Date: " . $publishDate . "</p>";
-                echo "<a href='viewBookDetails.php?bookId=" . $bookId . "'><button>View details</button></a>";
+                echo "<a href='viewBookDetails.php?bookId=" . $bookId . "'><button class='actionBtns'>View details</button></a>";
                 echo "<br>";
-                if ($publishedBY == $_SESSION['uid']){
-                    echo '<a href="edit_books.php?id=' . $bookId . '"><button>edit Book</button></a>';
+                if ($publishedBY == $_SESSION['uid']) {
+                    echo '<a href="edit_books.php?id=' . $bookId . '"><button class="actionBtns">Edit Book</button></a>';
                     echo "<br>";
-                    echo '<a href="delete_books.php?id=' . $bookId . '"><button>Delete Book</button></a>';
+                    echo '<a href="delete_books.php?id=' . $bookId . '"><button class="actionBtns">Delete Book</button></a>';
                 }
 
                 // Form for adding a book to the cart
                 echo "<form method='post'>";
                 echo "<input type='hidden' name='bookID' value='" . $bookId . "'>";
-                echo "<input type='submit' name='btnCart' value='Add to Cart'>";
+                echo "<input type='submit' class='btnCart' name='btnCart'  value='Add to Cart'>";
                 echo "</form>";
 
                 // Check if 'Add to Cart' button for a specific book is clicked
@@ -69,17 +70,16 @@
         }
     }
     ?>
-    <div>
-
-
-        <button onclick="filterBooks('ICT')">ICT</button>
-        <button onclick="filterBooks('Web Media')">Web Media</button>
-        <button onclick="filterBooks('Engineering')">Engineering</button>
-        <button onclick="filterBooks('Logistics')">Logistics</button>
-        <button onclick="filterBooks('Business')">Business</button>
-        <button onclick="filterBooks('Visual Design')">Visual Design</button>
-        <button onclick="filterBooks('Anime')">Anime</button>
-        <button onclick="filterBooks('Others')">Others</button>
+    <div class="catBtn">
+        <!-- Category buttons -->
+        <button class="catButtons" onclick="filterBooks('ICT')">ICT</button>
+        <button class="catButtons" onclick="filterBooks('Web Media')">Web Media</button>
+        <button class="catButtons" onclick="filterBooks('Engineering')">Engineering</button>
+        <button class="catButtons" onclick="filterBooks('Logistics')">Logistics</button>
+        <button class="catButtons" onclick="filterBooks('Business')">Business</button>
+        <button class="catButtons" onclick="filterBooks('Visual Design')">Visual Design</button>
+        <button class="catButtons" onclick="filterBooks('Anime')">Anime</button>
+        <button class="catButtons" onclick="filterBooks('Others')">Others</button>
     </div>
 
     <div id="bookDisplay">
@@ -90,8 +90,8 @@
         if (isset($_GET['keyword'])) {
             echo '
             <form action="" method="GET">
-            <label for="keyword">Search by Book ID or Name:</label>
-            <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+            <label for="keyword" id="search">Search by Book ID or Name:</label>
+            <input class="searchBtn" type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
             <button type="submit">Search</button>
              </form>';
 
@@ -100,22 +100,25 @@
             displayBooks($books);
         } else {
             // Code for displaying multiple books
-        
             $books = $book->getBooks();
 
-            echo "<h1>Welcome to Our Second-Hand Book Store</h1>";
-            echo '
-        <form action="" method="GET">
-        <label for="keyword">Search by Book ID or Name:</label>
-        <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
-        <button type="submit">Search</button>
-         </form>';
-
+            echo "<h1 class ='title' >Welcome to Our Second-Hand Book Store</h1>";
             if (isset($_SESSION['username'])) {
                 // Displaying user-specific content if logged in
-                echo "<h1>Welcome, " . $_SESSION['username'] . "</h1>";
-                echo '<a href="addBooks.php"><button>Add a Book</button></a>';
+                echo "<h1 class ='name'>Welcome, " . $_SESSION['username'] . "</h1>";
+                echo '<a href="addBooks.php"><button class="addbBtn">Add a Book</button></a>';
             }
+            echo '
+        <form action="" method="GET">
+        <label for="keyword" id="search">Search by Book ID or Name:</label>
+        <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+        <button class="searchBtn" type="submit">Search</button>
+         </form>
+         
+         <br>
+         ';
+
+
 
 
             // Displaying multiple books with an 'Add to Cart' button for each

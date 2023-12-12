@@ -64,28 +64,16 @@ if (isset($_POST['submitted'])) {
     <meta charset="UTF-8">
     <title>Edit Discussion</title>
     <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* Form Container */
         .form-container {
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
+            margin: auto;
+            width: 30%;
+            padding: 3%;
+            border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #9b9b9b;
+            margin-top: 2%;
+            border: none;
+            /* Remove border */
         }
 
         /* Form Style */
@@ -103,27 +91,15 @@ if (isset($_POST['submitted'])) {
         textarea {
             width: 100%;
             padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 3px;
             border: 1px solid #ccc;
-            border-radius: 4px;
         }
 
         textarea {
             resize: vertical;
             min-height: 100px;
-        }
-
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
+            margin-bottom: 10%;
         }
     </style>
 </head>
@@ -135,8 +111,8 @@ $listDiscInfo->getDiscWithID($discID);
 ?>
 
 <body>
-    <div class="form-container">
-        <h1>Edit Discussion</h1>
+    <h1 class="title">Edit Discussion</h1>
+    <div class=" form-container">
         <form action="" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <label for="discTitle">Discussion Title:</label>
@@ -153,7 +129,7 @@ $listDiscInfo->getDiscWithID($discID);
                 <label for="discBody">Discussion Body:</label>
                 <textarea id="discBody" name="discBody" required><?php echo $listDiscInfo->getDiscBody() ?></textarea>
                 <br /><br />
-                <input type="submit" class="button" value="Edit" />
+                <input type="submit" class="saveBtn" value="Edit" />
                 </p>
                 <input type="hidden" name="submitted" value="1" />
 

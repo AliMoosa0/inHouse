@@ -5,29 +5,25 @@ include 'header.php';
 foreach ($_FILES as $file) {
     echo $file['name'];
     echo "<img src='uploads/" . $file['name'] . "' />";
-    }
-    echo $_FILES['picture'];
+}
+echo $_FILES['picture'];
 
 
-    function uploadImg()
-    {
+function uploadImg()
+{
 
-        if (isset($_FILES['picture']) )
-        {
-            $name = "uploads//".$_FILES['picture']['name'];
-            move_uploaded_file($_FILES['picture']['tmp_name'], $name); 
-            if($_FILES['picture']['error'] > 0)
-            {
-                echo "<p>There was an error</p>";
-                echo $_FILES['picture']['error'];
-            }
-            else
-            {
-                return $_FILES['picture']['name'];
-            }
+    if (isset($_FILES['picture'])) {
+        $name = "uploads//" . $_FILES['picture']['name'];
+        move_uploaded_file($_FILES['picture']['tmp_name'], $name);
+        if ($_FILES['picture']['error'] > 0) {
+            echo "<p>There was an error</p>";
+            echo $_FILES['picture']['error'];
+        } else {
+            return $_FILES['picture']['name'];
         }
-        return $_FILES['picture']['name'];
     }
+    return $_FILES['picture']['name'];
+}
 
 
 
@@ -56,11 +52,14 @@ if (isset($_POST['submitted'])) {
 ?>
 
 
+
 <body>
+    <h1 class="title">Add a Book</h1>
     <div id="content">
+
         <div id="content-inner">
-            <nav id="sidebar">
-                <h1>Add a Book</h1>'
+            
+
                 <table cellpadding="" width="80%" align="center">
                     <tr>
                         <td>
@@ -69,11 +68,16 @@ if (isset($_POST['submitted'])) {
                                     <br>
                                     <p>
                                         <label><b> Book Name </b></label>
-                                        <input type="text" name="name" size="50" /><br>
+                                        <input class="addEdit" type="text" name="name" size="50" /><br>
 
                                         <label><b>Book Author </b></label>
-                                        <input type="text" name="auth" /> <br>
+                                        <input class="addEdit" type="text" name="auth" /> <br>
 
+                                        <label><b>Price </b></label>
+                                        <input class="addEdit" type="text" name="price" /><br>
+
+                                        <label><b>Publish Date </b></label>
+                                        <input class="addEdit" type="date" name="publish_date" /><br>
 
                                         <b>Category </b><br>
                                         <select name="cat">
@@ -96,19 +100,14 @@ if (isset($_POST['submitted'])) {
 
                                         </select>
                                         <br>
-                                        <label><b>Price </b></label>
-                                        <input type="text" name="price" /><br>
+
 
                                         <label><b>Book Image </b></label>
-                                        <input type="file" name="picture" /><br>
-
-                                        <label><b>Publish Date </b></label>
-                                        <input type="date" name="publish_date" /><br>
-
+                                        <input class="addEdit" type="file" name="picture" /><br>
 
 
                                         <br /><br />
-                                        <input type="submit" class="button" value="Add" />
+                                        <input type="submit" class="saveBtn" value="Add" />
                                     </p>
                                     <input type="hidden" name="submitted" value="1" />
                                 </fieldset>

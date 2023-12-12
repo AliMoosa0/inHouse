@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 
 <div id="main">
 
-
+<h1 class="title" >Delete Book</h1>
     <form method="post" class="form-container">
         <?php if (isset($error)): ?>
             <p style="color: red;">
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
             </p>
         <?php endif; ?>
         <br />
-        <h2 class="form-title">Delete Book</h2>
+       
         <h2>Title:
             <?php echo $book->getBookName(); ?>
         </h2>

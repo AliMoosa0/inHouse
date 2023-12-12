@@ -5,21 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <style>
-        .book-details {
-            background-color:rgba(249, 249, 249, 0.8);
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .book-details h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
 
 <body>
@@ -51,15 +36,16 @@
             }
             $addedBy = $bookInfo->addedBy;
             $db = Database::getInstance();
-		    $q = 'SELECT username FROM users WHERE uid = \''.$addedBy.'\'';
-		    $data = $db->singleFetch($q);
+            $q = 'SELECT username FROM users WHERE uid = \'' . $addedBy . '\'';
+            $data = $db->singleFetch($q);
             $addedBy = $data->username;
 
-//TODO: add a button to add to cart
-
+            //TODO: add a button to add to cart
+            echo "<h1 class='title'>Book Details</h1>  ";
             // Display book details
             echo "<div class='book-details'>";
             echo "<img src='uploads/" . $bookPic . "' alt='Book Cover'>";
+            echo "<div class='bookDetails'>"; // book-details div
             echo "<h2>" . $bookName . "</h2>";
             echo "<p><strong>Book Number:</strong> " . $bookId . "</p>";
             echo "<p><strong>Author:</strong> " . $bookAuthor . "</p>";
@@ -69,7 +55,7 @@
             echo "<p><strong>Condition:</strong> " . $bookCondition . "</p>";
             echo "<p><strong>In Stock:</strong> " . $inStock . "</p>";
             echo "<p><strong>Added By:</strong> " . $addedBy . "</p>";
-
+            echo "</div>";
 
 
             echo "</div>";

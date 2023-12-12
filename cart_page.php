@@ -16,10 +16,9 @@
             align-items: center;
         }
 
-        img {
-            width: 100px;
-            /* Adjust the image size as needed */
-            height: 100px;
+        .theImg {
+            width: 220px;
+            height: 300px;
             margin-right: 20px;
         }
 
@@ -89,7 +88,7 @@
     //handel the place order button
     if (isset($_POST['checkoutBtn'])) {
         // echo "Order placed successfully*************************************";
-        
+    
         $order = new order();
 
         if ($order->insert()) {
@@ -113,7 +112,7 @@
 
             foreach ($userCart as $cartItem) {
                 echo "<div class='cart-item' id='cartItem-" . $cartItem->cartID . "'>";
-                echo "<img src='uploads/" . $cartItem->bookPic . "' />";
+                echo "<img class='theImg' src='uploads/" . $cartItem->bookPic . "' />";
                 echo "<h2>" . $cartItem->bookName . "</h2>";
                 echo "<p>Price: " . $cartItem->price . "</p>";
                 // Add a 'Delete' button for each item

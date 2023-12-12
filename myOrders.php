@@ -8,10 +8,10 @@ $userOrder = $orders->initWithID();
 
 // Retrieve incoming orders
 $incomingOrders = $orders->getOrders(); // Assuming this function fetches incoming orders
-
+echo "<div class='ordersDiv'>"; // Opening .ordersDiv here
 // Display user orders
 if ($userOrder) {
-    echo "<h1>Your Orders</h1>";
+    echo "<h1 class='title'>Your Orders</h1>";
 
     // Group orders by their IDs
     $uniqueOrders = [];
@@ -25,8 +25,8 @@ if ($userOrder) {
 
     // Display unique orders along with book names and statuses
     foreach ($uniqueOrders as $orderID => $orders) {
-        echo "<div style='border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;'>";
-        echo "<h2 style='margin-bottom: 5px;'>Order ID: " . $orderID . "</h2>";
+        echo "<div  class'ordersDiv' style='border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;'>";
+        echo "<h2  style='margin-bottom: 5px;'>Order ID: " . $orderID . "</h2>";
 
         $firstIteration = true;
 
@@ -40,24 +40,28 @@ if ($userOrder) {
             $bookNames = $db->multiFetch($bookNameQuery);
 
             if ($bookNames) {
+
                 echo "<ul style='list-style: none; padding-left: 0;'>";
                 foreach ($bookNames as $book) {
                     echo "<li> Book Name: " . $book->bookName . "</li>";
                 }
                 echo "</ul>";
                 echo "<p>Order Status: " . $orderItem->orderStatus . "</p>";
+                echo '<br>';
             } else {
                 echo "<p>No book information found for this order.</p>";
             }
 
             $firstIteration = false;
         }
-
         echo "</div>";
+
     }
 } else {
     echo "<p>You Have No Orders.</p>";
 }
+echo "</div>"; // Close .ordersDiv here
+
 // Verify if the form was submitted using POST method
 
 // Check if the required fields are present
@@ -74,22 +78,22 @@ if (isset($_POST['bookID']) && isset($_POST['state'])) {
     // Redirect to the myOrders.php page to display updated information
 
     header("Location: myOrders.php");
-   
+
 }
 
 // Display incoming orders
 function displayOrders($incomingOrders)
 {
-
+    echo "<div class='inOrdersDiv'>"; // Opening .inOrdersDiv here
     if ($incomingOrders) {
-        echo "<h1>Incoming Orders</h1>";
+        echo "<h1 class='title'>Incoming Orders</h1>";
         foreach ($incomingOrders as $incomingOrder) {
             // Display incoming order details as needed
             echo "<div style='border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;'>";
             echo "<h2 style='margin-bottom: 5px;'>Incoming Book Name: " . $incomingOrder->bookName . "</h2>";
 
             $stat = $incomingOrder->orderStatus;
-            $orderID = $incomingOrder->orderID;
+
             $bookID = $incomingOrder->bookID;
             switch ($stat) {
                 case 'Placed':
@@ -97,7 +101,7 @@ function displayOrders($incomingOrders)
                     echo "<form method='POST' action=''>";
                     echo "<input type='hidden' name='bookID' value='$bookID'>";
                     echo "<input type='hidden' name='state' value='$state'>";
-                    echo "<input type='submit' value='Ready for Collection'>";
+                    echo "<input  class='searchBtn' type='submit' value='Ready for Collection'>";
                     echo "</form>";
                     break;
                 case 'Ready for Collection':
@@ -105,7 +109,7 @@ function displayOrders($incomingOrders)
                     echo "<form method='POST' action=''>";
                     echo "<input type='hidden' name='bookID' value='$bookID'>";
                     echo "<input type='hidden' name='state' value='$state'>";
-                    echo "<input type='submit' value='Collected'>";
+                    echo "<input class='searchBtn' type='submit' value='Collected'>";
                     echo "</form>";
                     break;
                 case 'Collected':
@@ -115,12 +119,13 @@ function displayOrders($incomingOrders)
                     echo "Unhandled state";
                     break;
             }
-            // Display other details of incoming orders
+
             echo "</div>";
         }
     } else {
         echo "<p>No Incoming Orders.</p>";
     }
+    echo "</div>"; // Close .inOrdersDiv here
 
 }
 displayOrders($incomingOrders);

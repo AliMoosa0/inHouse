@@ -1,61 +1,3 @@
-<style>
-    /* Resetting default margins and paddings */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-        padding: 20px;
-    }
-
-    .discussion {
-        background-color: #fff;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .discussion h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-
-    .discussion h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    .discussion p {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-
-    .discussion img {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 10px;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .discussion img {
-        max-width: 100%;
-        /* Ensures the image resizes responsively */
-        height: auto;
-        /* Maintains the image's aspect ratio */
-        display: block;
-        /* Removes any extra space below the image */
-        margin-bottom: 10px;
-        /* Adds space below the image */
-    }
-</style>
 <?php
 include "header.php";
 
@@ -79,36 +21,35 @@ if ($discID != 0) {
         $discBookName = $discInfo->discBookName;
         $discBookPic = $discInfo->discBookPic;
         $discBody = $discInfo->discBody;
-        $discVoteUps = $discInfo->voteUps;
         $discCreatedBy = $discInfo->createdBy;
         $discPublishDate = $discInfo->publishDate;
 
         ?>
-
+        <h1 class="title">Book Details</h1>
+        <br>
         <!-- Displaying the information -->
         <div class="discussion">
-            <h1>Discussion ID:
-                <?php echo $discID; ?>
-            </h1>
-            <h2>Discussion Name:
-                <?php echo $discName; ?>
-            </h2>
-            <p>Book Name:
-                <?php echo $discBookName; ?>
-            </p>
             <img src="uploads/<?php echo $discBookPic; ?>" alt="Book Picture" width="400px">
-            <p>Discussion Body:
-                <?php echo $discBody; ?>
-            </p>
-            <p>Vote Ups:
-                <?php echo $discVoteUps; ?>
-            </p>
-            <p>Created By:
-                <?php echo $discCreatedBy; ?>
-            </p>
-            <p>Publish Date:
-                <?php echo $discPublishDate; ?>
-            </p>
+
+            <div class="discDetails">
+                <h2>Discussion Name:
+                    <?php echo $discName; ?>
+                </h2>
+                <p>Book Name:
+                    <?php echo $discBookName; ?>
+                </p>
+
+                <p>Discussion Body:
+                    <?php echo $discBody; ?>
+                </p>
+
+                <p>Created By:
+                    <?php echo $discCreatedBy; ?>
+                </p>
+                <p>Publish Date:
+                    <?php echo $discPublishDate; ?>
+                </p>
+            </div>
         </div>
 
         <?php

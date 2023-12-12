@@ -62,72 +62,6 @@ if (isset($_POST['submitted'])) {
 
 ?>
 
-
-
-<style>
-    /* Reset */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    /* Body Styles */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        color: #333;
-        line-height: 1.6;
-    }
-
-    /* Content Styles */
-    #content {
-        width: 80%;
-        margin: 20px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Form Styles */
-    form {
-        width: 100%;
-    }
-
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    input[type="text"],
-    input[type="date"],
-    select {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    input[type="submit"] {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    input[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-</style>
-
-
-
 <?php if (isset($error)): ?>
     <p style="color: red;">
         <?php echo $error; ?>
@@ -147,10 +81,10 @@ $listBookInfo->initWithId($bookID);
 
 
 <body>
+<h1 class="title">Edit a Book</h1>
     <div id="content">
         <div id="content-inner">
             <nav id="sidebar">
-                <h1>Edit a Book</h1>'
                 <table cellpadding="" width="80%" align="center">
                     <tr>
                         <td>
@@ -159,11 +93,11 @@ $listBookInfo->initWithId($bookID);
                                     <br>
                                     <p>
                                         <label><b> Book Name </b></label>
-                                        <input type="text" name="name" size="50"
+                                        <input type="text" name="name" size="50" class="addEdit"
                                             value="<?php echo $listBookInfo->getBookName() ?>" /><br>
 
                                         <label><b>Book Author </b></label>
-                                        <input type="text" name="auth" size="50"
+                                        <input type="text" name="auth" size="50" class="addEdit"
                                             value="<?php echo $listBookInfo->getBookAuthor() ?>" /><br>
 
 
@@ -186,7 +120,7 @@ $listBookInfo->initWithId($bookID);
                                         <br>
 
                                         <b>condition </b><br>
-                                        <select name="condition">
+                                        <select name="condition" class="addEdit">
                                             <option value="<?php echo $listBookInfo->getBookCondition(); ?>">
 
                                                 selected:
@@ -195,25 +129,24 @@ $listBookInfo->initWithId($bookID);
                                             <option value="New">New</option>
                                             <option value="Used">Used</option>
                                             <option value="UnUsable">UnUsable</option>
-
                                         </select>
                                         <br>
                                         <label><b>Price </b></label>
                                         <input type="text" name="price"
-                                            value="<?php echo $listBookInfo->getBookPrice(); ?>" /><br>
+                                        class="addEdit"  value="<?php echo $listBookInfo->getBookPrice(); ?>" /><br>
 
                                         <label><b>Book Image </b></label>
                                         <input type="file" name="picture"
-                                            value="<?php echo $listBookInfo->getBookPic(); ?>" /><br>
+                                        class="addEdit"  value="<?php echo $listBookInfo->getBookPic(); ?>" /><br>
 
                                         <label><b>Publish Date </b></label>
                                         <input type="date" name="publish_date"
-                                            value="<?php echo $listBookInfo->getPublishDate(); ?>" /><br>
+                                        class="addEdit"  value="<?php echo $listBookInfo->getPublishDate(); ?>" /><br>
 
 
 
                                         <br /><br />
-                                        <input type="submit" class="button" value="Save Changes" />
+                                        <input type="submit" class="saveBtn" value="Save Changes" />
                                     </p>
                                     <input type="hidden" name="submitted" value="1" />
                                 </fieldset>

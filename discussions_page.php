@@ -18,11 +18,10 @@
             color: #fff;
         }
 
-        .discussion {
+        .discussion2 {
             display: flex;
             border: 1px solid #ccc;
             background-color: rgba(1, 1, 2, 0.5);
-
             margin-bottom: 20px;
             padding: 10px;
             color: #fff;
@@ -35,59 +34,102 @@
 
         .discussion-content {
             flex: 1;
+            margin-left: 3%;
         }
 
         .discH2 {
             margin-top: 0;
         }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .pagination a {
-            padding: 10px;
-            margin: 0 5px;
-            text-decoration: none;
-            background-color: #333;
-            color: #fff;
-            border-radius: 5px;
-        }
 
         .discBtns {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
+            display: block;
+            flex-direction: left;
 
         }
 
         .discBtn {
-            margin: 0 10px;
-            width: 90%;
-            padding: 10%;
-            background-color: #8c7ceb;
-            color: #fff;
+            background-color: #e1ecf4;
+            border-radius: 3px;
+            border: 1px solid #7aa7c7;
+            box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+            box-sizing: border-box;
+            color: #39739d;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.15385;
+            margin: 1%;
+            outline: none;
+            padding: 8px .8em;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: baseline;
+            white-space: nowrap;
         }
 
-        .discBtn:hover {
-            background-color: #9A8CEF;
+        .discBtn:hover,
+        .discBtn:focus {
+            background-color: #b3d3ea;
+            color: #2c5777;
+        }
+
+        .discBtn:focus {
+            box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+        }
+
+        .discBtn:active {
+            background-color: #a0c7e4;
+            box-shadow: none;
+            color: #2c5777;
         }
 
         .addDiscBtn {
-            margin: 0 10px;
-            width: 10%;
-            padding: 1%;
-            background-color: #8c7ceb;
-            color: #fff;
-            margin-bottom: 1%;
+            background-color: #e1ecf4;
+            border-radius: 3px;
+            border: 1px solid #7aa7c7;
+            box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+            box-sizing: border-box;
+            color: #39739d;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.15385;
+            margin: 2%;
+            outline: none;
+            padding: 8px .8em;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: baseline;
+            white-space: nowrap;
         }
 
-        .addDiscBtn:hover {
-            background-color: #9A8CEF;
+        .addDiscBtn:hover,
+        .addDiscBtn:focus {
+            background-color: #b3d3ea;
+            color: #2c5777;
+        }
 
+        .addDiscBtn:focus {
+            box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+        }
+
+        .addDiscBtn:active {
+            background-color: #a0c7e4;
+            box-shadow: none;
+            color: #2c5777;
         }
     </style>
 </head>
@@ -115,7 +157,7 @@
             <form action="" method="GET">
                 <label for="keyword">Search By Name:</label>
                 <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
-                <button type="submit">Search</button>
+                <button class="searchBtn" type="submit">Search</button>
             </form>
 
             <?php
@@ -126,7 +168,7 @@
             foreach ($discussions as $discussion) {
                 $addedBy = $discussion->createdBy;
                 echo '
-                    <div class="discussion">
+                    <div class="discussion2">
                         <img class="discImg" src="uploads/' . $discussion->discBookPic . '" alt="Book Image">
                         <div class="discussion-content">
                             <h2 class="discH2">' . $discussion->discTitle . '</h2>
@@ -134,23 +176,24 @@
                             <p class="article-description"><strong>Title: </strong>' . substr($discussion->discBody, 0, 100) . "..." . '</p>
                             <br>
                             <div class="discBtns">';
-                            
-                            if($addedBy == $_SESSION["uid"]) {
-                                echo '
+
+                //TODO: add this to the condition below || $_SESSION(["role"]) == "admin"
+                if ($addedBy == $_SESSION["uid"]) {
+                    echo '
                                     <a href="editDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Edit Discussion</button></a>
                                     <br>
                                     <a href="deleteDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Delete Discussion</button></a>
                                     <br>';
-                            }
-                            
-                            echo '
+                }
+
+                echo '
                                 <a href="viewDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">View Discussion</button></a>
                             </div>
                         </div>
                     </div>
                 ';
             }
-            
+
             ?>
         </div>
 
