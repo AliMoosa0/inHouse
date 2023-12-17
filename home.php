@@ -38,18 +38,18 @@
                 echo "<p>Publish Date: " . $publishDate . "</p>";
                 echo "<a href='viewBookDetails.php?bookId=" . $bookId . "'><button class='actionBtns'>View details</button></a>";
                 echo "<br>";
-                if ($publishedBY == $_SESSION['uid']) {
+                if ($publishedBY == $_SESSION['uid']  || ($_SESSION["role"] == "admin")) {
                     echo '<a href="edit_books.php?id=' . $bookId . '"><button class="actionBtns">Edit Book</button></a>';
                     echo "<br>";
                     echo '<a href="delete_books.php?id=' . $bookId . '"><button class="actionBtns">Delete Book</button></a>';
                 }
-
+                if ($publishedBY != $_SESSION['uid']) {
                 // Form for adding a book to the cart
                 echo "<form method='post'>";
                 echo "<input type='hidden' name='bookID' value='" . $bookId . "'>";
                 echo "<input type='submit' class='btnCart' name='btnCart'  value='Add to Cart'>";
                 echo "</form>";
-
+                }
                 // Check if 'Add to Cart' button for a specific book is clicked
                 if (isset($_POST['btnCart']) && isset($_POST['bookID']) && $_POST['bookID'] == $bookId) {
                     $cart = new Cart();

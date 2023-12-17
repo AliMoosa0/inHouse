@@ -55,84 +55,6 @@ if ($discID != 0) {
         <?php
     }
 }
-
-// Display the comment section
-echo "<div class='comment-section'>";
-echo "<h3 calss ='comTit' >Comments</h3>";
-
-// Display the comment form
-
-echo "<form class='comment-form' id='comment-form' method='POST'>";
-echo "<input type='hidden' name='discID' value=' $discID'>";
-echo '<input type="text" id="usernameField" name="username" value="' . (isset($_SESSION['username']) ? $_SESSION['username'] : '') . '" disabled>';
-echo "<textarea id ='txtComment' name='comment' placeholder='Your Comment' required></textarea>";
-echo "<button type='submit' class='submit-comment' name='submit-comment'>Submit Comment</button>";
-echo "</form>";
-
-
-
-// Check if the form is submitted
-if (isset($_POST['submit-comment'])) {
-    // Get the values from the form
-    $author = $_SESSION['username'];
-    // var_dump($author);
-    $comment = $_POST['comment'];
-
-    // Prepare the query using prepared statements
-    $insertQuery = "INSERT INTO comments (commentedBy, discID, uid, comment, commentedAT) VALUES (?, ?, ?, ?, NOW())";
-    $stmt = mysqli_prepare($connection, $insertQuery);
-
-    if ($stmt) {
-        // Bind the parameters
-        mysqli_stmt_bind_param($stmt, 'siss', $author, $discID, $uid, $comment);
-
-        // Assign values to $discID and $uid
-        $discID = $_GET['discid'];
-        $uid = $_SESSION['uid'];
-
-        // Execute the statement
-        $insertResult = mysqli_stmt_execute($stmt);
-
-        if ($insertResult) {
-            echo "<p class='success'>Comment added successfully.</p>";
-        } else {
-            echo "<p class='error'>Error adding comment: " . mysqli_stmt_error($stmt) . "</p>";
-        }
-    }
-
-
-}
-echo "</div>";
-
-
-
-
-
-
-// Display the existing comments for the article
-$commentQuery = "SELECT * FROM comments WHERE discID = $discID ORDER BY 'createdAT' DESC";
-$commentResult = mysqli_query($connection, $commentQuery);
-
-if (mysqli_num_rows($commentResult) > 0) {
-    echo "<ul class='comment-list'>";
-
-    while ($commentRow = mysqli_fetch_assoc($commentResult)) {
-        $commentAuthor = $commentRow['commentedBy'];
-        $commentContent = $commentRow['comment'];
-        $commentCreatedAt = $commentRow['commentedAT'];
-
-        echo "<li class='comment'>";
-        echo "<p class='comment-meta'>Comment by $commentAuthor on $commentCreatedAt</p>";
-        echo "<p class='comment-content'>$commentContent</p>";
-        echo "</li>";
-    }
-
-
-    echo "</ul>";
-}
-
-
-
 $uid = $_SESSION['uid'];
 // Display the thumbs-up button and count
 // Check if the user has already liked the discussion
@@ -145,13 +67,14 @@ $row = mysqli_fetch_assoc($result);
 $therow = mysqli_fetch_assoc($theresult);
 
 $theliked = $therow['liked'];
-echo '<div class="bigdiv">';
+echo '<div class="like-section">';
 echo "<div class='like-button'>";
-echo "<h3 class='likeTit'>likes</h3>";
-echo "<form method='post' id ='likeForm' action=''>
-    <button name='likeButton' type='submit' id='likeButton' value='like'><i class='fa-solid fa-thumbs-up' id='like-btn' data-article-id=''>&#128077;</i></button>
-</form>";
+echo "<h3 class='likeTit'>Likes</h3>";
+echo "<form method='post' id='likeForm' action=''>
+            <button name='likeButton' type='submit' id='likeButton' value='like'><i class='fas fa-thumbs-up' id='like-btn'></i></button>
+        </form>";
 
+echo '</div>';
 
 // Check if the like button is pressed
 if (isset($_POST['likeButton'])) {
@@ -195,7 +118,171 @@ if (isset($_POST['likeButton'])) {
 }
 
 // Update the like count display
+
 echo "<div class='like-count' id='likebuttonid'><span id='like-count'>Likes: $theliked</span></div>";
 
 echo "</div>";
 echo "</div>";
+// Display the comment section
+echo "<div class='comment-section'>";
+echo "<h3 class='comTit'>Comments</h3>";
+
+// Display the comment form
+echo "<form class='comment-form' id='comment-form' method='POST'>";
+echo "<input type='hidden' name='discID' value='$discID'>";
+echo '<input type="hidden" id="usernameField" name="username" value="' . (isset($_SESSION['username']) ? $_SESSION['username'] : '') . '">';
+echo "<textarea id ='txtComment' name='comment' placeholder='Your Comment' required></textarea>";
+echo "<button type='submit' class='submit-comment' name='submit-comment'>Submit Comment</button>";
+echo "</form>";
+
+// Check if the form is submitted
+if (isset($_POST['submit-comment'])) {
+    $author = $_SESSION['username'];
+    $comment = $_POST['comment'];
+    $notReply = 0;
+
+    // Assign values to $discID and $uid
+    $discID = $_POST['discID'];
+    $uid = $_SESSION['uid'];
+
+    // Prepare the query for adding a comment
+    $insertQuery = "INSERT INTO comments (commentedBy, discID, uid, comment, replyTo, commentedAT) VALUES (?, ?, ?, ?, ?, NOW())";
+    $stmt = mysqli_prepare($connection, $insertQuery);
+
+    if ($stmt) {
+        // Bind the parameters
+        mysqli_stmt_bind_param($stmt, 'siisi', $author, $discID, $uid, $comment, $notReply);
+
+        // Execute the statement
+        $insertResult = mysqli_stmt_execute($stmt);
+
+        if ($insertResult) {
+            echo "<p class='success'>Comment added successfully.</p>";
+        } else {
+            echo "<p class='error'>Error adding comment: " . mysqli_stmt_error($stmt) . "</p>";
+        }
+    }
+}
+
+// Check if the form is submitted for replying to a comment
+if (isset($_POST['submit-reply'])) {
+    $author = $_SESSION['username'];
+    $replyComment = $_POST['replyComment'];
+    $parentCommentID = $_POST['parentCommentID']; // ID of the comment being replied to
+
+    // Assign values to $discID and $uid
+    $discID = $_POST['discID'];
+    $uid = $_SESSION['uid'];
+
+    // Prepare the query for inserting a reply
+    $insertQuery = "INSERT INTO comments (commentedBy, discID, uid, comment, commentedAT, replyTo) VALUES (?, ?, ?, ?, NOW(), ?)";
+    $stmt = mysqli_prepare($connection, $insertQuery);
+
+    if ($stmt) {
+        // Bind the parameters
+        mysqli_stmt_bind_param($stmt, 'siisi', $author, $discID, $uid, $replyComment, $parentCommentID);
+
+        // Execute the statement
+        $insertResult = mysqli_stmt_execute($stmt);
+
+        if ($insertResult) {
+            echo "<p class='success'>Reply added successfully.</p>";
+            // Redirect to avoid resubmission on page refresh
+            header("Location: {$_SERVER['REQUEST_URI']}");
+            exit();
+        } else {
+            echo "<p class='error'>Error adding reply: " . mysqli_stmt_error($stmt) . "</p>";
+        }
+    }
+}
+
+?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const replyButtons = document.querySelectorAll('.reply-button');
+
+        replyButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const commentID = this.getAttribute('data-comment-id');
+                const replyForm = document.getElementById(`reply-form-${commentID}`);
+
+                if (replyForm) {
+                    if (replyForm.style.display === 'none' || replyForm.style.display === '') {
+                        replyForm.style.display = 'block';
+                    } else {
+                        replyForm.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+<?php
+
+
+
+
+// Display the existing comments for the article
+$commentQuery = "SELECT * FROM comments WHERE discID = $discID and replyTO = '0' ORDER BY commentedAT DESC";
+$commentResult = mysqli_query($connection, $commentQuery);
+
+if (mysqli_num_rows($commentResult) > 0) {
+    echo "<ul class='comment-list'>";
+    echo '<div class="comment-section-container">';
+
+
+
+    while ($commentRow = mysqli_fetch_assoc($commentResult)) {
+        $commentAuthor = $commentRow['commentedBy'];
+        $commentContent = $commentRow['comment'];
+        $commentCreatedAt = $commentRow['commentedAT'];
+        $commentID = $commentRow['commentID'];
+        // var_dump($commentID);
+        // die();
+
+        echo "<li class='comment'>";
+        echo "<p class='comment-meta'>Comment by $commentAuthor on $commentCreatedAt</p>";
+        echo "<p class='comment-content'>$commentContent</p>";
+
+        // Add a Reply button for each comment
+        echo "<button class='reply-button' data-comment-id='$commentID'>Reply</button>";
+
+        // Add a hidden reply form for each comment
+        echo "<div class='reply-form' id='reply-form-$commentID' style='display:none;'>";
+        echo "<form class='comment-form' method='POST'>";
+        echo "<input type='hidden' name='discID' value='$discID'>";
+        echo "<input type='hidden' name='parentCommentID' value='$commentID'>";
+        echo "<textarea name='replyComment' placeholder='Your Reply'></textarea>";
+        echo "<button type='submit' name='submit-reply'>Submit Reply</button>";
+        echo "</form>";
+        echo "</div>";
+
+        // Fetch and display replies for the current comment
+        $replyQuery = "SELECT * FROM comments WHERE replyTo = $commentID ORDER BY commentedAT ASC";
+        $replyResult = mysqli_query($connection, $replyQuery);
+
+        if (mysqli_num_rows($replyResult) > 0) {
+            echo "<ul class='reply-list'>";
+            while ($replyRow = mysqli_fetch_assoc($replyResult)) {
+                $replyAuthor = $replyRow['commentedBy'];
+                $replyContent = $replyRow['comment'];
+                $replyCreatedAt = $replyRow['commentedAT'];
+
+                echo "<li class='reply'>";
+                echo "<p class='reply-meta'>Reply by $replyAuthor on $replyCreatedAt</p>";
+                echo "<p class='reply-content'>$replyContent</p>";
+                echo "</li>";
+            }
+            echo "</ul>";
+        }
+
+        echo "</li>";
+    }
+
+    echo "</ul>";
+    echo "</div>";
+}
+
+

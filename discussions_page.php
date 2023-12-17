@@ -177,14 +177,14 @@
                             <br>
                             <div class="discBtns">';
 
-                //TODO: add this to the condition below || $_SESSION(["role"]) == "admin"
-                if ($addedBy == $_SESSION["uid"]) {
+                if ($addedBy == $_SESSION["uid"] || ($_SESSION["role"] == "admin")) {
                     echo '
                                     <a href="editDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Edit Discussion</button></a>
                                     <br>
                                     <a href="deleteDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Delete Discussion</button></a>
                                     <br>';
                 }
+
 
                 echo '
                                 <a href="viewDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">View Discussion</button></a>

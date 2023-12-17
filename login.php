@@ -3,14 +3,6 @@ ob_start();
 
 
 include('header.php');
-// echo '*********' . $_SESSION['uid'];
-
-
-// Check for the registration success message in the URL
-// if (isset($_GET['registration']) && $_GET['registration'] === 'success') {
-//     // Generate JavaScript code to show an alert
-//     echo '<script>alert("Registration was successful! You can now log in.");</script>';
-// }
 
 ?>
 

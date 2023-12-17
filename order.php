@@ -107,7 +107,7 @@ class order
             $db->querySQL($sql);
             $update = 'update carts set status = "hide" where cartID = ' . $cart->cartID;
             $db->querySQL($update);
-            //TODO: update the status of the book to sold
+            
             $updateBook = 'update books set inStock = 0 where bookID = ' . $cart->bookID;
             $db->querySQL($updateBook);
         }
