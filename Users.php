@@ -157,7 +157,7 @@ class Users
                 $hashed_pwd = password_hash($this->password, PASSWORD_DEFAULT);
                 $db = Database::getInstance();
                 $data = "insert into users (uid, username,  email, phoneNumber, RegDate, password, role) values (null, '$this->username', '$this->email', '$this->phoneNumber', NOW(), '$hashed_pwd', '$this->role')";
-              
+
                 $db->querySQL($data);
                 //echo $data;
                 return true;
@@ -170,15 +170,13 @@ class Users
         }
     }
 
-    //TODO: make it with username
-    function changePassword($uid, $password)
+    
+    function changePassword($username, $password)
     {
         try {
             $hashed_pwd = password_hash($password, PASSWORD_DEFAULT);
             $db = Database::getInstance();
-            $data = "UPDATE users SET `password` = '$hashed_pwd' where uid = $uid";
-            // var_dump($data);
-            // die();
+            $data = "UPDATE users SET `password` = '$hashed_pwd' where username = '$username'";
             $db->querySQL($data);
             //echo $data;
             return true;

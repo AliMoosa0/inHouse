@@ -32,10 +32,10 @@ session_start();
         <li><a href="discussions_page.php">Discussions</a></li>
         <li><a href="MyBooks.php">My Books</a></li>
         <li><a href="myOrders.php">My Orders</a></li>
-        <li><a href="cart_page.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
         <?php if ($_SESSION['role'] == 'admin') { ?>
           <li><a href="admin_dashboard.php">Admin Panel</a></li>
         <?php } ?>
+        <li><a href="cart_page.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
       </ul>
 
       <?php

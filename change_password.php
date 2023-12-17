@@ -5,13 +5,13 @@ ob_start();
 include('header.php');
 
 
-$userID = 0;
-if (isset($_GET['id'])) {
-    $userID = $_GET['id'];
-} elseif (isset($_POST['id'])) {
-    $userID = $_POST['id'];
+$userID = 'enter your username';
+if (isset($_GET['username'])) {
+    $userID = $_GET['username'];
+} elseif (isset($_POST['username'])) {
+    $userID = $_POST['username'];
 }
-//TODO: make it with username
+
 
 ?>
 
@@ -228,18 +228,18 @@ if (isset($_GET['id'])) {
         <div class="container">
             <!-- <label for="show" class="close-btn fas fa-times"  title="close"></label> -->
             <div class="text">
-                Change password
+                Reset password
             </div>
             <form action="" method="post">
                 <div class="data">
-                    <label>user ID</label>
+                    <label>Username</label>
 
-                    <input type="text" id="Username" name="Username" placeholder="Enter your user ID" autofocus
+                    <input type="text" id="Username" name="Username" placeholder="Enter your Username" autofocus
                         onblur="isValid(this);" required value="<?php echo $userID; ?>">
 
                 </div>
                 <div class="data">
-                    <label>Password confirmation</label>
+                    <label>Password </label>
                     <input type="password" id="Password" name="Password1" placeholder="Enter your New password"
                         autofocus onblur="isValid(this);" required>
                 </div>
@@ -274,7 +274,7 @@ if (isset($_GET['id'])) {
 if (isset($_POST['submitted'])) {
     include('Users.php');
     $user = new Users();
-    if (trim($_POST['password1']) == $_POST['password2']) {
+    if (trim($_POST['password1']) == trim($_POST['password2'])) {
         $username = trim($_POST['Username']);
         $password = trim($_POST['Password1']);
         // var_dump($username);

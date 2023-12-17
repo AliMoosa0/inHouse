@@ -38,17 +38,17 @@
                 echo "<p>Publish Date: " . $publishDate . "</p>";
                 echo "<a href='viewBookDetails.php?bookId=" . $bookId . "'><button class='actionBtns'>View details</button></a>";
                 echo "<br>";
-                if ($publishedBY == $_SESSION['uid']  || ($_SESSION["role"] == "admin")) {
+                if ($publishedBY == $_SESSION['uid'] || ($_SESSION["role"] == "admin")) {
                     echo '<a href="edit_books.php?id=' . $bookId . '"><button class="actionBtns">Edit Book</button></a>';
                     echo "<br>";
                     echo '<a href="delete_books.php?id=' . $bookId . '"><button class="actionBtns">Delete Book</button></a>';
                 }
                 if ($publishedBY != $_SESSION['uid']) {
-                // Form for adding a book to the cart
-                echo "<form method='post'>";
-                echo "<input type='hidden' name='bookID' value='" . $bookId . "'>";
-                echo "<input type='submit' class='btnCart' name='btnCart'  value='Add to Cart'>";
-                echo "</form>";
+                    // Form for adding a book to the cart
+                    echo "<form method='post'>";
+                    echo "<input type='hidden' name='bookID' value='" . $bookId . "'>";
+                    echo "<input type='submit' class='btnCart' name='btnCart'  value='Add to Cart'>";
+                    echo "</form>";
                 }
                 // Check if 'Add to Cart' button for a specific book is clicked
                 if (isset($_POST['btnCart']) && isset($_POST['bookID']) && $_POST['bookID'] == $bookId) {
@@ -90,10 +90,10 @@
         if (isset($_GET['keyword'])) {
             echo '
             <form action="" method="GET">
-            <label for="keyword" id="search">Search by Book ID or Name:</label>
-            <input class="searchBtn" type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
-            <button type="submit">Search</button>
-             </form>';
+        <label for="keyword" id="search">Search by Book ID or Name:</label>
+        <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+        <button class="searchBtn" type="submit">Search</button>
+         </form>';
 
             $keyword = $_GET['keyword'];
             $books = $book->initWithIdOrName($keyword);
@@ -132,7 +132,7 @@
     </div>
 
     <script>
-        // JavaScript function to filter books based on category without page reload
+        // JavaScript function to filter books based on category 
         function filterBooks(category) {
             // AJAX call to fetch books based on category
             var xhttp = new XMLHttpRequest();
