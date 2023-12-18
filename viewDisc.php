@@ -44,7 +44,11 @@ if ($discID != 0) {
                 </p>
 
                 <p>Created By:
-                    <?php echo $discCreatedBy; ?>
+                    <?php
+                    $db = Database::getInstance();
+                    $q = "SELECT username FROM users WHERE uid = '$discCreatedBy'";
+                    $result = $db->singleFetch($q);
+                    echo $result->username; ?>
                 </p>
                 <p>Publish Date:
                     <?php echo $discPublishDate; ?>
@@ -123,6 +127,7 @@ echo "<div class='like-count' id='likebuttonid'><span id='like-count'>Likes: $th
 
 echo "</div>";
 echo "</div>";
+
 // Display the comment section
 echo "<div class='comment-section'>";
 echo "<h3 class='comTit'>Comments</h3>";

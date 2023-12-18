@@ -17,7 +17,7 @@ if (isset($_SESSION['username'])) {
 } else {
     echo "<h1>you are not logged in</h1>";
 }
-//TODO: fix the search function
+
 
 
 

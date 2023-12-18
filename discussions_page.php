@@ -138,7 +138,7 @@
     <?php
     include "header.php";
     $disc = new Discussions();
-
+    $discussionsPerPage = 2; // Adjust as needed
     // Check if the search form is submitted with a keyword
     if (isset($_GET['keyword'])) {
         $keyword = $_GET['keyword'];
@@ -146,28 +146,47 @@
     } else {
         $discussions = $disc->getAllDisc(); // If no keyword, fetch all discussions
     }
+
+
+
+    $totalDiscussions = count($discussions);
+
+    // Determine current page
+    if (!isset($_GET['page'])) {
+        $currentPage = 1;
+    } else {
+        $currentPage = $_GET['page'];
+    }
+
+    // Calculate offset and get paginated discussions
+    $offset = ($currentPage - 1) * $discussionsPerPage;
+    $paginatedDiscussions = array_slice($discussions, $offset, $discussionsPerPage);
+
     ?>
 
 
 
-    <body>
-        <div class="container2">
-            <h1>Discussions Page</h1>
 
-            <form action="" method="GET">
-                <label for="keyword">Search By Name:</label>
-                <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
-                <button class="searchBtn" type="submit">Search</button>
-            </form>
+    <div class="container2">
+        <h1>Discussions Page</h1>
 
-            <?php
-            if (isset($_SESSION['username'])) {
-                echo '<a href="addDisc.php"><button class="addDiscBtn">Add a Discussion</button></a>';
-            }
+        <form action="" method="GET">
+            <label for="keyword">Search By Name:</label>
+            <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+            <button class="searchBtn" type="submit">Search</button>
+        </form>
 
-            foreach ($discussions as $discussion) {
-                $addedBy = $discussion->createdBy;
-                echo '
+        <?php
+        if (isset($_SESSION['username'])) {
+            echo '<a href="addDisc.php"><button class="addDiscBtn">Add a Discussion</button></a>';
+        }
+
+        foreach ($paginatedDiscussions as $discussion) {
+            $addedBy = $discussion->createdBy;
+            
+
+
+            echo '
                     <div class="discussion2">
                         <img class="discImg" src="uploads/' . $discussion->discBookPic . '" alt="Book Image">
                         <div class="discussion-content">
@@ -177,27 +196,37 @@
                             <br>
                             <div class="discBtns">';
 
-                if ($addedBy == $_SESSION["uid"] || ($_SESSION["role"] == "admin")) {
-                    echo '
+            if ($addedBy == $_SESSION["uid"] || ($_SESSION["role"] == "admin")) {
+                echo '
                                     <a href="editDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Edit Discussion</button></a>
                                     <br>
                                     <a href="deleteDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Delete Discussion</button></a>
                                     <br>';
-                }
+            }
 
 
-                echo '
+            echo '
                                 <a href="viewDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">View Discussion</button></a>
                             </div>
                         </div>
                     </div>
                 ';
-            }
+        }
+        ?>
+        <!-- Pagination links -->
+        <?php
+        $totalPages = ceil($totalDiscussions / $discussionsPerPage);
+        for ($i = 1; $i <= $totalPages; $i++) {
+            echo '<a href="?page=' . $i . '"><button class="searchBtn" >' . $i . '</button></a>';
+        }
+        ?>
 
-            ?>
-        </div>
 
-        <?php include "footer.html"; ?>
-    </body>
+    </div>
+
+
+    <?php include "footer.html"; ?>
+</body>
+
 
 </html>
