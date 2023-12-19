@@ -170,7 +170,7 @@ class Users
         }
     }
 
-    
+
     function changePassword($username, $password)
     {
         try {
@@ -185,7 +185,17 @@ class Users
             return false;
         }
     }
+    function isEmailExists($email)
+    {
+        $db = Database::getInstance();
+        $result = $db->singleFetch("SELECT *  FROM users WHERE email = '$email'");
 
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     function deleteUser()
     {
@@ -256,5 +266,20 @@ class Users
             $_SESSION['role']);
         session_destroy();
     }
+    function generateUniqueToken()
+    {
+        return bin2hex(random_bytes(16)); // Generates a more secure 32-character token
+    }
+
+
+    public function saveResetToken($email, $token)
+    {
+        $db = Database::getInstance();
+        $query = "UPDATE users SET reset_token = '$token' WHERE email = '$email'";
+        $db->querySQL($query);
+        // Check for success or handle errors accordingly
+    }
+
 }
+
 ?>
