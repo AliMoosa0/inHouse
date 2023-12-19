@@ -97,7 +97,7 @@ if (isset($_POST['submitted'])) {
     <div class="center">
       <div class="container">
         <div class="text">
-          Register Form
+          Sign Up Form
         </div>
         <form action="register.php" method="post">
           <div class="data">
@@ -122,10 +122,10 @@ if (isset($_POST['submitted'])) {
           </div>
           <div class="btn">
             <div class="inner"></div>
-            <button type="submit" name="submitted">Register</button>
+            <button type="submit" name="submitted">Sign Up</button>
           </div>
           <div class="signup-link">
-            Already a Member? <a href="login.php">Login now</a>
+            Already a Member? <a href="login.php">Sign In</a>
           </div>
         </form>
       </div>

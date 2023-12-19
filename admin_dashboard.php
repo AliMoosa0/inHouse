@@ -143,6 +143,7 @@
                 $userID = $userRow->uid;
                 $userName = $userRow->username;
                 $role = $userRow->role;
+                $email = $userRow->email;
 
                 echo "<tr>";
                 echo "<td>$userID</td>";
@@ -151,7 +152,8 @@
                 echo "<td>";
                 echo "<a href='delete_user.php?id=$userID'><button class='searchBtn' >Delete</button></a>";
                 echo " | ";
-                echo "<a href='change_password.php?username=$userName'><button class='searchBtn'>Change Password</button></a>";
+              
+                echo "<a href='changeWithEmail.php?email=$email'><button class='searchBtn'>Reset Password</button></a>";
                 echo "</td>";
                 echo "</tr>";
             }

@@ -1,185 +1,89 @@
-<?php include "header.php"; ?>
+<?php
+ob_start();
+include('header.php');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-<style>
-    /* Reset default margin and padding */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+?>
 
-    /* Container to limit width */
-    .container {
-        width: 80%;
-        margin: 0 auto;
-    }
+<body>
+    <div class="center">
+        <div class="container">
+            <div class="text">
+                Reset Password With Email
+            </div>
+            <div class="message-container">
+                <?php
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
+                    $useremail = $_POST['email'];
 
-    /* Navigation Links */
-    .nav-links ul {
-        list-style-type: none;
-        padding: 0;
-    }
+                    $user = new Users();
+                    $userExists = $user->isEmailExists($useremail);
 
-    .nav-links li {
-        display: inline;
-        margin-right: 20px;
-    }
+                    if ($userExists) {
+                        $resetToken = $user->generateUniqueToken(); // Generate a unique token
+                
+                        // Save the token in the database for this user (associate it with the user's email or ID)
+                        $user->saveResetToken($useremail, $resetToken);
 
-    .nav-links a {
-        text-decoration: none;
-        color: #333;
-        font-weight: bold;
-    }
+                        // Construct the password reset link with the token
+                        $passwordResetLink = "http://inhousevm.westeurope.cloudapp.azure.com/~u201902206/inHouse/change_password.php?token=$resetToken";
 
-    /* Sections */
-    .hidden-section {
-        display: none;
-        width: 100%;
-    }
+                        $mail = new PHPMailer(true);
+                        try {
+                            // SMTP configuration for Gmail
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com';
+                            $mail->SMTPAuth = true;
+                            $mail->Username = 'alm9ly@gmail.com';
+                            $mail->Password = 'sncv cgdv qsex jvux';
+                            $mail->SMTPSecure = 'tls'; // Enable TLS encryption
+                            $mail->Port = 587; // TCP port to connect to
+                
+                            // Sender information
+                            $mail->setFrom('alm9ly@gmail.com', 'Polytechnic Second Hand Shop');
 
-    /* Table Styling */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
+                            // Add a recipient
+                            $mail->addAddress($useremail); // User's email address
+                
+                            // Email content
+                            $mail->isHTML(true);
+                            $mail->Subject = 'Password Reset';
+                            $mail->Body = "Hello,<br><br>Please click on the following link to reset your password: <a href=\"$passwordResetLink\">Reset Password</a><br><br>If you didn't request a password reset, please ignore this email.<br>Thank you.";
 
-    th,
-    td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
 
-    th {
-        background-color: #f2f2f2;
-    }
+                            $mail->send();
+                            $message = "An email has been sent to $useremail with instructions to reset your password.";
+                            $error = false;
+                        } catch (Exception $e) {
+                            $message = "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                            $error = true;
+                        }
+                    } else {
+                        $message = "The email entered does not exist in our database.";
+                        $error = true;
+                    }
 
-    /* Button Styling */
-    button {
-        padding: 8px 12px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-</style>
-<h1 class="title">Admin Pannel</h1>
-<div class=" nav-links">
-    <ul>
-        <li><button class="searchBtn"><a href="#" onclick="showSection('manageComments')">Manage Comments</a></button>
-        </li>
-        <li><button class="searchBtn"><a href="#" onclick="showSection('manageUsers')">Manage Users</a></button></li>
-    </ul>
+                    // Display the message
+                    echo '<div class="' . ($error ? 'error-message' : 'success-message') . '">' . $message . '</div>';
+                }
+                ?>
+            </div>
+            <form action="" method="post">
+                <div class="data">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter your Email" autofocus required>
+                </div>
+                <div class="btn">
+                    <div class="inner"></div>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
+</body>
 
-    <section id="manageComments" class="hidden-section">
-        <div class="data-type">
-            <h2>Comments Management</h2>
-        </div>
-        <?php
-        include "comments.php";
-        $comments = new Comments();
-        $commentRows = $comments->getAllComments();
-
-        if (!empty($commentRows)) {
-            echo "<table>";
-            echo "<thead>";
-            echo "<tr>";
-            echo "<th>Comment ID</th>";
-            echo "<th>Username</th>";
-            echo "<th>Comment</th>";
-            echo "<th>Action</th>";
-            echo "</tr>";
-            echo "</thead>";
-            echo "<tbody>";
-
-            foreach ($commentRows as $commentRow) {
-                $commentID = $commentRow->commentID;
-                $commentedBy = $commentRow->commentedBy;
-                $comment = $commentRow->comment;
-
-                echo "<tr>";
-                echo "<td>$commentID</td>";
-                echo "<td>$commentedBy</td>";
-                echo "<td>$comment</td>";
-                echo "<td>";
-                echo "<a href='deleteComment.php?id=$commentID'><button>Delete Comment</button></a>";
-                echo "</td>";
-                echo "</tr>";
-            }
-
-            echo "</tbody>";
-            echo "</table>";
-        } else {
-            echo "No comments found.";
-        }
-        ?>
-    </section>
-
-    <section id="manageUsers" class="hidden-section">
-        <div class="data-type">
-            <h2>Users Management</h2>
-        </div>
-        <?php
-        include "Users.php";
-        $users = new Users();
-        $userRows = $users->getAllUsers();
-
-        if (!empty($userRows)) {
-            echo "<table>";
-            echo "<thead>";
-            echo "<tr>";
-            echo "<th>User ID</th>";
-            echo "<th>Username</th>";
-            echo "<th>Role</th>";
-            echo "<th>Action</th>";
-            echo "</tr>";
-            echo "</thead>";
-            echo "<tbody>";
-
-            foreach ($userRows as $userRow) {
-                $userID = $userRow->uid;
-                $userName = $userRow->username;
-                $role = $userRow->role;
-
-                echo "<tr>";
-                echo "<td>$userID</td>";
-                echo "<td>$userName</td>";
-                echo "<td>$role</td>";
-                echo "<td>";
-                echo "<a href='delete_user.php?id=$userID'><button>Delete</button></a>";
-                echo " | ";
-                echo "<a href='change_password.php?id=$userID'><button>Change Password</button></a>";
-                echo "</td>";
-                echo "</tr>";
-            }
-
-            echo "</tbody>";
-            echo "</table>";
-        } else {
-            echo "No users found.";
-        }
-        ?>
-    </section>
-
-    <script>
-        function hideAllSections() {
-            const sections = document.querySelectorAll('.hidden-section');
-            sections.forEach(section => {
-                section.style.display = 'none';
-            });
-        }
-
-        function showSection(sectionId) {
-            hideAllSections();
-            document.getElementById(sectionId).style.display = 'block';
-        }
-
-        hideAllSections();
-    </script>
+</html>

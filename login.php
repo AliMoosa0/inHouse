@@ -31,7 +31,8 @@ include('header.php');
     if (document.getElementById('Username').value != '' &&
       document.getElementById('Password').value != '') {
 
-      document.getElementById('sub').disabled = false;
+      document.getElementById('sub').disabled = false; \
+
     }
   }
 </script>
@@ -50,9 +51,10 @@ include('header.php');
   if (isset($_GET['registration']) && $_GET['registration'] === 'success') {
     // Generate JavaScript code to show an alert
     echo '<script>alert("Registration was successful! You can now log in.");</script>';
+  
   }
   ?>
-  
+
 </head>
 
 <body>
@@ -62,7 +64,7 @@ include('header.php');
     <div class="container">
       <!-- <label for="show" class="close-btn fas fa-times"  title="close"></label> -->
       <div class="text">
-        Login
+      Sign In
       </div>
       <form action="login.php" method="post">
         <div class="data">
@@ -77,15 +79,15 @@ include('header.php');
             onblur="isValid(this);" required>
         </div>
         <div class="forgot-pass">
-                    <a href="change_password.php">Forgot Password?</a>
-                </div>
+          <a href="changeWithEmail.php">Forgot Password?</a>
+        </div>
         <div class="btn">
           <div class="inner"></div>
-          <button type="submit" name="submitted">login</button>
+          <button type="submit" name="submitted">Sign In</button>
 
         </div>
         <div class="signup-link">
-          Not a member? <a href="register.php">Register now</a>
+          Not a member? <a href="register.php">Sign Up</a>
         </div>
       </form>
     </div>

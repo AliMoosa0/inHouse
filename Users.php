@@ -176,7 +176,7 @@ class Users
         try {
             $hashed_pwd = password_hash($password, PASSWORD_DEFAULT);
             $db = Database::getInstance();
-            $data = "UPDATE users SET `password` = '$hashed_pwd' where username = '$username'";
+            $data = "UPDATE users SET `password` = '$hashed_pwd' where reset_token = '$username'";
             $db->querySQL($data);
             //echo $data;
             return true;
