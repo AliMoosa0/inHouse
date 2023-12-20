@@ -272,13 +272,27 @@ class Users
     }
 
 
-    public function saveResetToken($email, $token)
+    public function saveResetToken($email, $token, $expiration)
     {
         $db = Database::getInstance();
-        $query = "UPDATE users SET reset_token = '$token' WHERE email = '$email'";
-        $db->querySQL($query);
-        // Check for success or handle errors accordingly
+        $query = "UPDATE users SET reset_token = '$token', token_expiration = '$expiration' WHERE email = '$email'";
+        if ($db->querySQL($query)) {
+            return true; // Success: token saved
+        } else {
+            return false; // Error: unable to save token
+        }
     }
+
+    public function deleteExpiredTokens()
+    {
+        $db = Database::getInstance();
+
+        $sql = "UPDATE users SET reset_token = NULL, token_expiration = NULL WHERE token_expiration < now()";
+        $db->querySQL($sql);
+        
+    }
+
+
 
 }
 

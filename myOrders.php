@@ -25,25 +25,31 @@ if ($userOrder) {
 
     // Display unique orders along with book names and statuses
     foreach ($uniqueOrders as $orderID => $orders) {
-        echo "<div  class'ordersDiv' style='border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;'>";
-        echo "<h2  style='margin-bottom: 5px;'>Order ID: " . $orderID . "</h2>";
-
-        $firstIteration = true;
+        echo "<div class='ordersDiv' style='border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; width : 80%; '>";
+        echo "<div  id='order_$orderID' '>";
+        echo "<h2 style='margin-bottom: 5px;'>Order ID: " . $orderID . "</h2>";
 
         foreach ($orders as $orderItem) {
-            if (!$firstIteration) {
-                // echo "<hr>";
-            }
-
             $bookNameQuery = 'SELECT bookName FROM carts WHERE cartID = ' . $orderItem->cartID;
             $db = Database::getInstance();
             $bookNames = $db->multiFetch($bookNameQuery);
 
             if ($bookNames) {
-
                 echo "<ul style='list-style: none; padding-left: 0;'>";
                 foreach ($bookNames as $book) {
                     echo "<li> Book Name: " . $book->bookName . "</li>";
+                    $bookName = $book->bookName; // Assuming $book->bookName contains the book name
+
+                    // Properly concatenate the bookName within single quotes in the SQL query
+                    $bookPriceQuery = "SELECT bookPrice FROM books WHERE bookName = '$bookName'";
+                    // var_dump($bookPriceQuery);
+                    // die();
+                    $db = Database::getInstance();
+                    $price = $db->singleFetch($bookPriceQuery);
+
+
+
+                    echo "<li> Book Price: " . $price->bookPrice . "</li>";
                 }
                 echo "</ul>";
                 echo "<p>Order Status: " . $orderItem->orderStatus . "</p>";
@@ -51,16 +57,18 @@ if ($userOrder) {
             } else {
                 echo "<p>No book information found for this order.</p>";
             }
-
-            $firstIteration = false;
         }
         echo "</div>";
 
+        echo '<button onclick="printOrder(\'order_' . $orderID . '\')" class="searchBtn">Print Order</button>';
+        echo "</div>";
+
     }
+
 } else {
     echo "<p>You Have No Orders.</p>";
 }
-echo "</div>"; // Close .ordersDiv here
+
 
 // Verify if the form was submitted using POST method
 
@@ -134,3 +142,12 @@ displayOrders($incomingOrders);
 
 
 ?>
+<script>
+    function printOrder(orderID) {
+        var printContent = document.getElementById(orderID).innerHTML;
+        var originalContent = document.body.innerHTML;
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+    }
+</script>

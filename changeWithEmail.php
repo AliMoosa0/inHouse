@@ -22,15 +22,25 @@ $email = $_GET['email'];
                 <?php
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
                     $useremail = $_POST['email'];
+                   
+                
+
+
 
                     $user = new Users();
                     $userExists = $user->isEmailExists($useremail);
 
                     if ($userExists) {
                         $resetToken = $user->generateUniqueToken(); // Generate a unique token
-                
+
+                        
+
+                        $expiration = date('Y-m-d H:i:s', strtotime('+3 minutes'));
+                        
+
+
                         // Save the token in the database for this user (associate it with the user's email or ID)
-                        $user->saveResetToken($useremail, $resetToken);
+                        $user->saveResetToken($useremail, $resetToken, $expiration);
 
                         // Construct the password reset link with the token
                         $passwordResetLink = "http://inhousevm.westeurope.cloudapp.azure.com/~u201902206/inHouse/change_password.php?token=$resetToken";
@@ -78,7 +88,8 @@ $email = $_GET['email'];
             <form action="" method="post">
                 <div class="data">
                     <label>Email</label>
-                    <input type="email" name="email" value="<?php echo $email ?>" placeholder="Enter your Email" autofocus required>
+                    <input type="email" name="email" value="<?php echo $email ?>" placeholder="Enter your Email"
+                        autofocus required>
                 </div>
                 <div class="btn">
                     <div class="inner"></div>

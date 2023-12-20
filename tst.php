@@ -1,89 +1,71 @@
 <?php
 ob_start();
 include('header.php');
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+// Retrieve cart information for the logged-in user
+$orders = new order();
+$userOrder = $orders->initWithID();
+
+// Retrieve incoming orders
+$incomingOrders = $orders->getOrders(); // Assuming this function fetches incoming orders
+
+// Display user orders
+if ($userOrder) {
+    echo "<h1 class='title'>Your Orders</h1>";
+
+    // Group orders by their IDs
+    $uniqueOrders = [];
+    foreach ($userOrder as $orderItem) {
+        $orderID = $orderItem->orderID;
+        if (!isset($uniqueOrders[$orderID])) {
+            $uniqueOrders[$orderID] = [];
+        }
+        $uniqueOrders[$orderID][] = $orderItem;
+    }
+
+    // Display unique orders along with book names and statuses
+    foreach ($uniqueOrders as $orderID => $orders) {
+        echo "<div class='ordersDiv' style='border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;'>";
+        echo "<div  id='order_$orderID' '>";
+        echo "<h2 style='margin-bottom: 5px;'>Order ID: " . $orderID . "</h2>";
+
+        foreach ($orders as $orderItem) {
+            $bookNameQuery = 'SELECT bookName FROM carts WHERE cartID = ' . $orderItem->cartID;
+            $db = Database::getInstance();
+            $bookNames = $db->multiFetch($bookNameQuery);
+
+            if ($bookNames) {
+                echo "<ul style='list-style: none; padding-left: 0;'>";
+                foreach ($bookNames as $book) {
+                    echo "<li> Book Name: " . $book->bookName . "</li>";
+                }
+                echo "</ul>";
+                echo "<p>Order Status: " . $orderItem->orderStatus . "</p>";
+                echo '<br>';
+            } else {
+                echo "<p>No book information found for this order.</p>";
+            }
+        }
+        echo "</div>";
+
+        echo '<button onclick="printOrder(\'order_' . $orderID . '\')" class="print-button">Print Order</button>';
+        echo "</div>";
+
+    }
+
+} else {
+    echo "<p>You Have No Orders.</p>";
+}
+
+include('footer.php');
 ?>
 
-<body>
-    <div class="center">
-        <div class="container">
-            <div class="text">
-                Reset Password With Email
-            </div>
-            <div class="message-container">
-                <?php
-                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
-                    $useremail = $_POST['email'];
-
-                    $user = new Users();
-                    $userExists = $user->isEmailExists($useremail);
-
-                    if ($userExists) {
-                        $resetToken = $user->generateUniqueToken(); // Generate a unique token
-                
-                        // Save the token in the database for this user (associate it with the user's email or ID)
-                        $user->saveResetToken($useremail, $resetToken);
-
-                        // Construct the password reset link with the token
-                        $passwordResetLink = "http://inhousevm.westeurope.cloudapp.azure.com/~u201902206/inHouse/change_password.php?token=$resetToken";
-
-                        $mail = new PHPMailer(true);
-                        try {
-                            // SMTP configuration for Gmail
-                            $mail->isSMTP();
-                            $mail->Host = 'smtp.gmail.com';
-                            $mail->SMTPAuth = true;
-                            $mail->Username = 'alm9ly@gmail.com';
-                            $mail->Password = 'sncv cgdv qsex jvux';
-                            $mail->SMTPSecure = 'tls'; // Enable TLS encryption
-                            $mail->Port = 587; // TCP port to connect to
-                
-                            // Sender information
-                            $mail->setFrom('alm9ly@gmail.com', 'Polytechnic Second Hand Shop');
-
-                            // Add a recipient
-                            $mail->addAddress($useremail); // User's email address
-                
-                            // Email content
-                            $mail->isHTML(true);
-                            $mail->Subject = 'Password Reset';
-                            $mail->Body = "Hello,<br><br>Please click on the following link to reset your password: <a href=\"$passwordResetLink\">Reset Password</a><br><br>If you didn't request a password reset, please ignore this email.<br>Thank you.";
-
-
-                            $mail->send();
-                            $message = "An email has been sent to $useremail with instructions to reset your password.";
-                            $error = false;
-                        } catch (Exception $e) {
-                            $message = "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                            $error = true;
-                        }
-                    } else {
-                        $message = "The email entered does not exist in our database.";
-                        $error = true;
-                    }
-
-                    // Display the message
-                    echo '<div class="' . ($error ? 'error-message' : 'success-message') . '">' . $message . '</div>';
-                }
-                ?>
-            </div>
-            <form action="" method="post">
-                <div class="data">
-                    <label>Email</label>
-                    <input type="email" name="email" placeholder="Enter your Email" autofocus required>
-                </div>
-                <div class="btn">
-                    <div class="inner"></div>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</body>
-
-</html>
+<script>
+    function printOrder(orderID) {
+        var printContent = document.getElementById(orderID).innerHTML;
+        var originalContent = document.body.innerHTML;
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+    }
+</script>
