@@ -43,7 +43,7 @@
                     echo "<br>";
                     echo '<a href="delete_books.php?id=' . $bookId . '"><button class="actionBtns">Delete Book</button></a>';
                 }
-                if ($publishedBY != $_SESSION['uid']) {
+                if ($publishedBY != $_SESSION['uid'] && $_SESSION['username'] != "") {
                     // Form for adding a book to the cart
                     echo "<form method='post'>";
                     echo "<input type='hidden' name='bookID' value='" . $bookId . "'>";

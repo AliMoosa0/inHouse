@@ -220,13 +220,14 @@
             echo '<a href="?page=' . $i . '"><button class="searchBtn" >' . $i . '</button></a>';
         }
         ?>
+        <br>
 
+<?php include "footer.html"; ?>
 
     </div>
 
 
-    <?php include "footer.html"; ?>
 </body>
 
-
 </html>
+

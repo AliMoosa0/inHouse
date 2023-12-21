@@ -5,12 +5,12 @@ $books = new Books();
 $userID = $_SESSION['uid'];
 $row = $books->getBooksByAddedBy($userID);
 echo "<h1 class='title'>My Books</h1>";
-echo '
-<form action="" method="GET">
-<label for="keyword" id="search">Search by Book ID or Name:</label>
-<input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
-<button class="searchBtn" type="submit">Search</button>
-</form>';
+// echo '
+// <form action="" method="GET">
+// <label for="keyword" id="search">Search by Book ID or Name:</label>
+// <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+// <button class="searchBtn" type="submit">Search</button>
+// </form>';
 
 if (isset($_SESSION['username'])) {
     echo '<a href="addBooks.php"><button class="addbBtn">Add a Book</button></a>';
@@ -22,12 +22,12 @@ if (isset($_SESSION['username'])) {
 
 
 if (isset($_GET['keyword'])) {
-    echo '
-    <form action="" method="GET">
-<label for="keyword" id="search">Search by Book ID or Name:</label>
-<input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
-<button class="searchBtn" type="submit">Search</button>
- </form>';
+//     echo '
+//     <form action="" method="GET">
+// <label for="keyword" id="search">Search by Book ID or Name:</label>
+// <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+// <button class="searchBtn" type="submit">Search</button>
+//  </form>';
 
     $keyword = $_GET['keyword'];
     $book = new Books();

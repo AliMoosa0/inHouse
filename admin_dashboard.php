@@ -67,8 +67,14 @@
         <ul>
             <li><button class="searchBtn"><a href="#" onclick="showSection('manageComments')">Manage
                         Comments</a></button>
+            
+                        <li>
+  <button class="searchBtn" onclick="window.open('barcode', '_blank')">Barcode Generator</button>
+</li>
             </li>
-            <li><button class="searchBtn"><a href="#" onclick="showSection('manageUsers')">Manage Users</a></button>
+            
+  <a href="barcode" target="_blank" class="searchBtn">Barcode Generator</a>
+</li>
             </li>
         </ul>
     </div>

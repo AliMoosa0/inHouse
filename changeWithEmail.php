@@ -65,7 +65,7 @@ $email = $_GET['email'];
                             // Email content
                             $mail->isHTML(true);
                             $mail->Subject = 'Password Reset';
-                            $mail->Body = "Hello,<br><br>Please click on the following link to reset your password: <a href=\"$passwordResetLink\">Reset Password</a><br><br>If you didn't request a password reset, please ignore this email.<br>Thank you.";
+                            $mail->Body = "Hello,<br><br>Please click on the following link to reset your password: <a href=\"$passwordResetLink\">Reset Password</a><br><br>Please note theat the link will Expier in 3 Mins<br><br>If you didn't request a password reset, please ignore this email.<br>Thank you.";
 
 
                             $mail->send();

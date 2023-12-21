@@ -12,6 +12,14 @@ if (isset($_GET['token'])) {
     $userID = $_POST['token'];
 }
 
+$token = $_GET['token'];
+
+
+$user = new Users();
+if ($user->isTokenExpired($userID)) {
+    echo "The link is expired, please request a new link.";
+    exit; // Stop execution if the token is expired
+}
 
 ?>
 

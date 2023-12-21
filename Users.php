@@ -291,6 +291,21 @@ class Users
         $db->querySQL($sql);
         
     }
+    public function isTokenExpired($token)
+    {
+        $db = Database::getInstance();
+    
+        $sql = "SELECT reset_token FROM users WHERE reset_token = '$token'";
+       
+        $result = $db->singleFetch($sql);
+       
+        if ($result) {
+            return false; // Token exists (not expired because expired tokens are deleted)
+        } else {
+            return true; // Token does not exist or is expired
+        }
+    }
+    
 
 
 

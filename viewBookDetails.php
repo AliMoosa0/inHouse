@@ -67,7 +67,7 @@
             echo "<p><strong>Condition:</strong> " . $bookCondition . "</p>";
             echo "<p><strong>In Stock:</strong> " . $inStock . "</p>";
             echo "<p><strong>Added By:</strong> " . $addedBy . "</p>";
-            if ($publishedBY != $_SESSION['uid']) {
+            if ($publishedBY != $_SESSION['uid'] && $_SESSION['username'] != "") {
                 // Form for adding a book to the cart
                 echo "<form method='post'>";
                 echo "<input type='hidden' name='bookID' value='" . $bookId . "'>";

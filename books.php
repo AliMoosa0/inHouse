@@ -2,6 +2,7 @@
 
 class Books
 {
+	
 
 	private $bookID;
 	private $bookName;
@@ -210,25 +211,29 @@ class Books
 
 	function addBook()
 	{
-
 		try {
+
 			$db = Database::getInstance();
-			$q = "INSERT INTO books (bookID, bookName, bookAuthor, bookCategory, bookPrice, publishDate, bookCondition, bookPic, inStock, addedBy)
-						  VALUES (null ,'$this->bookName', '$this->bookAuthor', '$this->bookCategory', '$this->bookPrice', '$this->publishDate', 
-						  '$this->bookCondition', '$this->bookPic', '$this->inStock', '$this->addedBy')";
-
-			$db->querySQL($q);
-
-			return true;
-
+			$query = "INSERT INTO books (bookID, bookName, bookAuthor, bookCategory, bookPrice, publishDate, bookCondition, bookPic, inStock, addedBy)
+					  VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					  $conn = new Connection();
+			$connection = $conn->getConnection();
+	
+			$stmt = mysqli_prepare($connection, $query);
+			$stmt->bind_param("sssdssssi", $this->bookName, $this->bookAuthor, $this->bookCategory, $this->bookPrice, $this->publishDate, $this->bookCondition, $this->bookPic, $this->inStock, $this->addedBy);
+	
+			if ($stmt->execute()) {
+				return true;
+			} else {
+				return false;
+			}
 		} catch (Exception $e) {
 			echo 'Exception: ' . $e->getMessage();
 			echo 'Error: Unable to execute the query.';
-
 			return false;
 		}
 	}
-
+	
 
 
 
@@ -247,24 +252,50 @@ class Books
 		}
 	}
 	function updateDB()
-	{
-		$db = Database::getInstance();
-		$data = "UPDATE books SET 
-				bookID = '$this->bookID',
-                BookName = '$this->bookName',
-                BookAuthor = '$this->bookAuthor',
-                BookCategory = '$this->bookCategory',
-                BookPrice = '$this->bookPrice',
-                PublishDate = '$this->publishDate',
-                BookCondition = '$this->bookCondition',
-                BookPic = '$this->bookPic',
-                InStock = '$this->inStock',
-                AddedBy = '$this->addedBy'
-             WHERE BookID = '$this->bookID'";
+{
+    try {
+        $db = Database::getInstance();
+        $query = "UPDATE books SET 
+                    bookName = ?,
+                    bookAuthor = ?,
+                    bookCategory = ?,
+                    bookPrice = ?,
+                    publishDate = ?,
+                    bookCondition = ?,
+                    bookPic = ?,
+                    inStock = ?,
+                    addedBy = ?
+                  WHERE bookID = ?";
 
-		$db->querySQL($data);
-		return true;
-	}
+$conn = new Connection();
+$connection = $conn->getConnection();
+
+$stmt = mysqli_prepare($connection, $query);
+
+        $stmt->bind_param("sssdssssii",
+		 $this->bookName,
+		 $this->bookAuthor,
+		  $this->bookCategory,
+		   $this->bookPrice, 
+		   $this->publishDate,
+		    $this->bookCondition,
+			 $this->bookPic, 
+			 $this->inStock,
+			  $this->addedBy,
+			   $this->bookID);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        echo 'Exception: ' . $e->getMessage();
+        echo 'Error: Unable to execute the query.';
+        return false;
+    }
+}
+
 
 
 
