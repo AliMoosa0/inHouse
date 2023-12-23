@@ -59,6 +59,8 @@ if ($userOrder) {
         echo '<button onclick="printOrder(\'order_' . $orderID . '\')" class="searchBtn">Print Order</button>';
         echo "</div>";
         echo "</div>"; // Closing the added div with 80% width
+        echo'<br>';
+
         
     }
 
