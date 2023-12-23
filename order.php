@@ -117,14 +117,30 @@ class order
     function getOrders()
     {
         $db = Database::getInstance();
-        $data = $db->multiFetch('SELECT DISTINCT b.*, c.userID AS cartUserID, o.orderStatus, o.orderID
-        FROM books b
-        INNER JOIN carts c ON b.bookID = c.bookID
-        INNER JOIN orders o ON c.cartID = o.cartID
-        WHERE b.addedBy = ' . $_SESSION['uid']);
-
+        $data = $db->multiFetch("SELECT DISTINCT 
+        b.*, 
+        c.userID AS cartUserID, 
+        o.orderStatus, 
+        o.orderID,
+        u1.phoneNumber, 
+        u2.username 
+    FROM 
+        books b
+    INNER JOIN 
+        carts c ON b.bookID = c.bookID
+    INNER JOIN 
+        orders o ON c.cartID = o.cartID
+    INNER JOIN 
+        users u1 ON u1.uid = c.userID 
+    INNER JOIN 
+        users u2 ON u2.uid = c.userID 
+    WHERE 
+        b.addedBy = " . $_SESSION['uid']
+        );
+    
         return $data;
     }
+    
 
     function changeState($bookID, $state)
     {

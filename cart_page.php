@@ -143,6 +143,7 @@
 
             } else {
                 echo "<p>Your cart is empty.</p>";
+                exit();
             }
 
             echo ' <div class="cart-total">';

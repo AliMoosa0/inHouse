@@ -921,12 +921,7 @@ form .signup-link a:hover {
   color: #2c5777;
 }
 
-.ordersDiv {
-  padding: 2%;
-}
-.inOrdersDiv {
-  padding: 2%;
-}
+
 /* ---------------------------------------------------------------book details-------------------------------------------------------------------- */
 
 .book-details {
@@ -1086,4 +1081,18 @@ form .signup-link a:hover {
   margin-top: 5px;
   font-size: 14px;
   color: #666;
+}
+
+
+
+/* ---------------------------------------------------------------My Orders-------------------------------------------------------------------- */
+
+
+
+
+.ordersDiv {
+  padding: 2%;
+}
+.inOrdersDiv {
+  padding: 2%;
 }

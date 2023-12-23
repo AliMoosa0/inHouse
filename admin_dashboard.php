@@ -14,6 +14,7 @@
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         text-align: center;
         /* Center text */
+        color: white;
     }
 
     .nav-links ul {
@@ -41,24 +42,27 @@
         text-decoration: none;
 
     }
+#manageComments {
+    color: white;
+}
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    color: white; // Added to make the text white
+}
 
-    table th,
-    table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-
-    .hidden-section {
-        display: none;
-    }
+.hidden-section {
+    display: none;
+}
 </style>
 
 <h1 class="title">Admin Pannel</h1>
@@ -67,12 +71,10 @@
         <ul>
             <li><button class="searchBtn"><a href="#" onclick="showSection('manageComments')">Manage
                         Comments</a></button>
-            
-                        <li>
-  <button class="searchBtn" onclick="window.open('barcode', '_blank')">Barcode Generator</button>
-</li>
             </li>
-            
+            <li><button class="searchBtn"><a href="#" onclick="showSection('manageUsers')">Manage Users</a></button>
+            </li>
+<li>
   <a href="barcode" target="_blank" class="searchBtn">Barcode Generator</a>
 </li>
             </li>
