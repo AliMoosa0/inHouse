@@ -65,7 +65,7 @@ table td {
 }
 </style>
 
-<h1 class="title">Admin Pannel</h1>
+<h1 class="title">Admin Panel</h1>
 <div class="wrapper">
     <div class=" nav-links">
         <ul>

@@ -2,13 +2,6 @@
 
 include 'header.php';
 
-// foreach ($_FILES as $file) {
-//     echo $file['name'];
-//     echo "<img src='uploads/" . $file['name'] . "' />";
-// }
-// echo $_FILES['picture'];
-
-
 function uploadImg()
 {
 

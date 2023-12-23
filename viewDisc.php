@@ -25,7 +25,7 @@ if ($discID != 0) {
         $discPublishDate = $discInfo->publishDate;
 
         ?>
-        <h1 class="title">Book Details</h1>
+        <h1 class="title">Discussion Details</h1>
         <br>
         <!-- Displaying the information -->
         <div class="discussion">

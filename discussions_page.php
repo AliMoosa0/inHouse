@@ -192,7 +192,7 @@
                         <div class="discussion-content">
                             <h2 class="discH2">' . $discussion->discTitle . '</h2>
                             <p><strong>Book:</strong> ' . $discussion->discBookName . '</p>
-                            <p class="article-description"><strong>Title: </strong>' . substr($discussion->discBody, 0, 100) . "..." . '</p>
+                            <p class="article-description"><strong>Body: </strong>' . substr($discussion->discBody, 0, 100) . "..." . '</p>
                             <br>
                             <div class="discBtns">';
 
