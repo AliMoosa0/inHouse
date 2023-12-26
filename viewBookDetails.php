@@ -41,7 +41,7 @@
             $q = 'SELECT username FROM users WHERE uid = \'' . $addedBy . '\'';
             $data = $db->singleFetch($q);
             $addedBy = $data->username;
-            
+
             // Check if 'Add to Cart' button for a specific book is clicked
             if (isset($_POST['btnCart']) && isset($_POST['bookID']) && $_POST['bookID'] == $bookId) {
                 $cart = new Cart();
@@ -52,7 +52,7 @@
                     echo "Failed to add book to cart";
                 }
             }
-            //TODO: add a button to add to cart
+          
             echo "<h1 class='title'>Book Details</h1>  ";
             // Display book details
             echo "<div class='book-details'>";

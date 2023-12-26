@@ -5,12 +5,7 @@ $books = new Books();
 $userID = $_SESSION['uid'];
 $row = $books->getBooksByAddedBy($userID);
 echo "<h1 class='title'>My Books</h1>";
-// echo '
-// <form action="" method="GET">
-// <label for="keyword" id="search">Search by Book ID or Name:</label>
-// <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
-// <button class="searchBtn" type="submit">Search</button>
-// </form>';
+
 
 if (isset($_SESSION['username'])) {
     echo '<a href="addBooks.php"><button class="addbBtn">Add a Book</button></a>';
@@ -22,12 +17,7 @@ if (isset($_SESSION['username'])) {
 
 
 if (isset($_GET['keyword'])) {
-//     echo '
-//     <form action="" method="GET">
-// <label for="keyword" id="search">Search by Book ID or Name:</label>
-// <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
-// <button class="searchBtn" type="submit">Search</button>
-//  </form>';
+
 
     $keyword = $_GET['keyword'];
     $book = new Books();
@@ -51,16 +41,7 @@ if (isset($_GET['keyword'])) {
         echo "<input type='hidden' name='bookID' value='" . $row[$i]->bookID . "'>";
         echo "</form>";
 
-        // Check if 'Add to Cart' button for a specific book is clicked
-        if (isset($_POST['btnCart']) && isset($_POST['bookID']) && $_POST['bookID'] == $row[$i]->bookID) {
-            $cart = new Cart();
-            $cart->initWith($_SESSION['uid'], $row[$i]->bookID, $row[$i]->bookName, $row[$i]->bookPrice, $row[$i]->bookPic);
-            if ($cart->addToCart($_SESSION['uid'])) { // Pass the necessary argument (in this case, user ID)
-                echo "Book added to cart";
-            } else {
-                echo "Failed to add book to cart";
-            }
-        }
+       
 
         echo "</div>"; // Closing div for 'book-info'
         echo "</div>"; // Closing div for 'book'
@@ -88,16 +69,6 @@ if (isset($_GET['keyword'])) {
         echo "<input type='hidden' name='bookID' value='" . $row[$i]->bookID . "'>";
         echo "</form>";
 
-        // Check if 'Add to Cart' button for a specific book is clicked
-        if (isset($_POST['btnCart']) && isset($_POST['bookID']) && $_POST['bookID'] == $row[$i]->bookID) {
-            $cart = new Cart();
-            $cart->initWith($_SESSION['uid'], $row[$i]->bookID, $row[$i]->bookName, $row[$i]->bookPrice, $row[$i]->bookPic);
-            if ($cart->addToCart($_SESSION['uid'])) { // Pass the necessary argument (in this case, user ID)
-                echo "Book added to cart";
-            } else {
-                echo "Failed to add book to cart";
-            }
-        }
 
         echo "</div>"; // Closing div for 'book-info'
         echo "</div>"; // Closing div for 'book'

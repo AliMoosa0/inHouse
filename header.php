@@ -10,7 +10,8 @@ session_start();
   <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="..." crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="..." crossorigin="anonymous">
 
 
   <nav>
@@ -28,7 +29,7 @@ session_start();
       </label>
       <ul class="links">
         <li><a href="home.php">Home Page</a></li>
-        <li><a href="contactUs.php">Contact Us</a></li>
+        <!-- <li><a href="contactUs.php">Contact Us</a></li> -->
         <li><a href="discussions_page.php">Discussions</a></li>
         <li><a href="MyBooks.php">My Books</a></li>
         <li><a href="myOrders.php">My Orders</a></li>
@@ -78,7 +79,7 @@ session_start();
 
 
   </nav>
- 
+
 
 </header>
 
@@ -95,5 +96,4 @@ include('cart.php');
 include('order.php');
 $db = new Connection();
 $connection = $db->getConnection();
-
 ?>

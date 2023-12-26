@@ -202,6 +202,8 @@ class Users
         try {
             $db = Database::getInstance();
             $db->querySQL('delete from users where uid = ' . $this->uid);
+            // var_dump('delete from users where uid = ' . $this->uid);
+            // die();
             return true;
         } catch (Exception $ex) {
             echo 'exception: ' . $ex;
