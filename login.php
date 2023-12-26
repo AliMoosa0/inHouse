@@ -111,10 +111,10 @@ if (isset($_POST['submitted'])) {
 
   if ($lgnObj->login($username, $password)) {
     if ($_SESSION['role'] == "admin") {
-      header('Location: home.php');
+      header('Location: admin_dashboard.php');
       exit(); // Always exit after header redirection
     } elseif ($_SESSION['role'] == "student") {
-      header('Location: discussions_page.php');
+      header('Location: home.php');
       exit(); // Always exit after header redirection
     }
   } else {
