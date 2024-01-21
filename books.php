@@ -1,6 +1,8 @@
 <?php
 
-class Books {
+class Books
+{
+	
 
 	private $bookID;
 	private $bookName;
@@ -14,7 +16,8 @@ class Books {
 	private $addedBy;
 
 
-	public function __construct() {
+	public function __construct()
+	{
 
 		$this->bookID = null;
 		$this->bookName = null;
@@ -29,88 +32,109 @@ class Books {
 		$this->addedBy = null;
 	}
 
-	public function getBookID() {
+	public function getBookID()
+	{
 		return $this->bookID;
 	}
 
-	public function setBookID($value) {
+	public function setBookID($value)
+	{
 		$this->bookID = $value;
 	}
 
-	public function getBookName() {
+	public function getBookName()
+	{
 		return $this->bookName;
 	}
 
-	public function setBookName($value) {
+	public function setBookName($value)
+	{
 		$this->bookName = $value;
 	}
 
-	public function getBookAuthor() {
+	public function getBookAuthor()
+	{
 		return $this->bookAuthor;
 	}
 
-	public function setBookAuthor($value) {
+	public function setBookAuthor($value)
+	{
 		$this->bookAuthor = $value;
 	}
 
-	public function getBookCategory() {
+	public function getBookCategory()
+	{
 		return $this->bookCategory;
 	}
 
-	public function setBookCategory($value) {
+	public function setBookCategory($value)
+	{
 		$this->bookCategory = $value;
 	}
 
-	public function getBookPrice() {
+	public function getBookPrice()
+	{
 		return $this->bookPrice;
 	}
 
-	public function setBookPrice($value) {
+	public function setBookPrice($value)
+	{
 		$this->bookPrice = $value;
 	}
 
-	public function getPublishDate() {
+	public function getPublishDate()
+	{
 		return $this->publishDate;
 	}
 
-	public function setPublishDate($value) {
+	public function setPublishDate($value)
+	{
 		$this->publishDate = $value;
 	}
 
-	public function getBookCondition() {
+	public function getBookCondition()
+	{
 		return $this->bookCondition;
 	}
 
-	public function setBookCondition($value) {
+	public function setBookCondition($value)
+	{
 		$this->bookCondition = $value;
 	}
 
 
-	public function getBookPic() {
+	public function getBookPic()
+	{
 		return $this->bookPic;
 	}
 
-	public function setBookPic($value) {
+	public function setBookPic($value)
+	{
 		$this->bookPic = $value;
 	}
 
-	public function getInStock() {
+	public function getInStock()
+	{
 		return $this->inStock;
 	}
 
-	public function setInStock($value) {
+	public function setInStock($value)
+	{
 		$this->inStock = $value;
 	}
 
-	public function getAddedBy() {
+	public function getAddedBy()
+	{
 		return $this->addedBy;
 	}
 
-	public function setAddedBy($value) {
+	public function setAddedBy($value)
+	{
 		$this->addedBy = $value;
 	}
 
-	public function initWith($bookID, $bookName, $bookAuthor, $bookCategory, $bookPrice, $publishDate, $bookCondition, $bookPic, $inStock, $addedBy) {
+	public function initWith($bookID, $bookName, $bookAuthor, $bookCategory, $bookPrice, $publishDate, $bookCondition, $bookPic, $inStock, $addedBy)
+	{
 		$this->bookID = $bookID;
 		$this->bookName = $bookName;
 		$this->bookAuthor = $bookAuthor;
@@ -122,12 +146,14 @@ class Books {
 		$this->inStock = $inStock;
 		$this->addedBy = $addedBy;
 	}
-	function getBooks() {
+	function getBooks()
+	{
 		$db = Database::getInstance();
 		$data = $db->multiFetch('Select * from books where inStock = 1 order by publishDate desc');
 		return $data;
 	}
-	public function initWithId($id) {
+	public function initWithId($id)
+	{
 		$db = Database::getInstance();
 		$data = $db->singleFetch("SELECT * FROM books WHERE BookID = $id");
 
@@ -145,24 +171,37 @@ class Books {
 		);
 		return $data;
 	}
-	function getBooksByCategory($category) {
+	function getBooksByCategory($category)
+	{
 		$db = Database::getInstance();
 		$data = $db->multiFetch("Select * from books where bookCategory = '$category' and inStock = 1 order by publishDate desc");
 		return $data;
 	}
 
-	function getBooksByAddedBy($addedBy) {
+	function getBooksByAddedBy($addedBy)
+	{
 		$db = Database::getInstance();
 		$data = $db->multiFetch("Select * from books where addedBy = '$addedBy' order by publishDate desc");
 		return $data;
 	}
 
 
-	function initWithIdOrName($keyword) {
+	function initWithIdOrName($keyword)
+	{
 		$db = Database::getInstance();
 		$lowerKeyword = strtolower($keyword); // Convert keyword to lowercase
-		$searchTerm = '%'.$lowerKeyword.'%'; // Add wildcards for partial matching
-		$sql = "SELECT * FROM books WHERE bookID = '$keyword' OR LOWER(bookName) LIKE '$searchTerm'";
+		$searchTerm = '%' . $lowerKeyword . '%'; // Add wildcards for partial matching
+		$sql = "SELECT * FROM books WHERE bookID = '$keyword' OR LOWER(bookName) LIKE '$searchTerm' and inStock = 1 order by publishDate desc";
+		$results = $db->multiFetch($sql);
+		return $results;
+	}
+
+	function initWithIdOrNameMy($keyword)
+	{
+		$db = Database::getInstance();
+		$lowerKeyword = strtolower($keyword); // Convert keyword to lowercase
+		$searchTerm = '%' . $lowerKeyword . '%'; // Add wildcards for partial matching
+		$sql = "SELECT * FROM books WHERE bookID = '$keyword' OR LOWER(bookName) LIKE '$searchTerm' AND inStock = 1 AND addedBy = '{$session['uid']}' ORDER BY publishDate DESC";
 		$results = $db->multiFetch($sql);
 		return $results;
 	}
@@ -170,109 +209,130 @@ class Books {
 
 
 
-	function initWithName() {
-
-		$db = Database::getInstance();
-		$q = 'SELECT * FROM books WHERE bookTitle = \''.$this->bookName.'\'';
-		$data = $db->singleFetch($q);
-		if($data != null) {
-			return false;
-		}
-		return true;
-	}
-
-
-	function addBook() {
-
+	function addBook()
+	{
 		try {
+
 			$db = Database::getInstance();
-			$q = "INSERT INTO books (bookID, bookName, bookAuthor, bookCategory, bookPrice, publishDate, bookCondition, bookPic, inStock, addedBy)
-						  VALUES (null ,'$this->bookName', '$this->bookAuthor', '$this->bookCategory', '$this->bookPrice', '$this->publishDate', 
-						  '$this->bookCondition', '$this->bookPic', '$this->inStock', '$this->addedBy')";
-
-			$db->querySQL($q);
-
-			return true;
-
+			$query = "INSERT INTO books (bookID, bookName, bookAuthor, bookCategory, bookPrice, publishDate, bookCondition, bookPic, inStock, addedBy)
+					  VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					  $conn = new Connection();
+			$connection = $conn->getConnection();
+	
+			$stmt = mysqli_prepare($connection, $query);
+			$stmt->bind_param("sssdssssi", $this->bookName, $this->bookAuthor, $this->bookCategory, $this->bookPrice, $this->publishDate, $this->bookCondition, $this->bookPic, $this->inStock, $this->addedBy);
+	
+			if ($stmt->execute()) {
+				return true;
+			} else {
+				return false;
+			}
 		} catch (Exception $e) {
-			echo 'Exception: '.$e->getMessage();
+			echo 'Exception: ' . $e->getMessage();
 			echo 'Error: Unable to execute the query.';
-
 			return false;
 		}
 	}
+	
 
 
 
 
 
 
-
-	function deleteBook() {
+	function deleteBook()
+	{
 		try {
 			$db = Database::getInstance();
-			$db->querySql('Delete from books where bookID='.$this->bookID);
+			$db->querySql('Delete from books where bookID=' . $this->bookID);
 			return true;
 		} catch (Exception $e) {
-			echo 'Exception: '.$e;
+			echo 'Exception: ' . $e;
 			return false;
 		}
 	}
-	function updateDB() {
-		$db = Database::getInstance();
-		$data = "UPDATE books SET 
-				bookID = '$this->bookID',
-                BookName = '$this->bookName',
-                BookAuthor = '$this->bookAuthor',
-                BookCategory = '$this->bookCategory',
-                BookPrice = '$this->bookPrice',
-                PublishDate = '$this->publishDate',
-                BookCondition = '$this->bookCondition',
-                BookPic = '$this->bookPic',
-                InStock = '$this->inStock',
-                AddedBy = '$this->addedBy'
-             WHERE BookID = '$this->bookID'";
+	function updateDB()
+{
+    try {
+        $db = Database::getInstance();
+        $query = "UPDATE books SET 
+                    bookName = ?,
+                    bookAuthor = ?,
+                    bookCategory = ?,
+                    bookPrice = ?,
+                    publishDate = ?,
+                    bookCondition = ?,
+                    bookPic = ?,
+                    inStock = ?,
+                    addedBy = ?
+                  WHERE bookID = ?";
 
-		$db->querySQL($data);
-		return true;
-	}
+$conn = new Connection();
+$connection = $conn->getConnection();
+
+$stmt = mysqli_prepare($connection, $query);
+
+        $stmt->bind_param("sssdssssii",
+		 $this->bookName,
+		 $this->bookAuthor,
+		  $this->bookCategory,
+		   $this->bookPrice, 
+		   $this->publishDate,
+		    $this->bookCondition,
+			 $this->bookPic, 
+			 $this->inStock,
+			  $this->addedBy,
+			   $this->bookID);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        echo 'Exception: ' . $e->getMessage();
+        echo 'Error: Unable to execute the query.';
+        return false;
+    }
+}
 
 
 
 
-	public function getBookPicWithID($id) {
-		$db = Database::getInstance();
-		$data = $db->singleFetch("SELECT bookPic FROM books WHERE BookID = $id");
-		return $data;
-	}
+
+	// public function getBookPicWithID($id) {
+	// 	$db = Database::getInstance();
+	// 	$data = $db->singleFetch("SELECT bookPic FROM books WHERE BookID = $id");
+	// 	return $data;
+	// }
 
 
 
 
-	public function isValid() {
-		$errors = true;
-		if(empty($this->bookAuthor)) {
-			$errors = false;
-		}
-		if(empty($this->bookName)) {
-			$errors = false;
-		}
-		if(empty($this->bookCategory)) {
-			$errors = false;
-		}
-		if(empty($this->BookPic)) {
-			$errors = false;
-		}
-		if(empty($this->bookCondition)) {
-			$errors = false;
-		}
-		if(empty($this->BookPrice)) {
-			$errors = false;
-		}
-		if(empty($this->addedBy)) {
-			$errors = false;
-		}
+	// public function isValid() {
+	// 	$errors = true;
+	// 	if(empty($this->bookAuthor)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->bookName)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->bookCategory)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->BookPic)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->bookCondition)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->BookPrice)) {
+	// 		$errors = false;
+	// 	}
+	// 	if(empty($this->addedBy)) {
+	// 		$errors = false;
+	// 	}
 
-		return $errors;
-	}
+	// 	return $errors;
+	// }
 }

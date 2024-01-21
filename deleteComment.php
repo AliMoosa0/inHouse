@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
     //test the value of the radio button       
     if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
-        
+
         //delete article 
         if ($comm->deleteComment($comID)) {
             $deleted = "Comment deleted successfully";
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 
 <div id="main">
 
-
+    <h1 class="title">Delete Comment</h1>
     <form method="post" class="form-container">
         <?php if (isset($error)): ?>
             <p style="color: red;">
@@ -98,9 +98,9 @@ if (isset($_POST['submit'])) {
             </p>
         <?php endif; ?>
         <br />
-        <h2 class="form-title">Delete a Comment</h2>
+      
         <h2>Comment:
-            <?php echo $commentInfo->comment ; ?>
+            <?php echo $commentInfo->comment; ?>
         </h2>
         <p>Are you sure you want to delete this comment? <br /><br />
             <label class="form-radio">

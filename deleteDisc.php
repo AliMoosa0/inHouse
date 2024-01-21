@@ -23,24 +23,19 @@ $discInfo = $disc->getDiscWithID($discID);
 <style>
     /* Form container styles */
     .form-container {
-        max-width: 400px;
+        text-align: center;
         margin: 0 auto;
-        padding: 20px;
-        background-color: #f2f2f2;
-        border: 1px solid #ccc;
+        padding: 1%;
+        background-color: #9b9b9b;
         border-radius: 5px;
-    }
-
-    /* Form title styles */
-    .form-title {
-        margin-top: 0;
-        margin-bottom: 20px;
-        font-size: 24px;
+        width: 40%;
+        height: 25%;
+        margin-top: 4%;
     }
 
     /* Radio button styles */
     .form-radio {
-        margin-bottom: 10px;
+        margin-bottom: 2%;
     }
 
     /* Submit button styles */
@@ -50,10 +45,6 @@ $discInfo = $disc->getDiscWithID($discID);
         border: none;
         padding: 10px 20px;
         cursor: pointer;
-    }
-
-    .form-submit:hover {
-        background-color: #23527c;
     }
 </style>
 <?php
@@ -81,8 +72,7 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div id="main">
-
-
+    <h1 class="title">Delete Discussion</h1>
     <form method="post" class="form-container">
         <?php if (isset($error)): ?>
             <p style="color: red;">
@@ -103,20 +93,23 @@ if (isset($_POST['submit'])) {
             </p>
         <?php endif; ?>
         <br />
-        <h2 class="form-title">Delete Discussion</h2>
-        <h2>Title:
+
+        <h2 class="delteTitle">Title:
             <?php echo $discInfo->discTitle; ?>
         </h2>
+        <br>
         <p>Are you sure you want to delete this Discussion? <br /><br />
-            <label class="form-radio">
+        <DIV class="form-radio">
+            <label>
                 <input type="radio" name="sure" value="Yes" /> Yes
             </label>
             <label class="form-radio">
                 <input type="radio" name="sure" value="No" /> No
             </label>
+        </DIV>
         </p>
         <input type="hidden" name="id" value="<?php echo $discID; ?>" />
-        <p><input type="submit" name="submit" value="Delete" class="form-submit" /></p>
+        <p><input type="submit" name="submit" value="Delete" class="searchBtn" /></p>
 
     </form>
 

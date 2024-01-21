@@ -1,25 +1,40 @@
 <head>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container66 {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
         h1 {
             text-align: center;
             margin-top: 20px;
         }
 
-        /* Style for each cart item */
         .cart-item {
             border: 1px solid #ccc;
             padding: 10px;
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
-            /* Align items with space in between */
             align-items: center;
+            background-color: #fff;
+            border-radius: 5px;
         }
 
-        img {
-            width: 100px;
-            /* Adjust the image size as needed */
-            height: 100px;
+        .theImg {
+            width: 220px;
+            height: 300px;
             margin-right: 20px;
         }
 
@@ -33,7 +48,6 @@
             margin: 0;
         }
 
-        /* Style for delete button */
         .delete-btn {
             background-color: #ff0000;
             color: white;
@@ -59,7 +73,7 @@
     <?php
 
     include "header.php"; // Include your header file
-    
+    echo '<h1 class="title">Your Cart</h1>';
     // Check if 'Delete' button for a specific cart item is clicked
     if (isset($_POST['deleteBtn']) && isset($_POST['cartID'])) {
         $cart = new Cart();
@@ -67,15 +81,14 @@
         if ($cart->deleteItem($cartIDToDelete)) {
             echo "Item deleted from cart";
             displayCart(); // Display the cart contents after deletion
-            // Optionally, return a success message or an indicator of successful deletion
             exit(); // Ensure nothing else is executed after deletion
         } else {
             echo "Failed to delete item from cart";
         }
     }
 
-    // Rest of your code to display the cart contents, including the foreach loop
-    
+
+
 
 
     // Check if the user is logged in
@@ -87,75 +100,79 @@
     }
 
     //handel the place order button
-    if (isset($_POST['checkoutBtn'])) {
-        // echo "Order placed successfully*************************************";
+    ?>
+    <div class=" container66">
+        <?php
+        if (isset($_POST['checkoutBtn'])) {
+            // echo "Order placed successfully*************************************";
         
-        $order = new order();
+            $order = new order();
 
-        if ($order->insert()) {
-            echo "Order placed successfully";
-            exit();
-        } else {
-            echo "Failed to place order";
+            if ($order->insert()) {
+                echo "Order placed successfully";
+                exit();
+            } else {
+                echo "Failed to place order";
+            }
         }
-    }
 
-    function displayCart()
-    {
-        $userID = $_SESSION['uid'];
-        // Retrieve cart information for the logged-in user
-        $cart = new Cart();
-        $userCart = $cart->getCart($userID); // Replace this with your method to get cart by user ID
-    
-        // Display cart contents
-        if ($userCart) {
-            echo "<h1>Your Cart</h1>";
+        function displayCart()
+        {
+            $userID = $_SESSION['uid'];
+            // Retrieve cart information for the logged-in user
+            $cart = new Cart();
+            $userCart = $cart->getCart($userID); // Replace this with your method to get cart by user ID
+        
+            // Display cart contents
+            if ($userCart) {
 
-            foreach ($userCart as $cartItem) {
-                echo "<div class='cart-item' id='cartItem-" . $cartItem->cartID . "'>";
-                echo "<img src='uploads/" . $cartItem->bookPic . "' />";
-                echo "<h2>" . $cartItem->bookName . "</h2>";
-                echo "<p>Price: " . $cartItem->price . "</p>";
-                // Add a 'Delete' button for each item
-                echo "<form method='post'>";
-                echo "<input type='hidden' name='cartID' value='" . $cartItem->cartID . "'>";
-                echo "<input type='submit' name='deleteBtn' value='Delete' onclick='updateCart(" . $cartItem->cartID . ")'>";
-                echo "</form>";
-                echo "</div>";
+
+                foreach ($userCart as $cartItem) {
+                    echo "<div class='cart-item' id='cartItem-" . $cartItem->cartID . "'>";
+                    echo "<img class='theImg' src='uploads/" . $cartItem->bookPic . "' />";
+                    echo "<h2>" . $cartItem->bookName . "</h2>";
+                    echo "<p>Price: " . $cartItem->price . "</p>";
+                    // Add a 'Delete' button for each item
+                    echo "<form method='post'>";
+                    echo "<input type='hidden' name='cartID' value='" . $cartItem->cartID . "'>";
+                    echo "<button type='submit' name='deleteBtn' class='btnCart' onclick='updateCart(" . $cartItem->cartID . ")'>Delete</button>";
+
+                    echo "</form>";
+                    echo "</div>";
+                }
+
+            } else {
+                echo "<p>Your cart is empty.</p>";
+                exit();
             }
 
-        } else {
-            echo "<p>Your cart is empty.</p>";
+            echo ' <div class="cart-total">';
+
+            // Get total cost for the user's cart
+            $cart = new Cart();
+            $userID = $_SESSION['uid'];
+            $total = $cart->getTotal($userID);
+
+            if ($total) {
+                // Display total cost
+                echo "<p>Total Cost: BHD" . $total->total . "</p>";
+                echo '<form method="POST">';
+                echo '<br>';
+                echo '<button type="submit" name="checkoutBtn" class="actionBtns">Place Order</button>';
+                echo '</form>';
+            } else {
+                // Handle the case when the cart is empty or total is not available
+                
+                echo "<p>No items in the cart or total not available.</p>";
+            }
+            echo '<br>';
+            echo '</div>';
+
         }
-
-        echo ' <div class="cart-total">';
-
-        // Get total cost for the user's cart
-        $cart = new Cart();
-        $userID = $_SESSION['uid'];
-        $total = $cart->getTotal($userID);
-
-        if ($total) {
-            // Display total cost
-            echo "<p>Total Cost: BHD" . $total->total . "</p>";
-            echo '<form method="POST">';
-            echo '<input type="submit" name="checkoutBtn" value="Place Order">';
-            echo '</form>';
-        } else {
-            // Handle the case when the cart is empty or total is not available
-            echo "<p>No items in the cart or total not available.</p>";
-        }
-
+        displayCart();
         echo '</div>';
-
-
-
-
-
-    }
-    displayCart();
-    ?>
-
+        ?>
+    </div>
 
     <?php
     include "footer.html"; // Include your footer file

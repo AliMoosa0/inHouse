@@ -27,9 +27,9 @@ class Database
     {
         $this->dblink = mysqli_connect(
             'localhost',
-            'u201902206',
-            'u201902206',
-            'db201902206'
+            'username',
+            'password',
+            'database name'
         ) or die('CAN NOT CONNECT');
     }
 
@@ -79,22 +79,7 @@ class Database
         return $result;
     }
 
-    function mkSafe($string)
-    {
-        /*$string = strip_tags($string);
-        if (!get_magic_quotes_gpc()) {
-            $string = addslashes($string);
-        } else {
-            $string = stripslashes($string);
-        }
-        $string = str_ireplace("script", "blocked", $string);
-
-        $string = trim($string);
-        */
-        $string = mysqli_real_escape_string($string);
-
-        return $string;
-    }
+  
 
     function getRows($sql)
     {

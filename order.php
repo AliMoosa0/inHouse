@@ -84,10 +84,13 @@ class order
         $data = $db->singleFetch('select max(cartID) as cartID from carts where userID = ' . $userID);
         $this->orderID = $data->cartID + 10000;
     }
-    function listOfCarts($userID)
+    function listOfCarts()
     {
         $db = Database::getInstance();
-        $data = $db->multiFetch('select * from carts where userID = ' . $userID);
+        $query = 'select * from carts where userID = ' . $_SESSION['uid'] . ' and status = "show"';
+
+        $data = $db->multiFetch($query);
+
         return $data;
 
     }
@@ -95,9 +98,8 @@ class order
     function insert()
     {
         $this->findNextID($_SESSION['uid']);
-        // var_dump($this->orderID);
-        // die();
-        $data = $this->listOfCarts($_SESSION['uid']);
+
+        $data = $this->listOfCarts();
         foreach ($data as $cart) {
             $db = Database::getInstance();
             $sql = 'insert into orders (orderID, orderedBY, cartID, orderStatus , orderedON)
@@ -105,10 +107,60 @@ class order
             $db->querySQL($sql);
             $update = 'update carts set status = "hide" where cartID = ' . $cart->cartID;
             $db->querySQL($update);
-            //TODO: update the status of the book to sold
+            
+            $updateBook = 'update books set inStock = 0 where bookID = ' . $cart->bookID;
+            $db->querySQL($updateBook);
         }
         return true;
     }
+
+    function getOrders()
+    {
+        $db = Database::getInstance();
+        $data = $db->multiFetch("SELECT DISTINCT 
+        b.*, 
+        c.userID AS cartUserID, 
+        o.orderStatus, 
+        o.orderID,
+        u1.phoneNumber, 
+        u2.username 
+    FROM 
+        books b
+    INNER JOIN 
+        carts c ON b.bookID = c.bookID
+    INNER JOIN 
+        orders o ON c.cartID = o.cartID
+    INNER JOIN 
+        users u1 ON u1.uid = c.userID 
+    INNER JOIN 
+        users u2 ON u2.uid = c.userID 
+    WHERE 
+        b.addedBy = " . $_SESSION['uid']
+        );
+    
+        return $data;
+    }
+    
+
+    function changeState($bookID, $state)
+    {
+        $db = Database::getInstance();
+        $sql = 'UPDATE orders 
+                SET orderStatus = "' . $state . '" 
+                WHERE cartID IN (
+                    SELECT cartID 
+                    FROM carts 
+                    WHERE bookID = ' . $bookID . '
+                )';
+
+        $db->querySQL($sql);
+
+        return true;
+    }
+
+
+
+
 
 
 }

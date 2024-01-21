@@ -7,7 +7,6 @@
     <title>Discussions Page</title>
 
     <style>
-       
         .container2 {
             max-width: 90%;
             max-height: 100%;
@@ -15,15 +14,14 @@
             padding: 20px;
         }
 
-        .container2 h1{
+        .container2 h1 {
             color: #fff;
         }
 
-        .discussion {
+        .discussion2 {
             display: flex;
             border: 1px solid #ccc;
             background-color: rgba(1, 1, 2, 0.5);
-            
             margin-bottom: 20px;
             padding: 10px;
             color: #fff;
@@ -36,124 +34,200 @@
 
         .discussion-content {
             flex: 1;
+            margin-left: 3%;
         }
 
         .discH2 {
             margin-top: 0;
         }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
+
+        .discBtns {
+            display: block;
+            flex-direction: left;
+
         }
 
-        .pagination a {
-            padding: 10px;
-            margin: 0 5px;
+        .discBtn {
+            background-color: #e1ecf4;
+            border-radius: 3px;
+            border: 1px solid #7aa7c7;
+            box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+            box-sizing: border-box;
+            color: #39739d;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.15385;
+            margin: 1%;
+            outline: none;
+            padding: 8px .8em;
+            position: relative;
+            text-align: center;
             text-decoration: none;
-            background-color: #333;
-            color: #fff;
-            border-radius: 5px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: baseline;
+            white-space: nowrap;
         }
 
-        .discBtns{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-
-        }
-        .discBtn{
-            margin: 0 10px;
-            width: 90%;
-            padding: 10%;
-            background-color: #8c7ceb;
-            color: #fff;
+        .discBtn:hover,
+        .discBtn:focus {
+            background-color: #b3d3ea;
+            color: #2c5777;
         }
 
-        .discBtn:hover{
-            background-color: #9A8CEF;
+        .discBtn:focus {
+            box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
         }
 
-        .addDiscBtn{
-            margin: 0 10px;
-            width: 10%;
-            padding: 1%;
-            background-color: #8c7ceb;
-            color: #fff;
-            margin-bottom: 1%;
+        .discBtn:active {
+            background-color: #a0c7e4;
+            box-shadow: none;
+            color: #2c5777;
         }
 
-        .addDiscBtn:hover{
-            background-color: #9A8CEF;
-
+        .addDiscBtn {
+            background-color: #e1ecf4;
+            border-radius: 3px;
+            border: 1px solid #7aa7c7;
+            box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+            box-sizing: border-box;
+            color: #39739d;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.15385;
+            margin: 2%;
+            outline: none;
+            padding: 8px .8em;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: baseline;
+            white-space: nowrap;
         }
-        
 
+        .addDiscBtn:hover,
+        .addDiscBtn:focus {
+            background-color: #b3d3ea;
+            color: #2c5777;
+        }
+
+        .addDiscBtn:focus {
+            box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+        }
+
+        .addDiscBtn:active {
+            background-color: #a0c7e4;
+            box-shadow: none;
+            color: #2c5777;
+        }
     </style>
 </head>
 
 <body>
-    <?php include "header.php";
-
-
+    <?php
+    include "header.php";
     $disc = new Discussions();
-    $row = $disc->getAllDisc();
+    $discussionsPerPage = 2; // Adjust as needed
+    // Check if the search form is submitted with a keyword
+    if (isset($_GET['keyword'])) {
+        $keyword = $_GET['keyword'];
+        $discussions = $disc->searchForDisc($keyword); // Retrieve discussions based on the keyword
+    } else {
+        $discussions = $disc->getAllDisc(); // If no keyword, fetch all discussions
+    }
+
+
+
+    $totalDiscussions = count($discussions);
+
+    // Determine current page
+    if (!isset($_GET['page'])) {
+        $currentPage = 1;
+    } else {
+        $currentPage = $_GET['page'];
+    }
+
+    // Calculate offset and get paginated discussions
+    $offset = ($currentPage - 1) * $discussionsPerPage;
+    $paginatedDiscussions = array_slice($discussions, $offset, $discussionsPerPage);
+
     ?>
+
+
+
+
     <div class="container2">
         <h1>Discussions Page</h1>
-        
+
+        <form action="" method="GET">
+            <label for="keyword">Search By Name:</label>
+            <input type="text" id="keyword" name="keyword" placeholder="Enter Book ID or Name">
+            <button class="searchBtn" type="submit">Search</button>
+        </form>
+
         <?php
-         if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['username'])) {
+            echo '<a href="addDisc.php"><button class="addDiscBtn">Add a Discussion</button></a>';
+        }
+
+        foreach ($paginatedDiscussions as $discussion) {
+            $addedBy = $discussion->createdBy;
+            
+
+
             echo '
-        
-            <a href="addDisc.php">
-            <button class="addDiscBtn">Add a Discusstion</button>
-             </a>
-        
-        
-        
-             ';}
-       
-        for ($i = 0; $i < count($row); $i++) {
+                    <div class="discussion2">
+                        <img class="discImg" src="uploads/' . $discussion->discBookPic . '" alt="Book Image">
+                        <div class="discussion-content">
+                            <h2 class="discH2">' . $discussion->discTitle . '</h2>
+                            <p><strong>Book:</strong> ' . $discussion->discBookName . '</p>
+                            <p class="article-description"><strong>Body: </strong>' . substr($discussion->discBody, 0, 100) . "..." . '</p>
+                            <br>
+                            <div class="discBtns">';
+
+            if ($addedBy == $_SESSION["uid"] || ($_SESSION["role"] == "admin")) {
+                echo '
+                                    <a href="editDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Edit Discussion</button></a>
+                                    <br>
+                                    <a href="deleteDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">Delete Discussion</button></a>
+                                    <br>';
+            }
+
+
             echo '
-        
-            <div class="discussion">
-                <img class="discImg" src="uploads/' . $row[$i]->discBookPic . '" alt="Book 1">
-                <div class="discussion-content">
-                    <h2 class="discH2">' . $row[$i]->discTitle . '</h2>
-                    <p><strong>Book:</strong> ' . $row[$i]->discBookName . '</p>
-                    <p class="article-description"><strong>Title: </strong>' . substr($row[$i]->discBody, 0, 100) . "..." . '</p>
-                    <br>
-                    <div class="discBtns">
-                        <a href="editDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">Edit Discussion</button></a>
-                        <br>
-                        <a href="deleteDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">Delete Discussion</button></a>
-                        <br>
-                        <a href="viewDisc.php?discid=' . $row[$i]->discID . '"><button class="discBtn">View Discusstion</button></a>
+                                <a href="viewDisc.php?discid=' . $discussion->discID . '"><button class="discBtn">View Discussion</button></a>
+                            </div>
+                        </div>
                     </div>
-                    </div>
-            </div>
-       
-    ';
+                ';
         }
         ?>
+        <!-- Pagination links -->
+        <?php
+        $totalPages = ceil($totalDiscussions / $discussionsPerPage);
+        for ($i = 1; $i <= $totalPages; $i++) {
+            echo '<a href="?page=' . $i . '"><button class="searchBtn" >' . $i . '</button></a>';
+        }
+        ?>
+        <br>
+
+<?php include "footer.html"; ?>
+
     </div>
 
- 
-
-
-    <?php include "footer.html"; ?>
 
 </body>
 
 </html>
 
-
-
-
-
-
-
-<body>

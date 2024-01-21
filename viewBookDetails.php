@@ -5,26 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <style>
-        .book-details {
-            background-color:rgba(249, 249, 249, 0.8);
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .book-details h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
 
 <body>
     <?php
     include "header.php";
+
 
     if (isset($_GET['bookId'])) {
         $bookId = $_GET['bookId'];
@@ -50,16 +36,28 @@
                 $inStock = "No";
             }
             $addedBy = $bookInfo->addedBy;
+            $publishedBY = $bookInfo->addedBy;
             $db = Database::getInstance();
-		    $q = 'SELECT username FROM users WHERE uid = \''.$addedBy.'\'';
-		    $data = $db->singleFetch($q);
+            $q = 'SELECT username FROM users WHERE uid = \'' . $addedBy . '\'';
+            $data = $db->singleFetch($q);
             $addedBy = $data->username;
 
-//TODO: add a button to add to cart
-
+            // Check if 'Add to Cart' button for a specific book is clicked
+            if (isset($_POST['btnCart']) && isset($_POST['bookID']) && $_POST['bookID'] == $bookId) {
+                $cart = new Cart();
+                $cart->initWith($_SESSION['uid'], $bookId, $bookName, $bookPrice, $bookPic, "show");
+                if ($cart->addToCart($_SESSION['uid'])) { // Pass the necessary argument (in this case, user ID)
+                    echo "Book added to cart";
+                } else {
+                    echo "Failed to add book to cart";
+                }
+            }
+          
+            echo "<h1 class='title'>Book Details</h1>  ";
             // Display book details
             echo "<div class='book-details'>";
             echo "<img src='uploads/" . $bookPic . "' alt='Book Cover'>";
+            echo "<div class='bookDetails'>"; // book-details div
             echo "<h2>" . $bookName . "</h2>";
             echo "<p><strong>Book Number:</strong> " . $bookId . "</p>";
             echo "<p><strong>Author:</strong> " . $bookAuthor . "</p>";
@@ -69,7 +67,17 @@
             echo "<p><strong>Condition:</strong> " . $bookCondition . "</p>";
             echo "<p><strong>In Stock:</strong> " . $inStock . "</p>";
             echo "<p><strong>Added By:</strong> " . $addedBy . "</p>";
+            if ($publishedBY != $_SESSION['uid'] && $_SESSION['username'] != "") {
+                // Form for adding a book to the cart
+                echo "<form method='post'>";
+                echo "<input type='hidden' name='bookID' value='" . $bookId . "'>";
+                echo "<input type='submit' class='btnCart' name='btnCart'  value='Add to Cart'>";
+                echo "</form>";
+            }
 
+
+
+            echo "</div>";
 
 
             echo "</div>";

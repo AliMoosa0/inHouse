@@ -1,118 +1,71 @@
 <?php
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
-include 'header.php';
+ob_start();
+include('header.php');
 
-$bookID = 0;
+// Retrieve cart information for the logged-in user
+$orders = new order();
+$userOrder = $orders->initWithID();
 
-if (isset($_GET['bookID'])) {
-    $bookID = $_GET['bookID'];
-} elseif (isset($_POST['bookID'])) {
-    $bookID = $_POST['bookID'];
+// Retrieve incoming orders
+$incomingOrders = $orders->getOrders(); // Assuming this function fetches incoming orders
+
+// Display user orders
+if ($userOrder) {
+    echo "<h1 class='title'>Your Orders</h1>";
+
+    // Group orders by their IDs
+    $uniqueOrders = [];
+    foreach ($userOrder as $orderItem) {
+        $orderID = $orderItem->orderID;
+        if (!isset($uniqueOrders[$orderID])) {
+            $uniqueOrders[$orderID] = [];
+        }
+        $uniqueOrders[$orderID][] = $orderItem;
+    }
+
+    // Display unique orders along with book names and statuses
+    foreach ($uniqueOrders as $orderID => $orders) {
+        echo "<div class='ordersDiv' style='border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;'>";
+        echo "<div  id='order_$orderID' '>";
+        echo "<h2 style='margin-bottom: 5px;'>Order ID: " . $orderID . "</h2>";
+
+        foreach ($orders as $orderItem) {
+            $bookNameQuery = 'SELECT bookName FROM carts WHERE cartID = ' . $orderItem->cartID;
+            $db = Database::getInstance();
+            $bookNames = $db->multiFetch($bookNameQuery);
+
+            if ($bookNames) {
+                echo "<ul style='list-style: none; padding-left: 0;'>";
+                foreach ($bookNames as $book) {
+                    echo "<li> Book Name: " . $book->bookName . "</li>";
+                }
+                echo "</ul>";
+                echo "<p>Order Status: " . $orderItem->orderStatus . "</p>";
+                echo '<br>';
+            } else {
+                echo "<p>No book information found for this order.</p>";
+            }
+        }
+        echo "</div>";
+
+        echo '<button onclick="printOrder(\'order_' . $orderID . '\')" class="print-button">Print Order</button>';
+        echo "</div>";
+
+    }
+
+} else {
+    echo "<p>You Have No Orders.</p>";
 }
 
-//echo $article_id;
-
-$book = new Books();
-$book->initWithId($bookID);
+include('footer.php');
 ?>
 
-<style>
-    /* Form container styles */
-    .form-container {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #f2f2f2;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+<script>
+    function printOrder(orderID) {
+        var printContent = document.getElementById(orderID).innerHTML;
+        var originalContent = document.body.innerHTML;
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
     }
-
-    /* Form title styles */
-    .form-title {
-        margin-top: 0;
-        margin-bottom: 20px;
-        font-size: 24px;
-    }
-
-    /* Radio button styles */
-    .form-radio {
-        margin-bottom: 10px;
-    }
-
-    /* Submit button styles */
-    .form-submit {
-        background-color: #337ab7;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-    }
-
-    .form-submit:hover {
-        background-color: #23527c;
-    }
-</style>
-
-
-<?php
-if (isset($_POST['submit'])) {
-
-    //test the value of the radio button       
-    if (isset($_POST['sure']) && ($_POST['sure'] == 'Yes')) { //delete the record
-        $book->setBookID($bookID);
-
-
-
-        //delete article 
-        $book->deleteBook();
-        $deleted = "Book deleted successfully";
-
-    } else {
-        $notDeleted = "Book deletion not confirmed";
-    }
-}
-?>
-
-<div id="main">
-
-
-    <form method="post" class="form-container">
-        <?php if (isset($error)): ?>
-            <p style="color: red;">
-                <?php echo $error; ?>
-            </p>
-        <?php endif; ?>
-
-        <?php if (isset($deleted)): ?>
-            <p style="color: green;">
-                <?php echo $deleted; ?>
-            </p>
-        <?php endif; ?>
-
-        <?php if (isset($notDeleted)): ?>
-            <p style="color: red;">
-                <?php echo $notDeleted; ?>
-            </p>
-        <?php endif; ?>
-        <br />
-        <h2 class="form-title">Delete Book</h2>
-        <h2>Title:
-            <?php echo $book->getBookName(); ?>
-        </h2>
-        <p>Are you sure you want to delete this article? <br /><br />
-            <label class="form-radio">
-                <input type="radio" name="sure" value="Yes" /> Yes
-            </label>
-            <label class="form-radio">
-                <input type="radio" name="sure" value="No" /> No
-            </label>
-        </p>
-        <input type="hidden" name="id" value="<?php echo $bookID; ?>" />
-        <p><input type="submit" name="submit" value="Delete" class="form-submit" /></p>
-
-    </form>
-
-</div>
+</script>

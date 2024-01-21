@@ -157,7 +157,7 @@ class Users
                 $hashed_pwd = password_hash($this->password, PASSWORD_DEFAULT);
                 $db = Database::getInstance();
                 $data = "insert into users (uid, username,  email, phoneNumber, RegDate, password, role) values (null, '$this->username', '$this->email', '$this->phoneNumber', NOW(), '$hashed_pwd', '$this->role')";
-              
+
                 $db->querySQL($data);
                 //echo $data;
                 return true;
@@ -170,15 +170,13 @@ class Users
         }
     }
 
-    //TODO: make it with username
-    function changePassword($uid, $password)
+
+    function changePassword($username, $password)
     {
         try {
             $hashed_pwd = password_hash($password, PASSWORD_DEFAULT);
             $db = Database::getInstance();
-            $data = "UPDATE users SET `password` = '$hashed_pwd' where uid = $uid";
-            // var_dump($data);
-            // die();
+            $data = "UPDATE users SET `password` = '$hashed_pwd' where reset_token = '$username'";
             $db->querySQL($data);
             //echo $data;
             return true;
@@ -187,13 +185,25 @@ class Users
             return false;
         }
     }
+    function isEmailExists($email)
+    {
+        $db = Database::getInstance();
+        $result = $db->singleFetch("SELECT *  FROM users WHERE email = '$email'");
 
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     function deleteUser()
     {
         try {
             $db = Database::getInstance();
             $db->querySQL('delete from users where uid = ' . $this->uid);
+            // var_dump('delete from users where uid = ' . $this->uid);
+            // die();
             return true;
         } catch (Exception $ex) {
             echo 'exception: ' . $ex;
@@ -258,5 +268,49 @@ class Users
             $_SESSION['role']);
         session_destroy();
     }
+    function generateUniqueToken()
+    {
+        return bin2hex(random_bytes(16)); // Generates a more secure 32-character token
+    }
+
+
+    public function saveResetToken($email, $token, $expiration)
+    {
+        $db = Database::getInstance();
+        $query = "UPDATE users SET reset_token = '$token', token_expiration = '$expiration' WHERE email = '$email'";
+        if ($db->querySQL($query)) {
+            return true; // Success: token saved
+        } else {
+            return false; // Error: unable to save token
+        }
+    }
+
+    public function deleteExpiredTokens()
+    {
+        $db = Database::getInstance();
+
+        $sql = "UPDATE users SET reset_token = NULL, token_expiration = NULL WHERE token_expiration < now()";
+        $db->querySQL($sql);
+        
+    }
+    public function isTokenExpired($token)
+    {
+        $db = Database::getInstance();
+    
+        $sql = "SELECT reset_token FROM users WHERE reset_token = '$token'";
+       
+        $result = $db->singleFetch($sql);
+       
+        if ($result) {
+            return false; // Token exists (not expired because expired tokens are deleted)
+        } else {
+            return true; // Token does not exist or is expired
+        }
+    }
+    
+
+
+
 }
+
 ?>

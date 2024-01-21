@@ -110,6 +110,7 @@ class Cart
         $db->querySQL($sql);
 
         return true;
+        
     }
 
 
