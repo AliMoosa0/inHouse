@@ -51,13 +51,13 @@ $email = $_GET['email'];
                             $mail->isSMTP();
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
-                            $mail->Username = 'alm9ly@gmail.com';
-                            $mail->Password = 'sncv cgdv qsex jvux';
+                            $mail->Username = '';  //enter your email in the empty field
+                            $mail->Password = '';  //enter your password in the empty field
                             $mail->SMTPSecure = 'tls'; // Enable TLS encryption
                             $mail->Port = 587; // TCP port to connect to
                 
                             // Sender information
-                            $mail->setFrom('alm9ly@gmail.com', 'Polytechnic Second Hand Shop');
+                            $mail->setFrom('', 'Polytechnic Second Hand Shop'); //enter your email in the empty field
 
                             // Add a recipient
                             $mail->addAddress($useremail); // User's email address
